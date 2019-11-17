@@ -1,0 +1,20 @@
+{
+  "name": "d4160.game-framework",
+  "displayName": "Unity Game Framework",
+  "version": "0.1.0",
+  "unity": "2018.1",
+  "description": "Unity Game Framework to control the essential parts of any game or app (Game Modes, Scene Management, Play Flow, Settings, Data Persistence and much more (WIP))",
+  "keywords": [
+    "utilities",
+    "unity",
+    "essential",
+    "game framework"
+  ],
+  "author": {
+    "name": "d4160(Maranatha2031)"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/d4160/Unity-GameFramework.git"
+  }
+}
