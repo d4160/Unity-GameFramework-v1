@@ -28,7 +28,7 @@
     /// Inherited from this class to allow another lists
     /// </summary>
     [System.Serializable]
-    public class ConcreteAppSettingsSerializableData : ISerializableData, IPlayerPrefsActions
+    public class ConcreteAppSettingsSerializableData : ISerializableData, IStorageHelper
     {
         [SerializeField] protected DefaultAppStatsSettingsSerializableData m_defaultAppStatsSettingsData;
         [SerializeField] protected DefaultAudioSettingsSerializableData m_defaultAudioSettingsData;
@@ -42,6 +42,23 @@
         public DefaultLocalizationSettingsSerializableData DefaultLocalizationSettingsData { get => m_defaultLocalizationSettingsData; set => m_defaultLocalizationSettingsData = value; }
         public DefaultPostProcessingSettingsSerializableData DefaultPostProcessingSettingsData { get => m_defaultPostProcessingSettingsData; set => m_defaultPostProcessingSettingsData = value; }
 
+        protected StorageHelperType m_storageHelperType;
+        protected int m_completedCount;
+
+        public StorageHelperType StorageHelperType
+        {
+            get => m_storageHelperType;
+            set
+            {
+                m_storageHelperType = value;
+                m_defaultAppStatsSettingsData.StorageHelperType = value;
+                m_defaultAudioSettingsData.StorageHelperType = value;
+                m_defaultGraphicsSettingsData.StorageHelperType = value;
+                m_defaultLocalizationSettingsData.StorageHelperType = value;
+                m_defaultPostProcessingSettingsData.StorageHelperType = value;
+            }
+        }
+
         /// <summary>
         /// Default constructor for serialization purpose.
         /// </summary>
@@ -50,22 +67,36 @@
 
         }
 
-        public void Save(bool encrypted = false)
+        public void Save(bool encrypted = false, System.Action onCompleted = null)
         {
-            m_defaultAppStatsSettingsData.Save(encrypted);
-            m_defaultAudioSettingsData.Save(encrypted);
-            m_defaultGraphicsSettingsData.Save(encrypted);
-            m_defaultLocalizationSettingsData.Save(encrypted);
-            m_defaultPostProcessingSettingsData.Save(encrypted);
+            m_completedCount = 0;
+
+            m_defaultAppStatsSettingsData.Save(encrypted, () => OnCompleted(onCompleted));
+            m_defaultAudioSettingsData.Save(encrypted, () => OnCompleted(onCompleted));
+            m_defaultGraphicsSettingsData.Save(encrypted, () => OnCompleted(onCompleted));
+            m_defaultLocalizationSettingsData.Save(encrypted, () => OnCompleted(onCompleted));
+            m_defaultPostProcessingSettingsData.Save(encrypted, () => OnCompleted(onCompleted));
         }
 
-        public void Load(bool encrypted = false)
+        protected virtual void OnCompleted(System.Action onCompleted)
         {
-            m_defaultAppStatsSettingsData.Load(encrypted);
-            m_defaultAudioSettingsData.Load(encrypted);
-            m_defaultGraphicsSettingsData.Load(encrypted);
-            m_defaultLocalizationSettingsData.Load(encrypted);
-            m_defaultPostProcessingSettingsData.Load(encrypted);
+            m_completedCount++;
+
+            if (m_completedCount >= 5)
+            {
+                onCompleted?.Invoke();
+            }
+        }
+
+        public void Load(bool encrypted = false, System.Action onCompleted = null)
+        {
+            m_completedCount = 0;
+
+            m_defaultAppStatsSettingsData.Load(encrypted, () => OnCompleted(onCompleted));
+            m_defaultAudioSettingsData.Load(encrypted, () => OnCompleted(onCompleted));
+            m_defaultGraphicsSettingsData.Load(encrypted, () => OnCompleted(onCompleted));
+            m_defaultLocalizationSettingsData.Load(encrypted, () => OnCompleted(onCompleted));
+            m_defaultPostProcessingSettingsData.Load(encrypted, () => OnCompleted(onCompleted));
         }
     }
 }

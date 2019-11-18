@@ -10,7 +10,7 @@
     [CreateAssetMenu(fileName = "AppSettingsDatabase.asset", menuName = "Game Framework/App Database")]
     public class AppSettingsDatabase : ScriptableObject, IDataSerializationAdapter
     {
-        protected IDataSerializationAdapter m_dataFormatter;
+        protected IDataSerializationAdapter m_dataAdapter;
 
         [SerializeField]
         [Reorderable(paginate = true, pageSize = 10)]
@@ -18,15 +18,15 @@
 
         public AppSettingsReorderableArray Settings => m_settings;
 
-        public IDataSerializationAdapter DataFormatter
+        public IDataSerializationAdapter DataAdapter
         {
             get {
-                if (m_dataFormatter == null)
-                    m_dataFormatter = new DefaultAppSettingsDataSerializationAdapter();
+                if (m_dataAdapter == null)
+                    m_dataAdapter = new DefaultAppSettingsDataSerializationAdapter();
 
-                return m_dataFormatter;
+                return m_dataAdapter;
             }
-            set => m_dataFormatter = value;
+            set => m_dataAdapter = value;
         }
 
         public AppSettingsScriptableBase this[int index]
@@ -51,12 +51,12 @@
 
         public ISerializableData GetSerializableData()
         {
-            return DataFormatter.GetSerializableData();
+            return DataAdapter.GetSerializableData();
         }
 
         public void FillFromSerializableData(ISerializableData data)
         {
-            DataFormatter.FillFromSerializableData(data);
+            DataAdapter.FillFromSerializableData(data);
         }
 
         public void Initialize(ISerializableData data)
@@ -67,7 +67,7 @@
 
         public void Unintialize()
         {
-            m_dataFormatter = null;
+            m_dataAdapter = null;
         }
 
         public bool IsInitialized => m_settings != null && m_settings.Length > 0;

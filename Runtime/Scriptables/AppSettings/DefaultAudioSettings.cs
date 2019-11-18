@@ -7,8 +7,10 @@
     public class DefaultAudioSettings : AppSettingsScriptableBase
     {
         [SerializeField] protected bool m_music;
+        [Range(0, 1f)]
         [SerializeField] protected float m_musicVolume;
         [SerializeField] protected bool m_sfxs;
+        [Range(0, 1f)]
         [SerializeField] protected float m_sfxsVolume;
 
         public override ISerializableData GetSerializableData()

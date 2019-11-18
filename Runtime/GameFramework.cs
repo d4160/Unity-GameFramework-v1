@@ -38,7 +38,7 @@
         /// <param name="onInitializeFailed">Called when the initialization process failed</param>
         public static void InitializeAppSettings(
             IDataPersistence dataPersistence = null,
-            IDataSerializationAdapter dataFormatter = null,
+            IDataSerializationAdapter dataAdapter = null,
             Action onInitializeCompleted = null,
             Action onInitializeFailed = null)
         {
@@ -53,31 +53,31 @@
 
             m_AppSettingsInitializationStatus = InitializationStatus.Initializing;
 
-            if (dataPersistence != null && dataFormatter != null)
+            if (dataPersistence != null && dataAdapter != null)
             {
                 LoadAppSettingsData(dataPersistence,
                     (data) =>
                     {
-                        InitializeAppSettings(data, dataFormatter, onInitializeCompleted, onInitializeFailed);
+                        InitializeAppSettings(data, dataAdapter, onInitializeCompleted, onInitializeFailed);
                     },
                     () =>
                     {
-                        InitializeAppSettings(null as ISerializableData, dataFormatter, onInitializeCompleted, onInitializeFailed);
+                        InitializeAppSettings(null as ISerializableData, dataAdapter, onInitializeCompleted, onInitializeFailed);
                     });
             }
             else
             {
-                InitializeAppSettings(null as ISerializableData, dataFormatter, onInitializeCompleted, onInitializeFailed);
+                InitializeAppSettings(null as ISerializableData, dataAdapter, onInitializeCompleted, onInitializeFailed);
             }
         }
 
-        static void InitializeAppSettings(ISerializableData data, IDataSerializationAdapter dataFormatter, Action onInitializeCompleted = null, Action onInitializeFailed = null)
+        static void InitializeAppSettings(ISerializableData data, IDataSerializationAdapter dataAdapter, Action onInitializeCompleted = null, Action onInitializeFailed = null)
         {
             bool isInitialized = true;
 
             try
             {
-                AppSettings.Database.DataFormatter = dataFormatter;
+                AppSettings.Database.DataAdapter = dataAdapter;
                 AppSettings.Database.Initialize(data);
 
                 isInitialized = true;
