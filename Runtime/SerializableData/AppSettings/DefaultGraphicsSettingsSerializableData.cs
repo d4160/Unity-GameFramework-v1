@@ -2,8 +2,10 @@
 {
     using System.Collections.Generic;
     using d4160.Systems.DataPersistence;
+    #if PLAYFAB
   using PlayFab;
   using PlayFab.ClientModels;
+  #endif
   using UnityEngine;
 
     [System.Serializable]
@@ -44,6 +46,7 @@
                     onCompleted?.Invoke();
                 break;
                 case StorageHelperType.PlayFab:
+                #if PLAYFAB
                     PlayFabClientAPI.GetUserData(new GetUserDataRequest() {
                         Keys = null
                     }, result => {
@@ -57,6 +60,7 @@
 
                         onCompleted?.Invoke();
                     }, null);
+                    #endif
                 break;
             }
         }
@@ -85,6 +89,7 @@
                 break;
 
                 case StorageHelperType.PlayFab:
+                #if PLAYFAB
                     PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest() {
                         Data = new Dictionary<string, string>() {
                             { nameof(resolution), resolution.ToString() },
@@ -93,6 +98,7 @@
                             { nameof(vSyncCount), vSyncCount.ToString() }
                         }
                     }, (result) => onCompleted?.Invoke(), null);
+                    #endif
                 break;
             }
         }

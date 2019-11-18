@@ -5,7 +5,6 @@
     using d4160.Worlds;
     using UniRx.Async;
     using UnityEngine;
-    using UnityEngine.InputSystem;
     using d4160.Systems.SceneManagement;
     using d4160.UI;
 

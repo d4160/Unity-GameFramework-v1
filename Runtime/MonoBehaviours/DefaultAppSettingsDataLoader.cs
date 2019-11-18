@@ -2,13 +2,16 @@
 {
     using d4160.Systems.DataPersistence;
     using UnityEngine;
+#if ODIN_SERIALIZER
     using OdinSerializer;
+#endif
     using UnityEngine.GameFoundation.DataPersistence;
     using DataSerializerType = d4160.Systems.DataPersistence.DataSerializerType;
     using NaughtyAttributes;
 
     public class DefaultAppSettingsDataLoader : DataLoader
     {
+#if ODIN_SERIALIZER
         // Odin only
         [ShowIf(ConditionOperator.And, "IsDataPersistenceLocal", "IsSerializerOdin")]
         [SerializeField] protected DataFormat m_dataFormat = DataFormat.JSON;
@@ -18,6 +21,7 @@
         private bool IsSerializerOdin => m_serializerType == DataSerializerType.Odin;
 #endif
         #endregion
+#endif
 
         DefaultAppSettingsDataSerializationAdapter _dataSerializationAdapter;
 
@@ -50,6 +54,7 @@
                     _dataSerializationAdapter.Initialize(Identifier, m_dataPersistence);
                 break;
                 case DataPersistenceType.Remote:
+                #if PLAYFAB
                     if (m_serializerType == DataSerializerType.JsonUtility)
                             m_adapterType = DataSerializationAdapterType.Concrete;
                     _dataSerializationAdapter = new DefaultAppSettingsDataSerializationAdapter(m_adapterType);
@@ -62,6 +67,7 @@
                     }
 
                     serializer = CreateDataSerializer();
+
                     var loginProvider = new CustomIdLoginProvider(
                         m_remoteId,
                         (result) =>
@@ -83,6 +89,7 @@
                         serializer, m_encrypted,
                         loginProvider, storageHelper
                     );
+                    #endif
                 break;
                 default:
                 break;
@@ -99,7 +106,9 @@
                     dataSerializer = new JsonDataSerializer();
                 break;
                 case DataSerializerType.Odin:
+#if ODIN_SERIALIZER
                     dataSerializer = new OdinDataSerializer(m_dataFormat);
+#endif
                 break;
             }
 
