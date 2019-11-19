@@ -4,18 +4,22 @@
     using d4160.Core;
     using UnityEngine;
     using UnityExtensions;
+    using UnityEngine.Serialization;
 
     [System.Serializable]
     public class DefaultLevelCategory : DefaultArchetype
     {
         [InspectInline(canCreateSubasset = true, canEditRemoteTarget = true)]
-        public ScriptableObject scenesSO;
+        [FormerlySerializedAs("scenesSO")]
+        [SerializeField] protected ScriptableObject m_scenesSO;
+
+        public ScriptableObject ScenesSO => m_scenesSO;
 
         public string[] SceneNames
         {
             get
             {
-                var iNames = scenesSO as IArchetypeNames;
+                var iNames = ScenesSO as IArchetypeNames;
                 if (iNames != null)
                     return iNames.ArchetypeNames;
 
@@ -25,14 +29,14 @@
 
         public SceneReference GetScene(int index)
         {
-            var eGetter = scenesSO as IElementGetter<SceneReference>;
+            var eGetter = ScenesSO as IElementGetter<SceneReference>;
             if (eGetter != null)
             {
                 return eGetter.GetElementAt(index);
             }
             else
             {
-                var wGetter = scenesSO as IElementGetter<Worlds.DefaultWorld>;
+                var wGetter = ScenesSO as IElementGetter<Worlds.DefaultWorld>;
                 if (wGetter != null)
                 {
                     var world = wGetter.GetElementAt(index);
