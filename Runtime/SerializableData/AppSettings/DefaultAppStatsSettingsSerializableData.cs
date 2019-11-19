@@ -2,8 +2,11 @@
 {
   using System.Collections.Generic;
   using d4160.Systems.DataPersistence;
+  #if PLAYFAB
   using PlayFab;
   using PlayFab.ClientModels;
+  #endif
+
 
   [System.Serializable]
     public class DefaultAppStatsSettingsSerializableData : SettingsSerializableDataBase, IStorageHelper
@@ -45,6 +48,7 @@
                     onCompleted?.Invoke();
                 break;
                 case StorageHelperType.PlayFab:
+                #if PLAYFAB
                     PlayFabClientAPI.GetUserData(new GetUserDataRequest() {
                         Keys = null
                     }, result => {
@@ -58,6 +62,7 @@
 
                         onCompleted?.Invoke();
                     }, null);
+                    #endif
                 break;
             }
         }
@@ -86,6 +91,7 @@
                 break;
 
                 case StorageHelperType.PlayFab:
+                #if PLAYFAB
                     PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest() {
                         Data = new Dictionary<string, string>() {
                             { nameof(fps), fps.ToString() },
@@ -94,6 +100,7 @@
                             { nameof(advancedInfo), advancedInfo.ToString() }
                         }
                     }, (result) => onCompleted?.Invoke(), null);
+                    #endif
                 break;
             }
         }
