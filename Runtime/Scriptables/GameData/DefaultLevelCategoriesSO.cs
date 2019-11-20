@@ -6,7 +6,7 @@
     using UnityEngine;
   using UnityEngine.GameFoundation.DataPersistence;
 
-  [CreateAssetMenu(fileName = "New DefaultLevelCategories_SO", menuName = "Game Framework/Level/DefaultLevelCategories")]
+  [CreateAssetMenu(fileName = "New DefaultLevelCategories_SO", menuName = "Game Framework/Game Data/DefaultLevelCategories")]
     public class DefaultLevelCategoriesSO : ArchetypesSOBase<LevelCategoriesReorderableArray, DefaultLevelCategory>
     {
         #region Editor Members

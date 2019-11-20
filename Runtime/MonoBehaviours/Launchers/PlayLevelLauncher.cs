@@ -1,4 +1,4 @@
-﻿namespace d4160.Levels
+﻿namespace d4160.GameFramework
 {
     using Malee;
 
@@ -9,7 +9,7 @@
 
         public PlayResult PlayResult => m_playResult;
         public PlayState PlayState => m_playState;
-        
+
         public abstract void SetReadyToPlay();
 
         public abstract void Play();

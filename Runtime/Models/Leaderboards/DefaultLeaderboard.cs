@@ -10,15 +10,17 @@
     {
         [Dropdown(ValuesProperty = "StatNames")]
         [SerializeField] protected int m_stat;
+        [SerializeField] protected LeaderboardResetFrequency m_resetFrequency;
+        [SerializeField] protected LeaderboardAggregationMethod m_aggregationMethod;
+        [SerializeField] protected int m_currentIteration;
 
-
-#if UNITY_EDITOR
-        protected string[] StatNames => StatManager.catalog.GetStatDefinitions().Select((x) => x.id).ToArray();
-#endif
+        [SerializeField] protected LeaderboardEntry[] m_entries;
     }
 
     [System.Serializable]
-    public class LeaderboardEntry
+    public struct LeaderboardEntry
     {
+        public string playerId;
+        public float value;
     }
 }

@@ -6,7 +6,7 @@
     using UnityEngine;
   using UnityEngine.GameFoundation.DataPersistence;
 
-  [CreateAssetMenu(fileName = "New Scenes_SO", menuName = "Game Framework/Level/Scenes", order = -1)]
+  [CreateAssetMenu(fileName = "New Scenes_SO", menuName = "Game Framework/Game Data/Scenes", order = -1)]
     public class ScenesSO : ReorderableSO<ScenesReorderableArray, SceneReference>
 #if UNITY_EDITOR
         , IArchetypeNames

@@ -1,10 +1,12 @@
-namespace d4160.Levels
+namespace d4160.GameFramework
 {
+    using d4160.Levels;
+
     public interface IPlayLevel : ILevel
     {
         PlayResult PlayResult { get; }
         PlayState PlayState { get; }
-        
+
         void SetReadyToPlay();
 
         void Play();

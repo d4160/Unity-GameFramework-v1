@@ -5,7 +5,6 @@
     using NaughtyAttributes;
     using Malee;
     using UnityEngine;
-    using d4160.Core.Attributes;
     using System.Collections.Generic;
     using UnityEngine.SceneManagement;
 

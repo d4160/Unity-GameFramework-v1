@@ -1,8 +1,6 @@
-﻿namespace d4160.Levels
+﻿namespace d4160.GameFramework
 {
-    using d4160.GameFramework;
     using d4160.Levels;
-    using d4160.GameFramework;
     using d4160.Core;
     using UnityEngine;
     using UnityExtensions;

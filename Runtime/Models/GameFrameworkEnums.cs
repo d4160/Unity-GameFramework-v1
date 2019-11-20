@@ -1,4 +1,4 @@
-﻿namespace d4160.Levels
+﻿namespace d4160.GameFramework
 {
     public enum LevelType
     {
@@ -31,5 +31,26 @@
         Playing,
         Paused,
         GameOver
+    }
+
+    public enum LeaderboardAggregationMethod
+    {
+        // Always update with the new value
+        Last,
+        // Always use the lowest value
+        Minimum,
+        // Always use the highest value
+        Maximun,
+        // Add this valueto the existing value
+        Sum
+    }
+
+    public enum LeaderboardResetFrequency
+    {
+        Manually,
+        Hourly,
+        Daily,
+        Weekly,
+        Monthly
     }
 }

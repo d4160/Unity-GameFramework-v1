@@ -18,4 +18,9 @@
     public class WorldsReorderableArray : ReorderableArray<DefaultWorld>
     {
     }
+
+    [System.Serializable]
+    public class LeaderboardsReorderableArray : ReorderableArray<DefaultLeaderboard>
+    {
+    }
 }

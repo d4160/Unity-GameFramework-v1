@@ -1,4 +1,4 @@
-﻿namespace d4160.Levels
+﻿namespace d4160.GameFramework
 {
     using Malee;
     using UnityEngine;

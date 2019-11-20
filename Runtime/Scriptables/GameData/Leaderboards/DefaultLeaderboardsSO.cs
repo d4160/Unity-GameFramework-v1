@@ -1,18 +1,30 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class DefaultLeaderboardsSO : MonoBehaviour
+﻿namespace d4160.GameFramework
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    using System.Linq;
+    using UnityEngine;
+    using UnityEngine.GameFoundation;
+    using UnityEngine.GameFoundation.DataPersistence;
 
-    // Update is called once per frame
-    void Update()
+    [CreateAssetMenu(fileName = "New DefaultLeaderboards_SO.asset", menuName = "Game Framework/Game Data/Default Leaderboards")]
+    public class DefaultLeaderboardsSO : ArchetypesSOBase<LeaderboardsReorderableArray, DefaultLeaderboard>
     {
-        
+#if UNITY_EDITOR
+        protected string[] StatNames => StatManager.catalog.GetStatDefinitions().Select((x) => x.id).ToArray();
+#endif
+
+        public override void FillFromSerializableData(ISerializableData data)
+        {
+        }
+
+        public override ISerializableData GetSerializableData()
+        {
+            return null;
+        }
+
+        public override void Initialize(ISerializableData data)
+        {
+            if(data != null)
+                FillFromSerializableData(data);
+        }
     }
 }
