@@ -76,7 +76,7 @@
 
         public ISerializableData GetSerializableData()
         {
-            var data = new AppSettingsSerializableData();
+            var data = new DefaultAppSettingsSerializableData();
 
             var gameData = new SettingsSerializableDataBase[m_gameData.Length];
             for (int i = 0; i < m_gameData.Length; i++)
@@ -91,7 +91,7 @@
 
         public void FillFromSerializableData(ISerializableData data)
         {
-            var appSettingsData = data as AppSettingsSerializableData;
+            var appSettingsData = data as DefaultAppSettingsSerializableData;
 
             if (appSettingsData == null || appSettingsData.SettingsData == null)
             {

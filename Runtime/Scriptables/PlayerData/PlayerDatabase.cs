@@ -1,50 +1,49 @@
 ﻿namespace d4160.GameFramework
 {
     using d4160.Core;
-  using d4160.Systems.DataPersistence;
-  using Malee;
-  using UnityEngine;
+    using d4160.Systems.DataPersistence;
+    using Malee;
+    using UnityEngine;
     using UnityEngine.GameFoundation.DataPersistence;
-    using UnityExtensions;
 
-    [CreateAssetMenu(fileName = "AppSettingsDatabase.asset", menuName = "Game Framework/App Database")]
-    public class AppSettingsDatabase : ScriptableObject, IDataSerializationAdapter
+    [CreateAssetMenu(fileName = "PlayerDatabase.asset", menuName = "Game Framework/Player Database")]
+    public class PlayerDatabase : ScriptableObject, IDataSerializationAdapter
     {
         protected IDataSerializationAdapter m_dataAdapter;
 
         [SerializeField]
         [Reorderable(paginate = true, pageSize = 10)]
-        protected AppSettingsReorderableArray m_settings;
+        protected PlayerDataReorderableArray m_playerData;
 
-        public AppSettingsReorderableArray Settings => m_settings;
+        public PlayerDataReorderableArray PlayerData => m_playerData;
 
         public IDataSerializationAdapter DataAdapter
         {
             get {
                 if (m_dataAdapter == null)
-                    m_dataAdapter = new DefaultAppSettingsDataSerializationAdapter();
+                    m_dataAdapter = new DefaultPlayerDataSerializationAdapter();
 
                 return m_dataAdapter;
             }
             set => m_dataAdapter = value;
         }
 
-        public AppSettingsScriptableBase this[int index]
+        public PlayerDataScriptableBase this[int index]
         {
             get
             {
-                if (m_settings.IsValidIndex(index))
-                    return m_settings[index];
+                if (m_playerData.IsValidIndex(index))
+                    return m_playerData[index];
 
                 return null;
             }
         }
 
-        public T GetSettings<T>(int index) where T : AppSettingsScriptableBase
+        public T GetData<T>(int index) where T : PlayerDataScriptableBase
         {
-            var settings = this[index];
-            if (settings)
-                return settings as T;
+            var playerData = this[index];
+            if (playerData)
+                return playerData as T;
 
             return null;
         }
@@ -59,7 +58,7 @@
             DataAdapter.FillFromSerializableData(data);
         }
 
-        public void Initialize(ISerializableData data)
+        public void InitializeData(ISerializableData data)
         {
             if(data != null)
                 FillFromSerializableData(data);
@@ -70,11 +69,11 @@
             m_dataAdapter = null;
         }
 
-        public bool IsInitialized => m_settings != null && m_settings.Length > 0;
+        public bool IsInitialized => m_playerData != null && m_playerData.Length > 0;
     }
 
     [System.Serializable]
-    public class AppSettingsReorderableArray : ReorderableArrayForUnityObject<AppSettingsScriptableBase>
+    public class PlayerDataReorderableArray : ReorderableArrayForUnityObject<PlayerDataScriptableBase>
     {
     }
 }

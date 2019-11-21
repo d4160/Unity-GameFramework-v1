@@ -1,10 +1,10 @@
-namespace d4160.GameFramework
+﻿namespace d4160.GameFramework
 {
     using d4160.Systems.DataPersistence;
     using UnityEngine;
     using UnityEngine.GameFoundation.DataPersistence;
 
-    public abstract class GameDataScriptableBase : ScriptableObject, IDataSerializationAdapter
+    public abstract class PlayerDataScriptableBase : ScriptableObject, IDataSerializationAdapter
     {
         public abstract ISerializableData GetSerializableData();
 

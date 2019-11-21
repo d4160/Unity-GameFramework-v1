@@ -22,7 +22,7 @@
             return data;
         }
 
-        public override void Initialize(ISerializableData data)
+        public override void InitializeData(ISerializableData data)
         {
             if (data != null)
             {

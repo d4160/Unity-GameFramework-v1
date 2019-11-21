@@ -10,7 +10,7 @@
     /// which JsonUtility can't support -> https://answers.unity.com/questions/1301570/doesnt-jsonutility-support-arrays-with-abstract-ty.html
     /// </summary>
     [System.Serializable]
-    public class AppSettingsSerializableData : ISerializableData
+    public class DefaultAppSettingsSerializableData : ISerializableData
     {
         [SerializeField] protected SettingsSerializableDataBase[] m_settingsData;
 
@@ -19,7 +19,7 @@
         /// <summary>
         /// Default constructor for serialization purpose.
         /// </summary>
-        public AppSettingsSerializableData()
+        public DefaultAppSettingsSerializableData()
         {
         }
     }
@@ -28,7 +28,7 @@
     /// Inherited from this class to allow another lists
     /// </summary>
     [System.Serializable]
-    public class ConcreteAppSettingsSerializableData : ISerializableData, IStorageHelper
+    public class DefaultConcreteAppSettingsSerializableData : ISerializableData, IStorageHelper
     {
         [SerializeField] protected DefaultAppStatsSettingsSerializableData m_defaultAppStatsSettingsData;
         [SerializeField] protected DefaultAudioSettingsSerializableData m_defaultAudioSettingsData;
@@ -62,12 +62,12 @@
         /// <summary>
         /// Default constructor for serialization purpose.
         /// </summary>
-        public ConcreteAppSettingsSerializableData()
+        public DefaultConcreteAppSettingsSerializableData()
         {
 
         }
 
-        public void Save(bool encrypted = false, System.Action onCompleted = null)
+        public virtual void Save(bool encrypted = false, System.Action onCompleted = null)
         {
             m_completedCount = 0;
 
@@ -88,7 +88,7 @@
             }
         }
 
-        public void Load(bool encrypted = false, System.Action onCompleted = null)
+        public virtual void Load(bool encrypted = false, System.Action onCompleted = null)
         {
             m_completedCount = 0;
 

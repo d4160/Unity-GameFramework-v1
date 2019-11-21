@@ -10,6 +10,6 @@
 
         public abstract void FillFromSerializableData(ISerializableData data);
 
-        public abstract void Initialize(ISerializableData data);
+        public abstract void InitializeData(ISerializableData data);
     }
 }

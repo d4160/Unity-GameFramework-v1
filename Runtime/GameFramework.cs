@@ -78,7 +78,7 @@
             try
             {
                 AppSettings.Database.DataAdapter = dataAdapter;
-                AppSettings.Database.Initialize(data);
+                AppSettings.Database.InitializeData(data);
 
                 isInitialized = true;
             }
