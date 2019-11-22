@@ -108,7 +108,7 @@
             var chapter = CurrentChapter;
             if (chapter == null) return;
 
-            var buildIndex = GameFrameworkSettings.Database.GetGameData<DefaultWorldsSO>(2).GetSceneBuildIndex(chapter.WorldScene);
+            var buildIndex = GameFrameworkSettings.GameDatabase.GetGameData<DefaultWorldsSO>(2).GetSceneBuildIndex(chapter.WorldScene);
             if (buildIndex == -1)
             {
                 LoadPlayScene(true, onCompleted);
@@ -144,7 +144,7 @@
             var chapter = CurrentChapter;
             if (chapter == null) return;
 
-            var buildIndex = GameFrameworkSettings.Database.GetGameData<DefaultLevelCategoriesSO>(3).GetSceneBuildIndex(chapter.LevelScene);
+            var buildIndex = GameFrameworkSettings.GameDatabase.GetGameData<DefaultLevelCategoriesSO>(3).GetSceneBuildIndex(chapter.LevelScene);
 
             await m_sceneLoader.LoadSceneAsync(
                 buildIndex,

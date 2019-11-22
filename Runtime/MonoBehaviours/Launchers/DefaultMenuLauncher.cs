@@ -23,13 +23,13 @@
 
 #if UNITY_EDITOR
         #region IWorldScene Implementation
-        public string[] WorldNames => GameFrameworkSettings.Database.GetGameData<DefaultWorldsSO>(2).ArchetypeNames;
-        public string[] WorldSceneNames => GameFrameworkSettings.Database.GetGameData<DefaultWorldsSO>(2).GetSceneNames(m_worldScene.world);
+        public string[] WorldNames => GameFrameworkSettings.GameDatabase.GetGameData<DefaultWorldsSO>(2).ArchetypeNames;
+        public string[] WorldSceneNames => GameFrameworkSettings.GameDatabase.GetGameData<DefaultWorldsSO>(2).GetSceneNames(m_worldScene.world);
         #endregion
 
         #region ILevelScene Implementation
-        public string[] LevelCategoryNames => GameFrameworkSettings.Database.GetGameData<DefaultLevelCategoriesSO>(3).ArchetypeNames;
-        public string[] LevelSceneNames => GameFrameworkSettings.Database.GetGameData<DefaultLevelCategoriesSO>(3).GetSceneNames(m_menuScene.levelCategory);
+        public string[] LevelCategoryNames => GameFrameworkSettings.GameDatabase.GetGameData<DefaultLevelCategoriesSO>(3).ArchetypeNames;
+        public string[] LevelSceneNames => GameFrameworkSettings.GameDatabase.GetGameData<DefaultLevelCategoriesSO>(3).GetSceneNames(m_menuScene.levelCategory);
         #endregion
 #endif
 
@@ -45,7 +45,7 @@
 
         protected virtual async UniTask LoadWorldScene(System.Action onCompleted = null)
         {
-            var buildIndex = GameFrameworkSettings.Database.GetGameData<DefaultWorldsSO>(2).GetSceneBuildIndex(m_worldScene);
+            var buildIndex = GameFrameworkSettings.GameDatabase.GetGameData<DefaultWorldsSO>(2).GetSceneBuildIndex(m_worldScene);
             if (buildIndex == -1)
             {
                 LoadMenuScene(true, onCompleted);
@@ -79,7 +79,7 @@
 
         protected virtual async void LoadMenuScene(bool setActiveAsMainScene = false, System.Action onCompleted = null)
         {
-            var buildIndex = GameFrameworkSettings.Database.GetGameData<DefaultLevelCategoriesSO>(3).GetSceneBuildIndex(m_menuScene);
+            var buildIndex = GameFrameworkSettings.GameDatabase.GetGameData<DefaultLevelCategoriesSO>(3).GetSceneBuildIndex(m_menuScene);
 
             await m_sceneLoader.LoadSceneAsync(
                 buildIndex,

@@ -9,7 +9,7 @@
   using UnityEngine;
 
     [System.Serializable]
-    public class DefaultLocalizationSettingsSerializableData : SettingsSerializableDataBase, IStorageHelper
+    public class DefaultLocalizationSettingsSerializableData : BaseSettingsSerializableData, IStorageHelper
     {
         public SystemLanguage textLanguage;
         public SystemLanguage voiceLanguage;

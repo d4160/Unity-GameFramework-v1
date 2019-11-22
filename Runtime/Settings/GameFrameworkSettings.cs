@@ -53,24 +53,24 @@
                 }
 
 #if UNITY_EDITOR
-                if (s_Instance.m_Database == null)
+                if (s_Instance.m_GameDatabase == null)
                 {
-                    string databaseAssetPath = $"Assets/{kAssetsFolder}/GameFrameworkDatabase.asset";
+                    string databaseAssetPath = $"Assets/{kAssetsFolder}/GameDatabase.asset";
 
                     // try to load a database asset by hardcoded path
-                    s_Instance.m_Database = AssetDatabase.LoadAssetAtPath<GameFrameworkDatabase>(databaseAssetPath);
+                    s_Instance.m_GameDatabase = AssetDatabase.LoadAssetAtPath<GameFrameworkDatabase>(databaseAssetPath);
 
                     // if that doesn't work, then create one
-                    if (s_Instance.m_Database == null)
+                    if (s_Instance.m_GameDatabase == null)
                     {
-                        s_Instance.m_Database = ScriptableObject.CreateInstance<GameFrameworkDatabase>();
+                        s_Instance.m_GameDatabase = ScriptableObject.CreateInstance<GameFrameworkDatabase>();
 
                         if (!AssetDatabase.IsValidFolder(string.Format("Assets/{0}", kAssetsFolder)))
                         {
                             AssetDatabase.CreateFolder("Assets", kAssetsFolder);
                         }
 
-                        AssetDatabase.CreateAsset(s_Instance.m_Database, databaseAssetPath);
+                        AssetDatabase.CreateAsset(s_Instance.m_GameDatabase, databaseAssetPath);
                         EditorUtility.SetDirty(s_Instance);
                         assetUpdate = true;
                     }
@@ -82,9 +82,83 @@
                     AssetDatabase.Refresh();
                 }
 #else
-                if (s_Instance.m_Database == null)
+                if (s_Instance.m_GameDatabase == null)
                 {
-                    throw new System.Exception("Game Framework  database reference cannot be null."
+                    throw new System.Exception("Game Database reference cannot be null."
+                        + "Open one of the Game Framework windows in the Unity Editor while not in Play Mode to have a database asset created for you automatically.");
+                }
+#endif
+
+                #if UNITY_EDITOR
+                if (s_Instance.m_PlayerDatabase == null)
+                {
+                    string databaseAssetPath = $"Assets/{kAssetsFolder}/PlayerDatabase.asset";
+
+                    // try to load a database asset by hardcoded path
+                    s_Instance.m_PlayerDatabase = AssetDatabase.LoadAssetAtPath<PlayerDatabase>(databaseAssetPath);
+
+                    // if that doesn't work, then create one
+                    if (s_Instance.m_PlayerDatabase == null)
+                    {
+                        s_Instance.m_PlayerDatabase = ScriptableObject.CreateInstance<PlayerDatabase>();
+
+                        if (!AssetDatabase.IsValidFolder(string.Format("Assets/{0}", kAssetsFolder)))
+                        {
+                            AssetDatabase.CreateFolder("Assets", kAssetsFolder);
+                        }
+
+                        AssetDatabase.CreateAsset(s_Instance.m_PlayerDatabase, databaseAssetPath);
+                        EditorUtility.SetDirty(s_Instance);
+                        assetUpdate = true;
+                    }
+                }
+
+                if (assetUpdate)
+                {
+                    AssetDatabase.SaveAssets();
+                    AssetDatabase.Refresh();
+                }
+#else
+                if (s_Instance.m_PlayerDatabase == null)
+                {
+                    throw new System.Exception("Player Database reference cannot be null."
+                        + "Open one of the Game Framework windows in the Unity Editor while not in Play Mode to have a database asset created for you automatically.");
+                }
+#endif
+
+                #if UNITY_EDITOR
+                if (s_Instance.m_AppSettingsDatabase == null)
+                {
+                    string databaseAssetPath = $"Assets/{kAssetsFolder}/AppSettingsDatabase.asset";
+
+                    // try to load a database asset by hardcoded path
+                    s_Instance.m_AppSettingsDatabase = AssetDatabase.LoadAssetAtPath<AppSettingsDatabase>(databaseAssetPath);
+
+                    // if that doesn't work, then create one
+                    if (s_Instance.m_AppSettingsDatabase == null)
+                    {
+                        s_Instance.m_AppSettingsDatabase = ScriptableObject.CreateInstance<AppSettingsDatabase>();
+
+                        if (!AssetDatabase.IsValidFolder(string.Format("Assets/{0}", kAssetsFolder)))
+                        {
+                            AssetDatabase.CreateFolder("Assets", kAssetsFolder);
+                        }
+
+                        AssetDatabase.CreateAsset(s_Instance.m_AppSettingsDatabase, databaseAssetPath);
+                        EditorUtility.SetDirty(s_Instance);
+                        assetUpdate = true;
+                    }
+                }
+
+                if (assetUpdate)
+                {
+                    AssetDatabase.SaveAssets();
+                    AssetDatabase.Refresh();
+                }
+#else
+                if (s_Instance.m_AppSettingsDatabase == null)
+                {
+                    throw new System.Exception("AppSettings Database reference cannot be null."
                         + "Open one of the Game Framework windows in the Unity Editor while not in Play Mode to have a database asset created for you automatically.");
                 }
 #endif
@@ -95,12 +169,32 @@
 
         [SerializeField]
         [InspectInline(canCreateSubasset = true, canEditRemoteTarget = true)]
-        private GameFrameworkDatabase m_Database;
+        private GameFrameworkDatabase m_GameDatabase;
 
-        public static GameFrameworkDatabase Database
+        public static GameFrameworkDatabase GameDatabase
         {
-            get { return Instance.m_Database; }
-            set { Instance.m_Database = value; }
+            get { return Instance.m_GameDatabase; }
+            set { Instance.m_GameDatabase = value; }
+        }
+
+        [SerializeField]
+        [InspectInline(canCreateSubasset = true, canEditRemoteTarget = true)]
+        private PlayerDatabase m_PlayerDatabase;
+
+        public static PlayerDatabase PlayerDatabase
+        {
+            get { return Instance.m_PlayerDatabase; }
+            set { Instance.m_PlayerDatabase = value; }
+        }
+
+        [SerializeField]
+        [InspectInline(canCreateSubasset = true, canEditRemoteTarget = true)]
+        private AppSettingsDatabase m_AppSettingsDatabase;
+
+        public static AppSettingsDatabase AppSettingsDatabase
+        {
+            get { return Instance.m_AppSettingsDatabase; }
+            set { Instance.m_AppSettingsDatabase = value; }
         }
 
 #if UNITY_EDITOR

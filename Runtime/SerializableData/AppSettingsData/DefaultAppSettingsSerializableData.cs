@@ -12,9 +12,9 @@
     [System.Serializable]
     public class DefaultAppSettingsSerializableData : ISerializableData
     {
-        [SerializeField] protected SettingsSerializableDataBase[] m_settingsData;
+        [SerializeField] protected BaseSettingsSerializableData[] m_settingsData;
 
-        public SettingsSerializableDataBase[] SettingsData { get => m_settingsData; set => m_settingsData = value; }
+        public BaseSettingsSerializableData[] SettingsData { get => m_settingsData; set => m_settingsData = value; }
 
         /// <summary>
         /// Default constructor for serialization purpose.

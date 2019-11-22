@@ -9,7 +9,7 @@
 
 
   [System.Serializable]
-    public class DefaultAppStatsSettingsSerializableData : SettingsSerializableDataBase, IStorageHelper
+    public class DefaultAppStatsSettingsSerializableData : BaseSettingsSerializableData, IStorageHelper
     {
         public bool fps;
         public bool ram;

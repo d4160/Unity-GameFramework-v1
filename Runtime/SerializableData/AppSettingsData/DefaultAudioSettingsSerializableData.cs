@@ -9,7 +9,7 @@
   using System.Collections.Generic;
 
   [System.Serializable]
-    public class DefaultAudioSettingsSerializableData : SettingsSerializableDataBase, IStorageHelper
+    public class DefaultAudioSettingsSerializableData : BaseSettingsSerializableData, IStorageHelper
     {
         public bool music;
         public float musicVolume;

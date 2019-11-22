@@ -4,6 +4,7 @@
     using UnityEditor;
 
     /* Use a class like this to generate a custom constants file */
+    /* TODO change to scriptable object editor script */
 
     public static class DefaultConstantsGenerator
     {
@@ -28,7 +29,7 @@
 
         static void GenerateConstants()
         {
-            var data = GameFrameworkSettings.Database.GameData;
+            var data = GameFrameworkSettings.GameDatabase.GameData;
             for (int i = 0; i < data.Length; i++)
             {
                 if (data[i] is IArchetypeNames)
@@ -43,7 +44,7 @@
 
         static void GenerateEnums()
         {
-            var data = GameFrameworkSettings.Database.GameData;
+            var data = GameFrameworkSettings.GameDatabase.GameData;
             for (int i = 0; i < data.Length; i++)
             {
                 if (data[i] is IArchetypeNames)

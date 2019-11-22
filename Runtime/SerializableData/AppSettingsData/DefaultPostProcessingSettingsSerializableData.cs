@@ -8,7 +8,7 @@
 #endif
 
   [System.Serializable]
-    public class DefaultPostProcessingSettingsSerializableData : SettingsSerializableDataBase, IStorageHelper
+    public class DefaultPostProcessingSettingsSerializableData : BaseSettingsSerializableData, IStorageHelper
     {
         public bool bloom;
         public bool colorGrading;

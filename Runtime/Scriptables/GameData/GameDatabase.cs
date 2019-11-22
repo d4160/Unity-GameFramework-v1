@@ -54,7 +54,7 @@
 #endif
         #endregion
 
-        public GameDataScriptableBase this[int index]
+        public ScriptableObjectBase this[int index]
         {
             get
             {
@@ -65,7 +65,7 @@
             }
         }
 
-        public T GetGameData<T>(int index) where T : GameDataScriptableBase
+        public T GetGameData<T>(int index) where T : ScriptableObjectBase
         {
             var gameData = this[index];
             if (gameData)
@@ -78,10 +78,10 @@
         {
             var data = new DefaultAppSettingsSerializableData();
 
-            var gameData = new SettingsSerializableDataBase[m_gameData.Length];
+            var gameData = new BaseSettingsSerializableData[m_gameData.Length];
             for (int i = 0; i < m_gameData.Length; i++)
             {
-                gameData[i] = m_gameData[i].GetSerializableData() as SettingsSerializableDataBase;
+                gameData[i] = m_gameData[i].GetSerializableData() as BaseSettingsSerializableData;
             }
 
             data.SettingsData = gameData;
@@ -123,7 +123,7 @@
     }
 
     [System.Serializable]
-    public class GameDataReorderableArray : ReorderableArrayForUnityObject<GameDataScriptableBase>
+    public class GameDataReorderableArray : ReorderableArrayForUnityObject<ScriptableObjectBase>
     {
     }
 }

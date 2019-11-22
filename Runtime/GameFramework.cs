@@ -1,11 +1,11 @@
-﻿namespace d4160.GameFramework
+namespace d4160.GameFramework
 {
     using System;
-  using d4160.Systems.DataPersistence;
-  using UnityEngine;
+    using d4160.Systems.DataPersistence;
+    using UnityEngine;
     using UnityEngine.GameFoundation.DataPersistence;
 
-    public static class GameFramework<T> where T : ISerializableData
+    public static class GameFramework
     {
         private enum InitializationStatus
         {
@@ -16,19 +16,25 @@
         }
 
         private static string m_AppSettingsDataPath;
-        private static InitializationStatus m_AppSettingsInitializationStatus = InitializationStatus.NotInitialized;
+        private static InitializationStatus m_AppSettingsDataInitializationStatus = InitializationStatus.NotInitialized;
+        private static string m_GameDataPath;
+        private static InitializationStatus m_GameDataInitializationStatus = InitializationStatus.NotInitialized;
+        private static string m_PlayerDataPath;
+        private static InitializationStatus m_PlayerDataInitializationStatus = InitializationStatus.NotInitialized;
 
         /// <summary>
-        /// Check if the AppSettings is initialized.
+        /// Check if the AppSettings data provider is initialized.
         /// </summary>
         /// <returns>Whether the AppSettings is initialized or not</returns>
-        public static bool IsInitialized
-        {
-            get { return m_AppSettingsInitializationStatus == InitializationStatus.Initialized; }
-        }
+        public static bool IsAppSettingsDataInitialized => m_AppSettingsDataInitializationStatus == InitializationStatus.Initialized;
+        public static bool IsGameDataInitialized => m_GameDataInitializationStatus == InitializationStatus.Initialized;
+        public static bool IsPlayerDataInitialized => m_PlayerDataInitializationStatus == InitializationStatus.Initialized;
 
         public static void SetAppSettingsDataPath(string dataPath) => m_AppSettingsDataPath = dataPath;
+        public static void SetGameDataPath(string dataPath) => m_AppSettingsDataPath = dataPath;
+        public static void SetPlayerDataPath(string dataPath) => m_AppSettingsDataPath = dataPath;
 
+        #region AppSettings Data
         /// <summary>
         /// Initialize the GameFoundation . It need a persistence object to be passed as argument to set the default persistence layer
         /// If the initialization fails, onInitializeFailed will be called with an exception.
@@ -36,14 +42,14 @@
         /// <param name="dataPersistence">The persistence layer of the Game Foundation. Required and cached for future execution</param>
         /// <param name="onInitializeCompleted">Called when the initialization process is completed with success</param>
         /// <param name="onInitializeFailed">Called when the initialization process failed</param>
-        public static void InitializeAppSettings(
+        public static void InitializeAppSettingsData<T>(
             IDataPersistence dataPersistence = null,
             IDataSerializationAdapter dataAdapter = null,
             Action onInitializeCompleted = null,
-            Action onInitializeFailed = null)
+            Action onInitializeFailed = null) where T : ISerializableData
         {
-            if (m_AppSettingsInitializationStatus == InitializationStatus.Initializing ||
-                m_AppSettingsInitializationStatus == InitializationStatus.Initialized)
+            if (m_AppSettingsDataInitializationStatus == InitializationStatus.Initializing ||
+                m_AppSettingsDataInitializationStatus == InitializationStatus.Initialized)
             {
                 Debug.LogWarning("AppSettings is already initialized and cannot be initialized again.");
                 onInitializeFailed?.Invoke();
@@ -51,34 +57,34 @@
                 return;
             }
 
-            m_AppSettingsInitializationStatus = InitializationStatus.Initializing;
+            m_AppSettingsDataInitializationStatus = InitializationStatus.Initializing;
 
             if (dataPersistence != null && dataAdapter != null)
             {
-                LoadAppSettingsData(dataPersistence,
+                LoadAppSettingsDataInternal<T>(dataPersistence,
                     (data) =>
                     {
-                        InitializeAppSettings(data, dataAdapter, onInitializeCompleted, onInitializeFailed);
+                        InitializeAppSettingsData(data, dataAdapter, onInitializeCompleted, onInitializeFailed);
                     },
                     () =>
                     {
-                        InitializeAppSettings(null as ISerializableData, dataAdapter, onInitializeCompleted, onInitializeFailed);
+                        InitializeAppSettingsData(null as ISerializableData, dataAdapter, onInitializeCompleted, onInitializeFailed);
                     });
             }
             else
             {
-                InitializeAppSettings(null as ISerializableData, dataAdapter, onInitializeCompleted, onInitializeFailed);
+                InitializeAppSettingsData(null as ISerializableData, dataAdapter, onInitializeCompleted, onInitializeFailed);
             }
         }
 
-        static void InitializeAppSettings(ISerializableData data, IDataSerializationAdapter dataAdapter, Action onInitializeCompleted = null, Action onInitializeFailed = null)
+        static void InitializeAppSettingsData(ISerializableData data, IDataSerializationAdapter dataAdapter, Action onInitializeCompleted = null, Action onInitializeFailed = null)
         {
             bool isInitialized = true;
 
             try
             {
-                AppSettings.Database.DataAdapter = dataAdapter;
-                AppSettings.Database.InitializeData(data);
+                GameFrameworkSettings.AppSettingsDatabase.DataAdapter = dataAdapter;
+                GameFrameworkSettings.AppSettingsDatabase.InitializeData(data);
 
                 isInitialized = true;
             }
@@ -89,25 +95,25 @@
 
             if (isInitialized)
             {
-                m_AppSettingsInitializationStatus = InitializationStatus.Initialized;
+                m_AppSettingsDataInitializationStatus = InitializationStatus.Initialized;
                 onInitializeCompleted?.Invoke();
             }
             else
             {
-                UninitializeAppSettings();
+                UninitializeAppSettingsData();
 
                 Debug.LogWarning("AppSettings can't be initialized.");
 
-                m_AppSettingsInitializationStatus = InitializationStatus.Failed;
+                m_AppSettingsDataInitializationStatus = InitializationStatus.Failed;
                 onInitializeFailed?.Invoke();
             }
         }
 
-        internal static void UninitializeAppSettings()
+        internal static void UninitializeAppSettingsData()
         {
-            m_AppSettingsInitializationStatus = InitializationStatus.NotInitialized;
+            m_AppSettingsDataInitializationStatus = InitializationStatus.NotInitialized;
 
-            AppSettings.Database.Unintialize();
+            GameFrameworkSettings.AppSettingsDatabase.Unintialize();
         }
 
         /// <summary>
@@ -116,10 +122,10 @@
         /// <param name="dataPersistence">The persistence layer used to execute the process</param>
         /// <param name="onLoadCompleted">Called when the loading process is completed with success</param>
         /// <param name="onLoadFailed">Called when the loading process failed</param>
-        public static void LoadAppSettings(
+        public static void LoadAppSettingsData<T>(
             IDataPersistence dataPersistence,
             Action onLoadCompleted = null,
-            Action onLoadFailed = null)
+            Action onLoadFailed = null) where T : ISerializableData
         {
             if (dataPersistence == null)
             {
@@ -128,12 +134,12 @@
                 return;
             }
 
-            LoadAppSettingsData(dataPersistence,
+            LoadAppSettingsDataInternal<T>(dataPersistence,
                 (data) =>
                 {
                     try
                     {
-                        FillAppSettings(data);
+                        FillAppSettingsData(data);
                         onLoadCompleted?.Invoke();
                     }
                     catch
@@ -144,11 +150,11 @@
                 }, onLoadFailed);
         }
 
-        private static void LoadAppSettingsData
+        private static void LoadAppSettingsDataInternal<T>
         (
             IDataPersistence dataPersistence,
             Action<ISerializableData> onLoadCompleted = null,
-            Action onLoadFailed = null)
+            Action onLoadFailed = null) where T : ISerializableData
         {
             if (dataPersistence == null)
             {
@@ -171,9 +177,9 @@
                 () => { onLoadFailed?.Invoke(); });
         }
 
-        private static void FillAppSettings(ISerializableData data)
+        private static void FillAppSettingsData(ISerializableData data)
         {
-            AppSettings.Database.FillFromSerializableData(data);
+            GameFrameworkSettings.AppSettingsDatabase.FillFromSerializableData(data);
         }
 
         /// <summary>
@@ -182,7 +188,7 @@
         /// <param name="dataPersistence">The persistence layer used to execute the process</param>
         /// <param name="onSaveCompleted">Called when the saving process is completed with success</param>
         /// <param name="onSaveFailed">Called when the saving process failed</param>
-        public static void SaveAppSettings(
+        public static void SaveAppSettingsData(
             IDataPersistence dataPersistence,
             Action onSaveCompleted = null,
             Action onSaveFailed = null)
@@ -194,15 +200,372 @@
                 return;
             }
 
-            if (!AppSettings.Database.IsInitialized)
+            if (!GameFrameworkSettings.AppSettingsDatabase.IsInitialized)
             {
                 onSaveFailed?.Invoke();
                 Debug.LogWarning("Cannot save AppSettings. AppSettings is not initialized.");
                 return;
             }
 
-            var appSettingsData = AppSettings.Database.GetSerializableData();
+            var appSettingsData = GameFrameworkSettings.AppSettingsDatabase.GetSerializableData();
             dataPersistence.Save(m_AppSettingsDataPath, appSettingsData, onSaveCompleted, onSaveFailed);
         }
+        #endregion
+
+        #region Game Data
+        /// <summary>
+        /// Initialize the GameFoundation . It need a persistence object to be passed as argument to set the default persistence layer
+        /// If the initialization fails, onInitializeFailed will be called with an exception.
+        /// </summary>
+        /// <param name="dataPersistence">The persistence layer of the Game Foundation. Required and cached for future execution</param>
+        /// <param name="onInitializeCompleted">Called when the initialization process is completed with success</param>
+        /// <param name="onInitializeFailed">Called when the initialization process failed</param>
+        public static void InitializeGameData<T>(
+            IDataPersistence dataPersistence = null,
+            IDataSerializationAdapter dataAdapter = null,
+            Action onInitializeCompleted = null,
+            Action onInitializeFailed = null) where T : ISerializableData
+        {
+            if (m_GameDataInitializationStatus == InitializationStatus.Initializing ||
+                m_GameDataInitializationStatus == InitializationStatus.Initialized)
+            {
+                Debug.LogWarning("Game Data is already initialized and cannot be initialized again.");
+                onInitializeFailed?.Invoke();
+
+                return;
+            }
+
+            m_GameDataInitializationStatus = InitializationStatus.Initializing;
+
+            if (dataPersistence != null && dataAdapter != null)
+            {
+                LoadGameDataInternal<T>(dataPersistence,
+                    (data) =>
+                    {
+                        InitializeGameData(data, dataAdapter, onInitializeCompleted, onInitializeFailed);
+                    },
+                    () =>
+                    {
+                        InitializeGameData(null as ISerializableData, dataAdapter, onInitializeCompleted, onInitializeFailed);
+                    });
+            }
+            else
+            {
+                InitializeGameData(null as ISerializableData, dataAdapter, onInitializeCompleted, onInitializeFailed);
+            }
+        }
+
+        static void InitializeGameData(ISerializableData data, IDataSerializationAdapter dataAdapter, Action onInitializeCompleted = null, Action onInitializeFailed = null)
+        {
+            bool isInitialized = true;
+
+            try
+            {
+                GameFrameworkSettings.GameDatabase.DataAdapter = dataAdapter;
+                GameFrameworkSettings.GameDatabase.InitializeData(data);
+
+                isInitialized = true;
+            }
+            catch
+            {
+                isInitialized = false;
+            }
+
+            if (isInitialized)
+            {
+                m_GameDataInitializationStatus = InitializationStatus.Initialized;
+                onInitializeCompleted?.Invoke();
+            }
+            else
+            {
+                UninitializeGameData();
+
+                Debug.LogWarning("GameData can't be initialized.");
+
+                m_GameDataInitializationStatus = InitializationStatus.Failed;
+                onInitializeFailed?.Invoke();
+            }
+        }
+
+        internal static void UninitializeGameData()
+        {
+            m_GameDataInitializationStatus = InitializationStatus.NotInitialized;
+
+            GameFrameworkSettings.GameDatabase.Unintialize();
+        }
+
+        /// <summary>
+        /// Asynchronously loads data from the persistence layer and populates managed systems with it
+        /// </summary>
+        /// <param name="dataPersistence">The persistence layer used to execute the process</param>
+        /// <param name="onLoadCompleted">Called when the loading process is completed with success</param>
+        /// <param name="onLoadFailed">Called when the loading process failed</param>
+        public static void LoadGameData<T>(
+            IDataPersistence dataPersistence,
+            Action onLoadCompleted = null,
+            Action onLoadFailed = null) where T : ISerializableData
+        {
+            if (dataPersistence == null)
+            {
+                onLoadFailed?.Invoke();
+                Debug.LogWarning("DataPersistence cannot be null on persistence process.");
+                return;
+            }
+
+            LoadGameDataInternal<T>(dataPersistence,
+                (data) =>
+                {
+                    try
+                    {
+                        FillGameData(data);
+                        onLoadCompleted?.Invoke();
+                    }
+                    catch
+                    {
+                        onLoadFailed?.Invoke();
+                    }
+
+                }, onLoadFailed);
+        }
+
+        private static void LoadGameDataInternal<T>
+        (
+            IDataPersistence dataPersistence,
+            Action<ISerializableData> onLoadCompleted = null,
+            Action onLoadFailed = null) where T : ISerializableData
+        {
+            if (dataPersistence == null)
+            {
+                onLoadFailed?.Invoke();
+                Debug.LogWarning("DataPersistence cannot be null on persistence process.");
+            }
+
+            dataPersistence.Load<T>(m_GameDataPath,
+                (data) =>
+                {
+                    try
+                    {
+                        onLoadCompleted?.Invoke(data);
+                    }
+                    catch
+                    {
+                        onLoadFailed?.Invoke();
+                    }
+                },
+                () => { onLoadFailed?.Invoke(); });
+        }
+
+        private static void FillGameData(ISerializableData data)
+        {
+            GameFrameworkSettings.GameDatabase.FillFromSerializableData(data);
+        }
+
+        /// <summary>
+        /// Asynchronously saves data through the persistence layer.
+        /// </summary>
+        /// <param name="dataPersistence">The persistence layer used to execute the process</param>
+        /// <param name="onSaveCompleted">Called when the saving process is completed with success</param>
+        /// <param name="onSaveFailed">Called when the saving process failed</param>
+        public static void SaveGameData(
+            IDataPersistence dataPersistence,
+            Action onSaveCompleted = null,
+            Action onSaveFailed = null)
+        {
+            if (dataPersistence == null)
+            {
+                onSaveFailed?.Invoke();
+                Debug.LogWarning("DataPersistence cannot be null on persistence process.");
+                return;
+            }
+
+            if (!GameFrameworkSettings.GameDatabase.IsInitialized)
+            {
+                onSaveFailed?.Invoke();
+                Debug.LogWarning("Cannot save GameData. GameData is not initialized.");
+                return;
+            }
+
+            var gameData = GameFrameworkSettings.GameDatabase.GetSerializableData();
+            dataPersistence.Save(m_GameDataPath, gameData, onSaveCompleted, onSaveFailed);
+        }
+        #endregion
+
+        #region Player Data
+        /// <summary>
+        /// Initialize the GameFoundation . It need a persistence object to be passed as argument to set the default persistence layer
+        /// If the initialization fails, onInitializeFailed will be called with an exception.
+        /// </summary>
+        /// <param name="dataPersistence">The persistence layer of the Game Foundation. Required and cached for future execution</param>
+        /// <param name="onInitializeCompleted">Called when the initialization process is completed with success</param>
+        /// <param name="onInitializeFailed">Called when the initialization process failed</param>
+        public static void InitializePlayerData<T>(
+            IDataPersistence dataPersistence = null,
+            IDataSerializationAdapter dataAdapter = null,
+            Action onInitializeCompleted = null,
+            Action onInitializeFailed = null) where T : ISerializableData
+        {
+            if (m_PlayerDataInitializationStatus == InitializationStatus.Initializing ||
+                m_PlayerDataInitializationStatus == InitializationStatus.Initialized)
+            {
+                Debug.LogWarning("Player Data is already initialized and cannot be initialized again.");
+                onInitializeFailed?.Invoke();
+
+                return;
+            }
+
+            m_PlayerDataInitializationStatus = InitializationStatus.Initializing;
+
+            if (dataPersistence != null && dataAdapter != null)
+            {
+                LoadPlayerDataInternal<T>(dataPersistence,
+                    (data) =>
+                    {
+                        InitializePlayerData(data, dataAdapter, onInitializeCompleted, onInitializeFailed);
+                    },
+                    () =>
+                    {
+                        InitializePlayerData(null as ISerializableData, dataAdapter, onInitializeCompleted, onInitializeFailed);
+                    });
+            }
+            else
+            {
+                InitializePlayerData(null as ISerializableData, dataAdapter, onInitializeCompleted, onInitializeFailed);
+            }
+        }
+
+        static void InitializePlayerData(ISerializableData data, IDataSerializationAdapter dataAdapter, Action onInitializeCompleted = null, Action onInitializeFailed = null)
+        {
+            bool isInitialized = true;
+
+            try
+            {
+                GameFrameworkSettings.PlayerDatabase.DataAdapter = dataAdapter;
+                GameFrameworkSettings.PlayerDatabase.InitializeData(data);
+
+                isInitialized = true;
+            }
+            catch
+            {
+                isInitialized = false;
+            }
+
+            if (isInitialized)
+            {
+                m_PlayerDataInitializationStatus = InitializationStatus.Initialized;
+                onInitializeCompleted?.Invoke();
+            }
+            else
+            {
+                UninitializePlayerData();
+
+                Debug.LogWarning("PlayerData can't be initialized.");
+
+                m_PlayerDataInitializationStatus = InitializationStatus.Failed;
+                onInitializeFailed?.Invoke();
+            }
+        }
+
+        internal static void UninitializePlayerData()
+        {
+            m_PlayerDataInitializationStatus = InitializationStatus.NotInitialized;
+
+            GameFrameworkSettings.PlayerDatabase.Unintialize();
+        }
+
+        /// <summary>
+        /// Asynchronously loads data from the persistence layer and populates managed systems with it
+        /// </summary>
+        /// <param name="dataPersistence">The persistence layer used to execute the process</param>
+        /// <param name="onLoadCompleted">Called when the loading process is completed with success</param>
+        /// <param name="onLoadFailed">Called when the loading process failed</param>
+        public static void LoadPlayerData<T>(
+            IDataPersistence dataPersistence,
+            Action onLoadCompleted = null,
+            Action onLoadFailed = null) where T : ISerializableData
+        {
+            if (dataPersistence == null)
+            {
+                onLoadFailed?.Invoke();
+                Debug.LogWarning("DataPersistence cannot be null on persistence process.");
+                return;
+            }
+
+            LoadPlayerDataInternal<T>(dataPersistence,
+                (data) =>
+                {
+                    try
+                    {
+                        FillPlayerData(data);
+                        onLoadCompleted?.Invoke();
+                    }
+                    catch
+                    {
+                        onLoadFailed?.Invoke();
+                    }
+
+                }, onLoadFailed);
+        }
+
+        private static void LoadPlayerDataInternal<T>
+        (
+            IDataPersistence dataPersistence,
+            Action<ISerializableData> onLoadCompleted = null,
+            Action onLoadFailed = null) where T : ISerializableData
+        {
+            if (dataPersistence == null)
+            {
+                onLoadFailed?.Invoke();
+                Debug.LogWarning("DataPersistence cannot be null on persistence process.");
+            }
+
+            dataPersistence.Load<T>(m_PlayerDataPath,
+                (data) =>
+                {
+                    try
+                    {
+                        onLoadCompleted?.Invoke(data);
+                    }
+                    catch
+                    {
+                        onLoadFailed?.Invoke();
+                    }
+                },
+                () => { onLoadFailed?.Invoke(); });
+        }
+
+        private static void FillPlayerData(ISerializableData data)
+        {
+            GameFrameworkSettings.PlayerDatabase.FillFromSerializableData(data);
+        }
+
+        /// <summary>
+        /// Asynchronously saves data through the persistence layer.
+        /// </summary>
+        /// <param name="dataPersistence">The persistence layer used to execute the process</param>
+        /// <param name="onSaveCompleted">Called when the saving process is completed with success</param>
+        /// <param name="onSaveFailed">Called when the saving process failed</param>
+        public static void SavePlayerData(
+            IDataPersistence dataPersistence,
+            Action onSaveCompleted = null,
+            Action onSaveFailed = null)
+        {
+            if (dataPersistence == null)
+            {
+                onSaveFailed?.Invoke();
+                Debug.LogWarning("DataPersistence cannot be null on persistence process.");
+                return;
+            }
+
+            if (!GameFrameworkSettings.PlayerDatabase.IsInitialized)
+            {
+                onSaveFailed?.Invoke();
+                Debug.LogWarning("Cannot save PlayerData. PlayerData is not initialized.");
+                return;
+            }
+
+            var PlayerData = GameFrameworkSettings.PlayerDatabase.GetSerializableData();
+            dataPersistence.Save(m_PlayerDataPath, PlayerData, onSaveCompleted, onSaveFailed);
+        }
+        #endregion
     }
 }

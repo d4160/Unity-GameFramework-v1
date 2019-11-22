@@ -38,8 +38,8 @@
 
 #if UNITY_EDITOR
         #region Editor Use Members
-        protected string[] LevelCategoryNames => GameFrameworkSettings.Database.GetGameData<DefaultLevelCategoriesSO>(3).ArchetypeNames;
-        protected string[] GameModeCategoryNames => GameFrameworkSettings.Database.GetGameData<DefaultArchetypesSO>(1).ArchetypeNames;
+        protected string[] LevelCategoryNames => GameFrameworkSettings.GameDatabase.GetGameData<DefaultLevelCategoriesSO>(3).ArchetypeNames;
+        protected string[] GameModeCategoryNames => GameFrameworkSettings.GameDatabase.GetGameData<DefaultArchetypesSO>(1).ArchetypeNames;
 
         protected bool IsCommonLevelTypeSelected()
         {

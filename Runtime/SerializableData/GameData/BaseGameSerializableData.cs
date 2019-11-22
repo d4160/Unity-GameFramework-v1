@@ -3,12 +3,12 @@
     using UnityEngine.GameFoundation.DataPersistence;
 
     [System.Serializable]
-    public abstract class SettingsSerializableDataBase : ISerializableData
+    public abstract class BaseGameSerializableData : ISerializableData
     {
         /// <summary>
         /// Default constructor for serialization purpose.
         /// </summary>
-        public SettingsSerializableDataBase()
+        public BaseGameSerializableData()
         {
         }
     }

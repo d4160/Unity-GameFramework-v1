@@ -29,17 +29,17 @@
 
 #if UNITY_EDITOR
         #region IWorldScene Implementation
-        public string[] WorldNames => GameFrameworkSettings.Database.GetGameData<DefaultWorldsSO>(2).ArchetypeNames;
-        public string[] WorldSceneNames => GameFrameworkSettings.Database.GetGameData<DefaultWorldsSO>(2).GetSceneNames(m_worldScene.world);
+        public string[] WorldNames => GameFrameworkSettings.GameDatabase.GetGameData<DefaultWorldsSO>(2).ArchetypeNames;
+        public string[] WorldSceneNames => GameFrameworkSettings.GameDatabase.GetGameData<DefaultWorldsSO>(2).GetSceneNames(m_worldScene.world);
         #endregion
 
         #region ILevelScene Implementation
-        public string[] LevelCategoryNames => GameFrameworkSettings.Database.GetGameData<DefaultLevelCategoriesSO>(3).ArchetypeNames;
-        public string[] LevelSceneNames => GameFrameworkSettings.Database.GetGameData<DefaultLevelCategoriesSO>(3).GetSceneNames(m_loadingScreenScene.levelCategory);
+        public string[] LevelCategoryNames => GameFrameworkSettings.GameDatabase.GetGameData<DefaultLevelCategoriesSO>(3).ArchetypeNames;
+        public string[] LevelSceneNames => GameFrameworkSettings.GameDatabase.GetGameData<DefaultLevelCategoriesSO>(3).GetSceneNames(m_loadingScreenScene.levelCategory);
         #endregion
 
         #region Other Editor Members
-        protected string[] GameModeCategoriesNames => GameFrameworkSettings.Database.GetGameData<DefaultArchetypesSO>(1).ArchetypeNames;
+        protected string[] GameModeCategoriesNames => GameFrameworkSettings.GameDatabase.GetGameData<DefaultArchetypesSO>(1).ArchetypeNames;
 
         protected bool IsCommonLevelTypeSelected()
         {
@@ -83,7 +83,7 @@
 
         public override async void Load(System.Action onCompleted = null)
         {
-            var buildIndex = GameFrameworkSettings.Database.GetGameData<DefaultLevelCategoriesSO>(3).GetSceneBuildIndex(m_loadingScreenScene);
+            var buildIndex = GameFrameworkSettings.GameDatabase.GetGameData<DefaultLevelCategoriesSO>(3).GetSceneBuildIndex(m_loadingScreenScene);
 
             await m_sceneLoader.LoadSceneAsync(
                 buildIndex, true, null, () => onCompleted?.Invoke(), true, null);

@@ -27,7 +27,7 @@
                         return;
                     }
 
-                    var settings = AppSettings.Database.Settings;
+                    var settings = GameFrameworkSettings.AppSettingsDatabase.Settings;
                     for (int i = 0; i < gData.SettingsData.Length; i++)
                     {
                         if (!settings.IsValidIndex(i)) break;
@@ -44,7 +44,7 @@
                         return;
                     }
 
-                    settings = AppSettings.Database.Settings;
+                    settings = GameFrameworkSettings.AppSettingsDatabase.Settings;
 
                     for (int i = 0; i < settings.Length; i++)
                     {
@@ -67,12 +67,12 @@
             {
                 case DataSerializationAdapterType.Generic:
                     var data = new DefaultAppSettingsSerializableData();
-                    var settings = AppSettings.Database.Settings;
-                    var settingsData = new SettingsSerializableDataBase[settings.Length];
+                    var settings = GameFrameworkSettings.AppSettingsDatabase.Settings;
+                    var settingsData = new BaseSettingsSerializableData[settings.Length];
 
                     for (int i = 0; i < settings.Length; i++)
                     {
-                        settingsData[i] = settings[i].GetSerializableData() as SettingsSerializableDataBase;
+                        settingsData[i] = settings[i].GetSerializableData() as BaseSettingsSerializableData;
                     }
 
                     data.SettingsData = settingsData;
@@ -80,7 +80,7 @@
                     return data;
                 case DataSerializationAdapterType.Concrete:
                     var cData = new DefaultConcreteAppSettingsSerializableData();
-                    settings = AppSettings.Database.Settings;
+                    settings = GameFrameworkSettings.AppSettingsDatabase.Settings;
 
                     for (int i = 0; i < settings.Length; i++)
                     {
@@ -118,16 +118,16 @@
             switch(m_dataType)
             {
                 case DataSerializationAdapterType.Generic:
-                    GameFramework<DefaultAppSettingsSerializableData>.SetAppSettingsDataPath(saveDataPathFull);
+                    GameFramework.SetAppSettingsDataPath(saveDataPathFull);
                     // tell Game Framework to initialize using this
                     // persistence system. Only call Initialize once per session.
-                    GameFramework<DefaultAppSettingsSerializableData>.InitializeAppSettings(dataPersistence, this, onInitializeCompleted, onInitializeFailed);
+                    GameFramework.InitializeAppSettingsData<DefaultAppSettingsSerializableData>(dataPersistence, this, onInitializeCompleted, onInitializeFailed);
                 break;
                 case DataSerializationAdapterType.Concrete:
-                    GameFramework<DefaultConcreteAppSettingsSerializableData>.SetAppSettingsDataPath(saveDataPathFull);
+                    GameFramework.SetAppSettingsDataPath(saveDataPathFull);
                     // tell Game Framework to initialize using this
                     // persistence system. Only call Initialize once per session.
-                    GameFramework<DefaultConcreteAppSettingsSerializableData>.InitializeAppSettings(dataPersistence, this, onInitializeCompleted, onInitializeFailed);
+                    GameFramework.InitializeAppSettingsData<DefaultConcreteAppSettingsSerializableData>(dataPersistence, this, onInitializeCompleted, onInitializeFailed);
                 break;
             }
         }
@@ -140,10 +140,10 @@
             switch(m_dataType)
             {
                 case DataSerializationAdapterType.Generic:
-                    GameFramework<DefaultAppSettingsSerializableData>.LoadAppSettings(dataPersistence, onLoadCompleted, onLoadFailed);
+                    GameFramework.LoadAppSettingsData<DefaultAppSettingsSerializableData>(dataPersistence, onLoadCompleted, onLoadFailed);
                 break;
                 case DataSerializationAdapterType.Concrete:
-                    GameFramework<DefaultConcreteAppSettingsSerializableData>.LoadAppSettings(dataPersistence, onLoadCompleted, onLoadFailed);
+                    GameFramework.LoadAppSettingsData<DefaultConcreteAppSettingsSerializableData>(dataPersistence, onLoadCompleted, onLoadFailed);
                 break;
             }
         }
@@ -156,10 +156,10 @@
             switch(m_dataType)
             {
                 case DataSerializationAdapterType.Generic:
-                    GameFramework<DefaultAppSettingsSerializableData>.SaveAppSettings(dataPersistence, onSaveCompleted, onSaveFailed);
+                    GameFramework.SaveAppSettingsData(dataPersistence, onSaveCompleted, onSaveFailed);
                 break;
                 case DataSerializationAdapterType.Concrete:
-                    GameFramework<DefaultConcreteAppSettingsSerializableData>.SaveAppSettings(dataPersistence, onSaveCompleted, onSaveFailed);
+                    GameFramework.SaveAppSettingsData(dataPersistence, onSaveCompleted, onSaveFailed);
                 break;
             }
         }

@@ -5,11 +5,11 @@
     using UnityEngine;
     using UnityEngine.GameFoundation.DataPersistence;
 
-    public class DefaultPlayerDataSerializationAdapter : IDataSerializationAdapter
+    public class DefaultGameDataSerializationAdapter : IDataSerializationAdapter
     {
         protected DataSerializationAdapterType m_dataType;
 
-        public DefaultPlayerDataSerializationAdapter(DataSerializationAdapterType dataType = DataSerializationAdapterType.Generic)
+        public DefaultGameDataSerializationAdapter(DataSerializationAdapterType dataType = DataSerializationAdapterType.Generic)
         {
             m_dataType = dataType;
         }
@@ -27,16 +27,16 @@
             switch(m_dataType)
             {
                 case DataSerializationAdapterType.Generic:
-                    var serializableData = new DefaultPlayerSerializableData();
+                    var serializableData = new DefaultGameSerializableData();
                     var data = GameFrameworkSettings.PlayerDatabase.PlayerData;
-                    var serializableDataArray = new BasePlayerSerializableData[data.Length];
+                    var serializableDataArray = new BaseGameSerializableData[data.Length];
 
                     for (int i = 0; i < data.Length; i++)
                     {
-                        serializableDataArray[i] = data[i].GetSerializableData() as BasePlayerSerializableData;
+                        serializableDataArray[i] = data[i].GetSerializableData() as BaseGameSerializableData;
                     }
 
-                    serializableData.PlayerData = serializableDataArray;
+                    serializableData.GameData = serializableDataArray;
 
                     return serializableData;
                 case DataSerializationAdapterType.Concrete:
@@ -48,8 +48,8 @@
 
         protected virtual ISerializableData GetConcreteSerializableData()
         {
-            var cData = new DefaultConcretePlayerSerializableData();
-            var data = GameFrameworkSettings.PlayerDatabase.PlayerData;
+            var cData = new DefaultConcreteGameSerializableData();
+            var data = GameFrameworkSettings.GameDatabase.GameData;
 
             for (int i = 0; i < data.Length; i++)
             {
@@ -69,20 +69,20 @@
             switch(m_dataType)
             {
                 case DataSerializationAdapterType.Generic:
-                    var gData = data as DefaultPlayerSerializableData;
+                    var gData = data as DefaultGameSerializableData;
 
-                    if (gData == null || gData.PlayerData == null)
+                    if (gData == null || gData.GameData == null)
                     {
-                        Debug.LogWarning($"PlayerSerializableData is null. ");
+                        Debug.LogWarning($"GameSerializableData is null. ");
                         return;
                     }
 
-                    var playerData = GameFrameworkSettings.PlayerDatabase.PlayerData;
-                    for (int i = 0; i < gData.PlayerData.Length; i++)
+                    var GameData = GameFrameworkSettings.GameDatabase.GameData;
+                    for (int i = 0; i < gData.GameData.Length; i++)
                     {
-                        if (!playerData.IsValidIndex(i)) break;
+                        if (!GameData.IsValidIndex(i)) break;
 
-                        playerData[i].FillFromSerializableData(gData.PlayerData[i]);
+                        GameData[i].FillFromSerializableData(gData.GameData[i]);
                     }
                 break;
                 case DataSerializationAdapterType.Concrete:
@@ -93,23 +93,23 @@
 
         protected virtual void FillConcreteTypeFromSerializableData(ISerializableData data)
         {
-            var cData = data as DefaultConcretePlayerSerializableData;
+            var cData = data as DefaultConcreteGameSerializableData;
 
             if (cData == null)
             {
-                Debug.LogWarning($"ConcretePlayerSerializableData is null. ");
+                Debug.LogWarning($"ConcreteGameSerializableData is null. ");
                 return;
             }
 
-            var playerData = GameFrameworkSettings.PlayerDatabase.PlayerData;
+            var GameData = GameFrameworkSettings.GameDatabase.GameData;
 
-            for (int i = 0; i < playerData.Length; i++)
+            for (int i = 0; i < GameData.Length; i++)
             {
                 switch(i)
                 {
                     default:
                     break;
-                    //case 0: playerData[i].FillFromSerializableData(cData.DefaultData); break;
+                    //case 0: GameData[i].FillFromSerializableData(cData.DefaultData); break;
                 }
             }
         }
@@ -123,10 +123,10 @@
             switch(m_dataType)
             {
                 case DataSerializationAdapterType.Generic:
-                    GameFramework.SetPlayerDataPath(saveDataPathFull);
+                    GameFramework.SetGameDataPath(saveDataPathFull);
                     // tell Game Framework to initialize using this
                     // persistence system. Only call Initialize once per session.
-                    GameFramework.InitializePlayerData<DefaultAppSettingsSerializableData>(dataPersistence, this, onInitializeCompleted, onInitializeFailed);
+                    GameFramework.InitializeGameData<DefaultAppSettingsSerializableData>(dataPersistence, this, onInitializeCompleted, onInitializeFailed);
                 break;
                 case DataSerializationAdapterType.Concrete:
                     InitializeConcreteType(saveDataPathFull, dataPersistence, onInitializeCompleted, onInitializeFailed);
@@ -140,10 +140,10 @@
             System.Action onInitializeCompleted = null,
             System.Action onInitializeFailed = null)
         {
-            GameFramework.SetPlayerDataPath(saveDataPathFull);
+            GameFramework.SetGameDataPath(saveDataPathFull);
             // tell Game Framework to initialize using this
             // persistence system. Only call Initialize once per session.
-            GameFramework.InitializePlayerData<DefaultConcretePlayerSerializableData>(dataPersistence, this, onInitializeCompleted, onInitializeFailed);
+            GameFramework.InitializeGameData<DefaultConcreteGameSerializableData>(dataPersistence, this, onInitializeCompleted, onInitializeFailed);
         }
 
         public virtual void Load(
@@ -154,7 +154,7 @@
             switch(m_dataType)
             {
                 case DataSerializationAdapterType.Generic:
-                    GameFramework.LoadPlayerData<DefaultPlayerSerializableData>(dataPersistence, onLoadCompleted, onLoadFailed);
+                    GameFramework.LoadGameData<DefaultGameSerializableData>(dataPersistence, onLoadCompleted, onLoadFailed);
                 break;
                 case DataSerializationAdapterType.Concrete:
                     LoadConcreteType(dataPersistence, onLoadCompleted, onLoadFailed);
@@ -167,7 +167,7 @@
             System.Action onLoadCompleted = null,
             System.Action onLoadFailed = null)
         {
-            GameFramework.LoadPlayerData<DefaultConcretePlayerSerializableData>(dataPersistence, onLoadCompleted, onLoadFailed);
+            GameFramework.LoadGameData<DefaultConcreteGameSerializableData>(dataPersistence, onLoadCompleted, onLoadFailed);
         }
 
         public virtual void Save(
@@ -178,7 +178,7 @@
             switch(m_dataType)
             {
                 case DataSerializationAdapterType.Generic:
-                    GameFramework.SavePlayerData(dataPersistence, onSaveCompleted, onSaveFailed);
+                    GameFramework.SaveGameData(dataPersistence, onSaveCompleted, onSaveFailed);
                 break;
                 case DataSerializationAdapterType.Concrete:
                     SaveConcreteType(dataPersistence, onSaveCompleted, onSaveFailed);
@@ -191,7 +191,7 @@
             System.Action onSaveCompleted = null,
             System.Action onSaveFailed = null)
         {
-            GameFramework.SavePlayerData(dataPersistence, onSaveCompleted, onSaveFailed);
+            GameFramework.SaveGameData(dataPersistence, onSaveCompleted, onSaveFailed);
         }
     }
 }

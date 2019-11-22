@@ -4,7 +4,7 @@ namespace d4160.GameFramework
     using Malee;
     using UnityEngine;
 
-    public abstract class ReorderableSO<TReorderableArray, TReorderableElement> : GameDataScriptableBase, IElementGetter<TReorderableElement>  where TReorderableArray : ReorderableArray<TReorderableElement>
+    public abstract class ReorderableSO<TReorderableArray, TReorderableElement> : ScriptableObjectBase, IElementGetter<TReorderableElement>  where TReorderableArray : ReorderableArray<TReorderableElement>
     {
         [SerializeField][Reorderable(paginate = true, pageSize = 10)]
         protected TReorderableArray m_elements;

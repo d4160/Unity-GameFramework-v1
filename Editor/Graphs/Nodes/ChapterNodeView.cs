@@ -91,7 +91,7 @@
 
 		private VisualElement CreateWorldField(ChapterNode chapterNode)
 		{
-			var worldNames = GameFrameworkSettings.Database.GetGameData<DefaultWorldsSO>(2).ArchetypeNames;
+			var worldNames = GameFrameworkSettings.GameDatabase.GetGameData<DefaultWorldsSO>(2).ArchetypeNames;
 			worldNames = EditorUtilities.GetNoneSelectableFrom(worldNames);
 
 			PopupField<string> field = new PopupField<string>(
@@ -118,7 +118,7 @@
 
 		private VisualElement CreateWorldSceneField(ChapterNode chapterNode)
 		{
-			var worldScenes = GameFrameworkSettings.Database.GetGameData<DefaultWorldsSO>(2).GetSceneNames(chapterNode.WorldScene.world).ToList();
+			var worldScenes = GameFrameworkSettings.GameDatabase.GetGameData<DefaultWorldsSO>(2).GetSceneNames(chapterNode.WorldScene.world).ToList();
 			if (worldScenes.Count == 0) worldScenes = new List<string>(){ "" };
 
 			PopupField<string> field = new PopupField<string>(
@@ -139,7 +139,7 @@
 
 		private VisualElement CreateLevelCategoryField(ChapterNode chapterNode)
 		{
-			var levelNames = GameFrameworkSettings.Database.GetGameData<DefaultLevelCategoriesSO>(3).ArchetypeNames;
+			var levelNames = GameFrameworkSettings.GameDatabase.GetGameData<DefaultLevelCategoriesSO>(3).ArchetypeNames;
 			levelNames = EditorUtilities.GetNoneSelectableFrom(levelNames);
 
 			PopupField<string> field = new PopupField<string>(
@@ -166,7 +166,7 @@
 
 		private VisualElement CreateLevelSceneField(ChapterNode chapterNode)
 		{
-			var levelScenes = GameFrameworkSettings.Database.GetGameData<DefaultLevelCategoriesSO>(3).GetSceneNames(chapterNode.LevelScene.levelCategory).ToList();
+			var levelScenes = GameFrameworkSettings.GameDatabase.GetGameData<DefaultLevelCategoriesSO>(3).GetSceneNames(chapterNode.LevelScene.levelCategory).ToList();
 			if (levelScenes.Count == 0) levelScenes = new List<string>(){ "" };
 
 			PopupField<string> field = new PopupField<string>(
