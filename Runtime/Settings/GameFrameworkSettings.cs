@@ -58,12 +58,12 @@
                     string databaseAssetPath = $"Assets/{kAssetsFolder}/GameDatabase.asset";
 
                     // try to load a database asset by hardcoded path
-                    s_Instance.m_GameDatabase = AssetDatabase.LoadAssetAtPath<GameFrameworkDatabase>(databaseAssetPath);
+                    s_Instance.m_GameDatabase = AssetDatabase.LoadAssetAtPath<GameDatabase>(databaseAssetPath);
 
                     // if that doesn't work, then create one
                     if (s_Instance.m_GameDatabase == null)
                     {
-                        s_Instance.m_GameDatabase = ScriptableObject.CreateInstance<GameFrameworkDatabase>();
+                        s_Instance.m_GameDatabase = ScriptableObject.CreateInstance<GameDatabase>();
 
                         if (!AssetDatabase.IsValidFolder(string.Format("Assets/{0}", kAssetsFolder)))
                         {
@@ -169,9 +169,9 @@
 
         [SerializeField]
         [InspectInline(canCreateSubasset = true, canEditRemoteTarget = true)]
-        private GameFrameworkDatabase m_GameDatabase;
+        private GameDatabase m_GameDatabase;
 
-        public static GameFrameworkDatabase GameDatabase
+        public static GameDatabase GameDatabase
         {
             get { return Instance.m_GameDatabase; }
             set { Instance.m_GameDatabase = value; }

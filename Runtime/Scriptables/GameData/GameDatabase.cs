@@ -12,7 +12,7 @@
     using UnityEngine.GameFoundation.DataPersistence;
 
     [CreateAssetMenu(fileName = "GameFrameworkDatabase.asset", menuName = "Game Framework/Database")]
-    public class GameFrameworkDatabase : ScriptableObject, IDataSerializationAdapter
+    public class GameDatabase : ScriptableObject, IDataSerializationAdapter
     {
         protected IDataSerializationAdapter m_dataAdapter;
         
