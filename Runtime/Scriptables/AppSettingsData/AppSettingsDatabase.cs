@@ -1,9 +1,9 @@
 ﻿namespace d4160.GameFramework
 {
     using d4160.Core;
-  using d4160.Systems.DataPersistence;
-  using Malee;
-  using UnityEngine;
+    using d4160.Systems.DataPersistence;
+    using Malee;
+    using UnityEngine;
     using UnityEngine.GameFoundation.DataPersistence;
     using UnityExtensions;
 

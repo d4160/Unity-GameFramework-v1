@@ -1,6 +1,7 @@
 ﻿namespace d4160.GameFramework
 {
     using d4160.Core;
+    using d4160.Systems.DataPersistence;
     using Malee;
 #if UNITY_EDITOR
     using NaughtyAttributes;
@@ -11,48 +12,25 @@
     using UnityEngine.GameFoundation.DataPersistence;
 
     [CreateAssetMenu(fileName = "GameFrameworkDatabase.asset", menuName = "Game Framework/Database")]
-    public class GameFrameworkDatabase : ScriptableObject
+    public class GameFrameworkDatabase : ScriptableObject, IDataSerializationAdapter
     {
+        protected IDataSerializationAdapter m_dataAdapter;
+        
         [Reorderable(paginate = true, pageSize = 10)]
         [SerializeField] protected GameDataReorderableArray m_gameData;
 
         public GameDataReorderableArray GameData => m_gameData;
 
-        #region Editor Members
-#if UNITY_EDITOR
-        [Button]
-        protected virtual void CreateDefaultArchetypes()
+        public IDataSerializationAdapter DataAdapter
         {
-            var bindings = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static;
-            var fields = GetType().GetFields(bindings);
+            get {
+                if (m_dataAdapter == null)
+                    m_dataAdapter = new DefaultGameDataSerializationAdapter();
 
-            for (int i = 0; i < fields.Length; i++)
-            {
-                var value = fields[i].GetValue(this);
-                if (value is IArchetypeOperations)
-                {
-                    var archetypeInterface = value as IArchetypeOperations;
-                    var attrib = Attribute.GetCustomAttribute(
-                        fields[i], typeof(DefaultArchetypesAttribute));
-
-                    if (attrib != null)
-                    {
-                        var defArchetypesAttrib = attrib as DefaultArchetypesAttribute;
-
-                        if (defArchetypesAttrib.OnlyOnEmptyLists && archetypeInterface.Count != 0)
-                        {
-                            continue;
-                        }
-                        else
-                        {
-                            archetypeInterface.AddRange(defArchetypesAttrib.kValues);
-                        }
-                    }
-                }
+                return m_dataAdapter;
             }
+            set => m_dataAdapter = value;
         }
-#endif
-        #endregion
 
         public ScriptableObjectBase this[int index]
         {
@@ -107,7 +85,7 @@
             }
         }
 
-        public void Initialize(ISerializableData data)
+        public void InitializeData(ISerializableData data)
         {
             if (data != null)
             {
@@ -120,6 +98,42 @@
         }
 
         public bool IsInitialized => m_gameData != null && m_gameData.Length > 0;
+
+        #region Editor Members
+#if UNITY_EDITOR
+        [Button]
+        protected virtual void CreateDefaultArchetypes()
+        {
+            var bindings = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static;
+            var fields = GetType().GetFields(bindings);
+
+            for (int i = 0; i < fields.Length; i++)
+            {
+                var value = fields[i].GetValue(this);
+                if (value is IArchetypeOperations)
+                {
+                    var archetypeInterface = value as IArchetypeOperations;
+                    var attrib = Attribute.GetCustomAttribute(
+                        fields[i], typeof(DefaultArchetypesAttribute));
+
+                    if (attrib != null)
+                    {
+                        var defArchetypesAttrib = attrib as DefaultArchetypesAttribute;
+
+                        if (defArchetypesAttrib.OnlyOnEmptyLists && archetypeInterface.Count != 0)
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            archetypeInterface.AddRange(defArchetypesAttrib.kValues);
+                        }
+                    }
+                }
+            }
+        }
+#endif
+        #endregion
     }
 
     [System.Serializable]
