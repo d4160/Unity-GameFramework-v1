@@ -8,9 +8,9 @@
     using UnityExtensions;
 
     [CreateAssetMenu(fileName = "AppSettingsDatabase.asset", menuName = "Game Framework/App Database")]
-    public class AppSettingsDatabase : ScriptableObject, IDataSerializationAdapter
+    public class AppSettingsDatabase : ScriptableObject, IDataSerializationActions
     {
-        protected IDataSerializationAdapter m_dataAdapter;
+        protected IDataSerializationActions m_dataAdapter;
 
         [SerializeField]
         [Reorderable(paginate = true, pageSize = 10)]
@@ -18,7 +18,7 @@
 
         public AppSettingsReorderableArray Settings => m_settings;
 
-        public IDataSerializationAdapter DataAdapter
+        public IDataSerializationActions DataAdapter
         {
             get {
                 if (m_dataAdapter == null)

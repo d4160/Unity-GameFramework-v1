@@ -7,9 +7,9 @@
     using UnityEngine.GameFoundation.DataPersistence;
 
     [CreateAssetMenu(fileName = "PlayerDatabase.asset", menuName = "Game Framework/Player Database")]
-    public class PlayerDatabase : ScriptableObject, IDataSerializationAdapter
+    public class PlayerDatabase : ScriptableObject, IDataSerializationActions
     {
-        protected IDataSerializationAdapter m_dataAdapter;
+        protected IDataSerializationActions m_dataAdapter;
 
         [SerializeField]
         [Reorderable(paginate = true, pageSize = 10)]
@@ -17,7 +17,7 @@
 
         public PlayerDataReorderableArray PlayerData => m_playerData;
 
-        public IDataSerializationAdapter DataAdapter
+        public IDataSerializationActions DataAdapter
         {
             get {
                 if (m_dataAdapter == null)

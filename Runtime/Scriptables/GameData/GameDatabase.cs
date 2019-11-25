@@ -12,16 +12,16 @@
     using UnityEngine.GameFoundation.DataPersistence;
 
     [CreateAssetMenu(fileName = "GameFrameworkDatabase.asset", menuName = "Game Framework/Database")]
-    public class GameDatabase : ScriptableObject, IDataSerializationAdapter
+    public class GameDatabase : ScriptableObject, IDataSerializationActions
     {
-        protected IDataSerializationAdapter m_dataAdapter;
-        
+        protected IDataSerializationActions m_dataAdapter;
+
         [Reorderable(paginate = true, pageSize = 10)]
         [SerializeField] protected GameDataReorderableArray m_gameData;
 
         public GameDataReorderableArray GameData => m_gameData;
 
-        public IDataSerializationAdapter DataAdapter
+        public IDataSerializationActions DataAdapter
         {
             get {
                 if (m_dataAdapter == null)

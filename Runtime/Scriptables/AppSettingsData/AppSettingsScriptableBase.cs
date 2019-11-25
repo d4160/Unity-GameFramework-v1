@@ -4,7 +4,7 @@
     using UnityEngine;
     using UnityEngine.GameFoundation.DataPersistence;
 
-    public abstract class AppSettingsScriptableBase : ScriptableObject, IDataSerializationAdapter
+    public abstract class AppSettingsScriptableBase : ScriptableObject, IDataSerializationActions
     {
         public abstract ISerializableData GetSerializableData();
 
