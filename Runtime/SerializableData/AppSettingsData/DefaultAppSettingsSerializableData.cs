@@ -1,6 +1,5 @@
 ﻿namespace d4160.GameFramework
 {
-    using System.Collections.Generic;
     using d4160.Systems.DataPersistence;
     using UnityEngine;
     using UnityEngine.GameFoundation.DataPersistence;

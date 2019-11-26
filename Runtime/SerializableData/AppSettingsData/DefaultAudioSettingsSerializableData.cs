@@ -2,13 +2,9 @@
 {
     using UnityEngine;
     using d4160.Systems.DataPersistence;
-    #if PLAYFAB
-  using PlayFab;
-  using PlayFab.ClientModels;
-  #endif
-  using System.Collections.Generic;
+    using System.Collections.Generic;
 
-  [System.Serializable]
+    [System.Serializable]
     public class DefaultAudioSettingsSerializableData : BaseSettingsSerializableData, IStorageHelper
     {
         public bool music;
@@ -25,7 +21,7 @@
         {
         }
 
-        public void Load(bool encrypted = false, System.Action onCompleted = null)
+        public virtual void Load(bool encrypted = false, System.Action onCompleted = null)
         {
             switch (StorageHelperType)
             {
@@ -49,26 +45,16 @@
                 break;
 
                 case StorageHelperType.PlayFab:
-                #if PLAYFAB
-                    PlayFabClientAPI.GetUserData(new GetUserDataRequest() {
-                        Keys = null
-                    }, result => {
-                        if (result.Data != null && result.Data.ContainsKey(nameof(music)))
-                        {
-                            music = bool.Parse(result.Data[nameof(music)].Value);
-                            musicVolume = float.Parse(result.Data[nameof(musicVolume)].Value);
-                            sfxs = bool.Parse(result.Data[nameof(sfxs)].Value);
-                            sfxsVolume = float.Parse(result.Data[nameof(sfxsVolume)].Value);
-                        }
-
-                        onCompleted?.Invoke();
-                    }, null);
-                    #endif
+                    LoadForPlayFab(encrypted, onCompleted);
                 break;
             }
         }
 
-        public void Save(bool encrypted = false, System.Action onCompleted = null)
+        protected virtual void LoadForPlayFab(bool encrypted = false, System.Action onCompleted = null)
+        {
+        }
+
+        public virtual void Save(bool encrypted = false, System.Action onCompleted = null)
         {
             switch (StorageHelperType)
             {
@@ -93,17 +79,15 @@
 
                 case StorageHelperType.PlayFab:
                 #if PLAYFAB
-                    PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest() {
-                        Data = new Dictionary<string, string>() {
-                            { nameof(music), music.ToString() },
-                            { nameof(musicVolume), musicVolume.ToString() },
-                            { nameof(sfxs), sfxs.ToString() },
-                            { nameof(sfxsVolume), sfxsVolume.ToString() }
-                        }
-                    }, (result) => onCompleted?.Invoke(), null);
+                    SaveForPlayFab(encrypted, onCompleted);
                     #endif
                 break;
             }
+        }
+
+        protected virtual void SaveForPlayFab(bool encrypted = false, System.Action onCompleted = null)
+        {
+
         }
     }
 }

@@ -1,14 +1,8 @@
 ﻿namespace d4160.GameFramework
 {
-  using System.Collections.Generic;
-  using d4160.Systems.DataPersistence;
-  #if PLAYFAB
-  using PlayFab;
-  using PlayFab.ClientModels;
-  #endif
+    using d4160.Systems.DataPersistence;
 
-
-  [System.Serializable]
+    [System.Serializable]
     public class DefaultAppStatsSettingsSerializableData : BaseSettingsSerializableData, IStorageHelper
     {
         public bool fps;
@@ -25,7 +19,7 @@
         {
         }
 
-        public void Load(bool encrypted = false, System.Action onCompleted = null)
+        public virtual void Load(bool encrypted = false, System.Action onCompleted = null)
         {
             switch (StorageHelperType)
             {
@@ -48,26 +42,17 @@
                     onCompleted?.Invoke();
                 break;
                 case StorageHelperType.PlayFab:
-                #if PLAYFAB
-                    PlayFabClientAPI.GetUserData(new GetUserDataRequest() {
-                        Keys = null
-                    }, result => {
-                        if (result.Data != null && result.Data.ContainsKey(nameof(fps)))
-                        {
-                            fps = bool.Parse(result.Data[nameof(fps)].Value);
-                            ram = bool.Parse(result.Data[nameof(ram)].Value);
-                            audio = bool.Parse(result.Data[nameof(audio)].Value);
-                            advancedInfo = bool.Parse(result.Data[nameof(advancedInfo)].Value);
-                        }
-
-                        onCompleted?.Invoke();
-                    }, null);
-                    #endif
+                    LoadForPlayFab(encrypted, onCompleted);
                 break;
             }
         }
 
-        public void Save(bool encrypted = false, System.Action onCompleted = null)
+        protected virtual void LoadForPlayFab(bool encrypted = false, System.Action onCompleted = null)
+        {
+            
+        }
+
+        public virtual void Save(bool encrypted = false, System.Action onCompleted = null)
         {
             switch (StorageHelperType)
             {
@@ -91,18 +76,14 @@
                 break;
 
                 case StorageHelperType.PlayFab:
-                #if PLAYFAB
-                    PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest() {
-                        Data = new Dictionary<string, string>() {
-                            { nameof(fps), fps.ToString() },
-                            { nameof(ram), ram.ToString() },
-                            { nameof(audio), audio.ToString() },
-                            { nameof(advancedInfo), advancedInfo.ToString() }
-                        }
-                    }, (result) => onCompleted?.Invoke(), null);
-                    #endif
+                    SaveForPlayFab(encrypted, onCompleted);
                 break;
             }
+        }
+
+        protected virtual void SaveForPlayFab(bool encrypted = false, System.Action onCompleted = null)
+        {
+            
         }
     }
 }

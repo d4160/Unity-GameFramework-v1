@@ -2,11 +2,7 @@
 {
     using System.Collections.Generic;
     using d4160.Systems.DataPersistence;
-    #if PLAYFAB
-  using PlayFab;
-  using PlayFab.ClientModels;
-  #endif
-  using UnityEngine;
+    using UnityEngine;
 
     [System.Serializable]
     public class DefaultGraphicsSettingsSerializableData : BaseSettingsSerializableData, IStorageHelper
@@ -23,7 +19,7 @@
 
         }
 
-        public void Load(bool encrypted = false, System.Action onCompleted = null)
+        public virtual void Load(bool encrypted = false, System.Action onCompleted = null)
         {
             switch (StorageHelperType)
             {
@@ -46,26 +42,16 @@
                     onCompleted?.Invoke();
                 break;
                 case StorageHelperType.PlayFab:
-                #if PLAYFAB
-                    PlayFabClientAPI.GetUserData(new GetUserDataRequest() {
-                        Keys = null
-                    }, result => {
-                        if (result.Data != null && result.Data.ContainsKey(nameof(resolution)))
-                        {
-                            resolution = int.Parse(result.Data[nameof(resolution)].Value);
-                            fullScreenMode = (FullScreenMode)System.Enum.Parse(typeof(FullScreenMode), result.Data[nameof(fullScreenMode)].Value);
-                            qualityLevel = int.Parse(result.Data[nameof(qualityLevel)].Value);
-                            vSyncCount = int.Parse(result.Data[nameof(vSyncCount)].Value);
-                        }
-
-                        onCompleted?.Invoke();
-                    }, null);
-                    #endif
+                    LoadForPlayFab(encrypted, onCompleted);
                 break;
             }
         }
 
-        public void Save(bool encrypted = false, System.Action onCompleted = null)
+        protected virtual void LoadForPlayFab(bool encrypted = false, System.Action onCompleted = null)
+        {
+        }
+
+        public virtual void Save(bool encrypted = false, System.Action onCompleted = null)
         {
             switch (StorageHelperType)
             {
@@ -89,18 +75,13 @@
                 break;
 
                 case StorageHelperType.PlayFab:
-                #if PLAYFAB
-                    PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest() {
-                        Data = new Dictionary<string, string>() {
-                            { nameof(resolution), resolution.ToString() },
-                            { nameof(fullScreenMode), fullScreenMode.ToString() },
-                            { nameof(qualityLevel), qualityLevel.ToString() },
-                            { nameof(vSyncCount), vSyncCount.ToString() }
-                        }
-                    }, (result) => onCompleted?.Invoke(), null);
-                    #endif
+                    SaveForPlayFab(encrypted, onCompleted);
                 break;
             }
+        }
+
+        protected virtual void SaveForPlayFab(bool encrypted = false, System.Action onCompleted = null)
+        {
         }
     }
 }
