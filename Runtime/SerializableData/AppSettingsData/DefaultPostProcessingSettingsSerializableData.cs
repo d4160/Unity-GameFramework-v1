@@ -3,7 +3,7 @@
     using d4160.Systems.DataPersistence;
 
     [System.Serializable]
-    public class DefaultPostProcessingSettingsSerializableData : BaseSettingsSerializableData, IStorageHelper
+    public class DefaultPostProcessingSettingsSerializableData : BaseSerializableData, IStorageHelper
     {
         public bool bloom;
         public bool colorGrading;

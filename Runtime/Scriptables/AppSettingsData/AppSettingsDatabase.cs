@@ -10,7 +10,7 @@
     [CreateAssetMenu(fileName = "AppSettingsDatabase.asset", menuName = "Game Framework/App Database")]
     public class AppSettingsDatabase : ScriptableObject, IDataSerializationActions
     {
-        protected IDataSerializationActions m_dataAdapter;
+        protected IDataSerializationAdapter m_dataAdapter;
 
         [SerializeField]
         [Reorderable(paginate = true, pageSize = 10)]
@@ -18,7 +18,7 @@
 
         public AppSettingsReorderableArray Settings => m_settings;
 
-        public IDataSerializationActions DataAdapter
+        public IDataSerializationAdapter DataAdapter
         {
             get {
                 if (m_dataAdapter == null)
@@ -40,7 +40,7 @@
             }
         }
 
-        public T GetSettings<T>(int index) where T : AppSettingsScriptableBase
+        public T GetSettingsData<T>(int index) where T : AppSettingsScriptableBase
         {
             var settings = this[index];
             if (settings)

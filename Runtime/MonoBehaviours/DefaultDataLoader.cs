@@ -28,10 +28,16 @@
                 break;
 
                 case DataPersistenceType.Remote:
+                    dataPersistence = CreateDataPersistenceForRemote(serializer, storageHelper);
                 break;
             }
 
             m_dataPersistence = dataPersistence;
+        }
+
+        protected virtual IDataPersistence CreateDataPersistenceForRemote(IDataSerializer serializer, IStorageHelper storageHelper)
+        {
+            return null;
         }
 
         public override void Initialize()
@@ -49,7 +55,7 @@
             m_dataSerializationAdapter.Save(m_dataPersistence);
         }
 
-        protected override IStorageHelper CreateStorageHelper(IDataSerializationActions serializationAdapter)
+        protected override IStorageHelper CreateStorageHelper(IDataSerializationAdapter serializationAdapter)
         {
             IStorageHelper storageHelper = null;
 
@@ -62,13 +68,25 @@
                 break;
 
                 case DataPersistenceType.Local:
+                    storageHelper = CreateStorageHelperForLocal(serializationAdapter);
                 break;
 
                 case DataPersistenceType.Remote:
+                    storageHelper = CreateStorageHelperForRemote(serializationAdapter);
                 break;
             }
 
             return storageHelper;
+        }
+
+        protected virtual IStorageHelper CreateStorageHelperForLocal(IDataSerializationAdapter serializationAdapter)
+        {
+            return null;
+        }
+
+        protected virtual IStorageHelper CreateStorageHelperForRemote(IDataSerializationAdapter serializationAdapter)
+        {
+            return null;
         }
 
         protected override IDataSerializationAdapter CreateSerializationAdapter()
@@ -95,19 +113,34 @@
             switch(m_persistenceTarget)
             {
                 case DataPersistenceTarget.Game:
-                    serializationAdapter = new DefaultGameDataSerializationAdapter(m_adapterType);
+                    serializationAdapter = CreateSerializationAdapterForGame(m_adapterType);
                 break;
 
                 case DataPersistenceTarget.Player:
-                    serializationAdapter = new DefaultPlayerDataSerializationAdapter(m_adapterType);
+                    serializationAdapter = CreateSerializationAdapterForPlayer(m_adapterType);
                 break;
 
                 case DataPersistenceTarget.AppSettings:
-                    serializationAdapter = new DefaultAppSettingsDataSerializationAdapter(m_adapterType);
+                    serializationAdapter = CreateSerializationAdapterForAppSettings(m_adapterType);
                 break;
             }
 
             return serializationAdapter;
+        }
+
+        protected virtual IDataSerializationAdapter CreateSerializationAdapterForGame(DataSerializationAdapterType adapterType)
+        {
+            return new DefaultGameDataSerializationAdapter(m_adapterType);
+        }
+
+        protected virtual IDataSerializationAdapter CreateSerializationAdapterForPlayer(DataSerializationAdapterType adapterType)
+        {
+            return new DefaultPlayerDataSerializationAdapter(m_adapterType);
+        }
+
+        protected virtual IDataSerializationAdapter CreateSerializationAdapterForAppSettings(DataSerializationAdapterType adapterType)
+        {
+            return new DefaultAppSettingsDataSerializationAdapter(m_adapterType);
         }
 
         protected override IDataSerializer CreateDataSerializer()
@@ -120,10 +153,16 @@
                     dataSerializer = new JsonDataSerializer();
                 break;
                 case DataSerializerType.Odin:
+                    dataSerializer = CreateDataSerializerForOdin();
                 break;
             }
 
             return dataSerializer;
+        }
+
+        protected virtual IDataSerializer CreateDataSerializerForOdin()
+        {
+            return null;
         }
     }
 }

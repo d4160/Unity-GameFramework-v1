@@ -10,11 +10,11 @@
     /// which JsonUtility can't support -> https://answers.unity.com/questions/1301570/doesnt-jsonutility-support-arrays-with-abstract-ty.html
     /// </summary>
     [System.Serializable]
-    public class DefaultGameSerializableData : ISerializableData
+    public class DefaultGameSerializableData : IGenericSerialiableData
     {
-        [SerializeField] protected BaseGameSerializableData[] m_gameData;
+        [SerializeField] protected BaseSerializableData[] m_gameData;
 
-        public BaseGameSerializableData[] GameData { get => m_gameData; set => m_gameData = value; }
+        public BaseSerializableData[] SerializableData { get => m_gameData; set => m_gameData = value; }
 
         /// <summary>
         /// Default constructor for serialization purpose.

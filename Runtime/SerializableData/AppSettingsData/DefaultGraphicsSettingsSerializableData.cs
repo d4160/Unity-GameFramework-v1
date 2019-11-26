@@ -5,7 +5,7 @@
     using UnityEngine;
 
     [System.Serializable]
-    public class DefaultGraphicsSettingsSerializableData : BaseSettingsSerializableData, IStorageHelper
+    public class DefaultGraphicsSettingsSerializableData : BaseSerializableData, IStorageHelper
     {
         public int resolution;
         public FullScreenMode fullScreenMode;

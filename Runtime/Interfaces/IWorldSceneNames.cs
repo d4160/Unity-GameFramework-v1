@@ -1,4 +1,4 @@
-﻿namespace d4160.Worlds
+﻿namespace d4160.GameFramework
 {
     public interface IWorldSceneNames
     {

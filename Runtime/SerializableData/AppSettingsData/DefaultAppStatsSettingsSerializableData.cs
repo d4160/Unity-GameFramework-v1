@@ -3,7 +3,7 @@
     using d4160.Systems.DataPersistence;
 
     [System.Serializable]
-    public class DefaultAppStatsSettingsSerializableData : BaseSettingsSerializableData, IStorageHelper
+    public class DefaultAppStatsSettingsSerializableData : BaseSerializableData, IStorageHelper
     {
         public bool fps;
         public bool ram;
@@ -49,7 +49,7 @@
 
         protected virtual void LoadForPlayFab(bool encrypted = false, System.Action onCompleted = null)
         {
-            
+
         }
 
         public virtual void Save(bool encrypted = false, System.Action onCompleted = null)
@@ -83,7 +83,7 @@
 
         protected virtual void SaveForPlayFab(bool encrypted = false, System.Action onCompleted = null)
         {
-            
+
         }
     }
 }

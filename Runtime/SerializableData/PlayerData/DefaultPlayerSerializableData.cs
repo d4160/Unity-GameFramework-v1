@@ -1,6 +1,5 @@
 ﻿namespace d4160.GameFramework
 {
-    using System.Collections.Generic;
     using d4160.Systems.DataPersistence;
     using UnityEngine;
     using UnityEngine.GameFoundation.DataPersistence;
@@ -10,11 +9,11 @@
     /// which JsonUtility can't support -> https://answers.unity.com/questions/1301570/doesnt-jsonutility-support-arrays-with-abstract-ty.html
     /// </summary>
     [System.Serializable]
-    public class DefaultPlayerSerializableData : ISerializableData
+    public class DefaultPlayerSerializableData : IGenericSerialiableData
     {
-        [SerializeField] protected BasePlayerSerializableData[] m_playerData;
+        [SerializeField] protected BaseSerializableData[] m_playerData;
 
-        public BasePlayerSerializableData[] PlayerData { get => m_playerData; set => m_playerData = value; }
+        public BaseSerializableData[] SerializableData { get => m_playerData; set => m_playerData = value; }
 
         /// <summary>
         /// Default constructor for serialization purpose.

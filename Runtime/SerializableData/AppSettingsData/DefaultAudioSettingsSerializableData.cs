@@ -5,7 +5,7 @@
     using System.Collections.Generic;
 
     [System.Serializable]
-    public class DefaultAudioSettingsSerializableData : BaseSettingsSerializableData, IStorageHelper
+    public class DefaultAudioSettingsSerializableData : BaseSerializableData, IStorageHelper
     {
         public bool music;
         public float musicVolume;

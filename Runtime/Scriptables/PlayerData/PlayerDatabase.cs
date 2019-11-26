@@ -9,7 +9,7 @@
     [CreateAssetMenu(fileName = "PlayerDatabase.asset", menuName = "Game Framework/Player Database")]
     public class PlayerDatabase : ScriptableObject, IDataSerializationActions
     {
-        protected IDataSerializationActions m_dataAdapter;
+        protected IDataSerializationAdapter m_dataAdapter;
 
         [SerializeField]
         [Reorderable(paginate = true, pageSize = 10)]
@@ -17,7 +17,7 @@
 
         public PlayerDataReorderableArray PlayerData => m_playerData;
 
-        public IDataSerializationActions DataAdapter
+        public IDataSerializationAdapter DataAdapter
         {
             get {
                 if (m_dataAdapter == null)

@@ -14,14 +14,14 @@
     [CreateAssetMenu(fileName = "GameFrameworkDatabase.asset", menuName = "Game Framework/Database")]
     public class GameDatabase : ScriptableObject, IDataSerializationActions
     {
-        protected IDataSerializationActions m_dataAdapter;
+        protected IDataSerializationAdapter m_dataAdapter;
 
         [Reorderable(paginate = true, pageSize = 10)]
         [SerializeField] protected GameDataReorderableArray m_gameData;
 
         public GameDataReorderableArray GameData => m_gameData;
 
-        public IDataSerializationActions DataAdapter
+        public IDataSerializationAdapter DataAdapter
         {
             get {
                 if (m_dataAdapter == null)
@@ -54,47 +54,23 @@
 
         public ISerializableData GetSerializableData()
         {
-            var data = new DefaultAppSettingsSerializableData();
-
-            var gameData = new BaseSettingsSerializableData[m_gameData.Length];
-            for (int i = 0; i < m_gameData.Length; i++)
-            {
-                gameData[i] = m_gameData[i].GetSerializableData() as BaseSettingsSerializableData;
-            }
-
-            data.SettingsData = gameData;
-
-            return data;
+            return DataAdapter.GetSerializableData();
         }
 
         public void FillFromSerializableData(ISerializableData data)
         {
-            var appSettingsData = data as DefaultAppSettingsSerializableData;
-
-            if (appSettingsData == null || appSettingsData.SettingsData == null)
-            {
-                Debug.LogWarning($"AppSettingsSerializableData is null. Object {appSettingsData.SettingsData == null} ");
-                return;
-            }
-
-            for (int i = 0; i < appSettingsData.SettingsData.Length; i++)
-            {
-                if (!m_gameData.IsValidIndex(i)) break;
-
-                m_gameData[i].FillFromSerializableData(appSettingsData.SettingsData[i]);
-            }
+            DataAdapter.FillFromSerializableData(data);
         }
 
         public void InitializeData(ISerializableData data)
         {
-            if (data != null)
-            {
+            if(data != null)
                 FillFromSerializableData(data);
-            }
         }
 
         public void Unintialize()
         {
+            m_dataAdapter = null;
         }
 
         public bool IsInitialized => m_gameData != null && m_gameData.Length > 0;

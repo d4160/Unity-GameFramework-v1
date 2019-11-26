@@ -4,7 +4,7 @@
     using UnityEngine;
 
     [System.Serializable]
-    public class DefaultLocalizationSettingsSerializableData : BaseSettingsSerializableData, IStorageHelper
+    public class DefaultLocalizationSettingsSerializableData : BaseSerializableData, IStorageHelper
     {
         public SystemLanguage textLanguage;
         public SystemLanguage voiceLanguage;

@@ -9,11 +9,11 @@
     /// which JsonUtility can't support -> https://answers.unity.com/questions/1301570/doesnt-jsonutility-support-arrays-with-abstract-ty.html
     /// </summary>
     [System.Serializable]
-    public class DefaultAppSettingsSerializableData : ISerializableData
+    public class DefaultAppSettingsSerializableData : IGenericSerialiableData
     {
-        [SerializeField] protected BaseSettingsSerializableData[] m_settingsData;
+        [SerializeField] protected BaseSerializableData[] m_settingsData;
 
-        public BaseSettingsSerializableData[] SettingsData { get => m_settingsData; set => m_settingsData = value; }
+        public BaseSerializableData[] SerializableData { get => m_settingsData; set => m_settingsData = value; }
 
         /// <summary>
         /// Default constructor for serialization purpose.
@@ -29,17 +29,17 @@
     [System.Serializable]
     public class DefaultConcreteAppSettingsSerializableData : ISerializableData, IStorageHelper
     {
-        [SerializeField] protected DefaultAppStatsSettingsSerializableData m_defaultAppStatsSettingsData;
-        [SerializeField] protected DefaultAudioSettingsSerializableData m_defaultAudioSettingsData;
-        [SerializeField] protected DefaultGraphicsSettingsSerializableData m_defaultGraphicsSettingsData;
-        [SerializeField] protected DefaultLocalizationSettingsSerializableData m_defaultLocalizationSettingsData;
-        [SerializeField] protected DefaultPostProcessingSettingsSerializableData m_defaultPostProcessingSettingsData;
+        [SerializeField] protected DefaultAppStatsSettingsSerializableData m_appStatsSettingsData;
+        [SerializeField] protected DefaultAudioSettingsSerializableData m_audioSettingsData;
+        [SerializeField] protected DefaultGraphicsSettingsSerializableData m_graphicsSettingsData;
+        [SerializeField] protected DefaultLocalizationSettingsSerializableData m_localizationSettingsData;
+        [SerializeField] protected DefaultPostProcessingSettingsSerializableData m_postProcessingSettingsData;
 
-        public DefaultAppStatsSettingsSerializableData DefaultAppStatsSettingsData { get => m_defaultAppStatsSettingsData; set => m_defaultAppStatsSettingsData = value; }
-        public DefaultAudioSettingsSerializableData DefaultAudioSettingsData { get => m_defaultAudioSettingsData; set => m_defaultAudioSettingsData = value; }
-        public DefaultGraphicsSettingsSerializableData DefaultGraphicsSettingsData { get => m_defaultGraphicsSettingsData; set => m_defaultGraphicsSettingsData = value; }
-        public DefaultLocalizationSettingsSerializableData DefaultLocalizationSettingsData { get => m_defaultLocalizationSettingsData; set => m_defaultLocalizationSettingsData = value; }
-        public DefaultPostProcessingSettingsSerializableData DefaultPostProcessingSettingsData { get => m_defaultPostProcessingSettingsData; set => m_defaultPostProcessingSettingsData = value; }
+        public DefaultAppStatsSettingsSerializableData AppStatsSettingsData { get => m_appStatsSettingsData; set => m_appStatsSettingsData = value; }
+        public DefaultAudioSettingsSerializableData AudioSettingsData { get => m_audioSettingsData; set => m_audioSettingsData = value; }
+        public DefaultGraphicsSettingsSerializableData GraphicsSettingsData { get => m_graphicsSettingsData; set => m_graphicsSettingsData = value; }
+        public DefaultLocalizationSettingsSerializableData LocalizationSettingsData { get => m_localizationSettingsData; set => m_localizationSettingsData = value; }
+        public DefaultPostProcessingSettingsSerializableData DPostProcessingSettingsData { get => m_postProcessingSettingsData; set => m_postProcessingSettingsData = value; }
 
         protected StorageHelperType m_storageHelperType;
         protected int m_completedCount;
@@ -50,11 +50,11 @@
             set
             {
                 m_storageHelperType = value;
-                m_defaultAppStatsSettingsData.StorageHelperType = value;
-                m_defaultAudioSettingsData.StorageHelperType = value;
-                m_defaultGraphicsSettingsData.StorageHelperType = value;
-                m_defaultLocalizationSettingsData.StorageHelperType = value;
-                m_defaultPostProcessingSettingsData.StorageHelperType = value;
+                m_appStatsSettingsData.StorageHelperType = value;
+                m_audioSettingsData.StorageHelperType = value;
+                m_graphicsSettingsData.StorageHelperType = value;
+                m_localizationSettingsData.StorageHelperType = value;
+                m_postProcessingSettingsData.StorageHelperType = value;
             }
         }
 
@@ -70,11 +70,11 @@
         {
             m_completedCount = 0;
 
-            m_defaultAppStatsSettingsData.Save(encrypted, () => OnCompleted(onCompleted));
-            m_defaultAudioSettingsData.Save(encrypted, () => OnCompleted(onCompleted));
-            m_defaultGraphicsSettingsData.Save(encrypted, () => OnCompleted(onCompleted));
-            m_defaultLocalizationSettingsData.Save(encrypted, () => OnCompleted(onCompleted));
-            m_defaultPostProcessingSettingsData.Save(encrypted, () => OnCompleted(onCompleted));
+            m_appStatsSettingsData.Save(encrypted, () => OnCompleted(onCompleted));
+            m_audioSettingsData.Save(encrypted, () => OnCompleted(onCompleted));
+            m_graphicsSettingsData.Save(encrypted, () => OnCompleted(onCompleted));
+            m_localizationSettingsData.Save(encrypted, () => OnCompleted(onCompleted));
+            m_postProcessingSettingsData.Save(encrypted, () => OnCompleted(onCompleted));
         }
 
         protected virtual void OnCompleted(System.Action onCompleted)
@@ -91,11 +91,11 @@
         {
             m_completedCount = 0;
 
-            m_defaultAppStatsSettingsData.Load(encrypted, () => OnCompleted(onCompleted));
-            m_defaultAudioSettingsData.Load(encrypted, () => OnCompleted(onCompleted));
-            m_defaultGraphicsSettingsData.Load(encrypted, () => OnCompleted(onCompleted));
-            m_defaultLocalizationSettingsData.Load(encrypted, () => OnCompleted(onCompleted));
-            m_defaultPostProcessingSettingsData.Load(encrypted, () => OnCompleted(onCompleted));
+            m_appStatsSettingsData.Load(encrypted, () => OnCompleted(onCompleted));
+            m_audioSettingsData.Load(encrypted, () => OnCompleted(onCompleted));
+            m_graphicsSettingsData.Load(encrypted, () => OnCompleted(onCompleted));
+            m_localizationSettingsData.Load(encrypted, () => OnCompleted(onCompleted));
+            m_postProcessingSettingsData.Load(encrypted, () => OnCompleted(onCompleted));
         }
     }
 }
