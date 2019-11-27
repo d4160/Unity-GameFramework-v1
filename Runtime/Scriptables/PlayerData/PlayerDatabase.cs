@@ -13,9 +13,9 @@
 
         [SerializeField]
         [Reorderable(paginate = true, pageSize = 10)]
-        protected PlayerDataReorderableArray m_playerData;
+        protected ScriptableObjectReorderableArray m_playerData;
 
-        public PlayerDataReorderableArray PlayerData => m_playerData;
+        public ScriptableObjectReorderableArray PlayerData => m_playerData;
 
         public IDataSerializationAdapter DataAdapter
         {
@@ -28,7 +28,7 @@
             set => m_dataAdapter = value;
         }
 
-        public PlayerDataScriptableBase this[int index]
+        public ScriptableObjectBase this[int index]
         {
             get
             {
@@ -39,7 +39,7 @@
             }
         }
 
-        public T GetData<T>(int index) where T : PlayerDataScriptableBase
+        public T GetData<T>(int index) where T : ScriptableObjectBase
         {
             var playerData = this[index];
             if (playerData)
@@ -70,10 +70,5 @@
         }
 
         public bool IsInitialized => m_playerData != null && m_playerData.Length > 0;
-    }
-
-    [System.Serializable]
-    public class PlayerDataReorderableArray : ReorderableArrayForUnityObject<PlayerDataScriptableBase>
-    {
     }
 }

@@ -7,7 +7,7 @@
     using UnityEngine.GameFoundation.DataPersistence;
 
     [CreateAssetMenu(fileName = "New DefaultGraphics Settings_SO.asset", menuName = "Game Framework/App Settings/Default Graphics")]
-    public class DefaultGraphicsSettings : AppSettingsScriptableBase
+    public class DefaultGraphicsSettings : ScriptableObjectBase
     {
         [Dropdown(ValuesProperty = "Resolutions")]
         [SerializeField] protected int m_resolution;

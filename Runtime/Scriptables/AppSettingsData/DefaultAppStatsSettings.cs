@@ -4,7 +4,7 @@
     using UnityEngine.GameFoundation.DataPersistence;
 
     [CreateAssetMenu(fileName = "New DefaultAppStats Settings_SO.asset", menuName = "Game Framework/App Settings/Default AppStats")]
-    public class DefaultAppStatsSettings : AppSettingsScriptableBase
+    public class DefaultAppStatsSettings : ScriptableObjectBase
     {
         [SerializeField] protected bool m_fps;
         [SerializeField] protected bool m_ram;

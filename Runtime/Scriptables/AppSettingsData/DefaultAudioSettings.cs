@@ -4,7 +4,7 @@
     using UnityEngine.GameFoundation.DataPersistence;
 
     [CreateAssetMenu(fileName = "New DefaultAudio Settings_SO.asset", menuName = "Game Framework/App Settings/Default Audio")]
-    public class DefaultAudioSettings : AppSettingsScriptableBase
+    public class DefaultAudioSettings : ScriptableObjectBase
     {
         [SerializeField] protected bool m_music;
         [Range(0, 1f)]

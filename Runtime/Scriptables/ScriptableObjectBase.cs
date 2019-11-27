@@ -1,6 +1,7 @@
 namespace d4160.GameFramework
 {
     using d4160.Systems.DataPersistence;
+    using Malee;
     using UnityEngine;
     using UnityEngine.GameFoundation.DataPersistence;
 
@@ -42,5 +43,10 @@ namespace d4160.GameFramework
         }
 
         protected abstract void FillFromSerializableData(T data);
+    }
+
+    [System.Serializable]
+    public class ScriptableObjectReorderableArray : ReorderableArrayForUnityObject<ScriptableObjectBase>
+    {
     }
 }

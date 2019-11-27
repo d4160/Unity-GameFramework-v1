@@ -17,9 +17,9 @@
         protected IDataSerializationAdapter m_dataAdapter;
 
         [Reorderable(paginate = true, pageSize = 10)]
-        [SerializeField] protected GameDataReorderableArray m_gameData;
+        [SerializeField] protected ScriptableObjectReorderableArray m_gameData;
 
-        public GameDataReorderableArray GameData => m_gameData;
+        public ScriptableObjectReorderableArray GameData => m_gameData;
 
         public IDataSerializationAdapter DataAdapter
         {
@@ -110,10 +110,5 @@
         }
 #endif
         #endregion
-    }
-
-    [System.Serializable]
-    public class GameDataReorderableArray : ReorderableArrayForUnityObject<ScriptableObjectBase>
-    {
     }
 }

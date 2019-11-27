@@ -4,7 +4,7 @@
     using UnityEngine.GameFoundation.DataPersistence;
 
     [CreateAssetMenu(fileName = "New DefaultPostProcessing Settings_SO.asset", menuName = "Game Framework/App Settings/Default PostProcessing")]
-    public class DefaultPostProcessingSettings : AppSettingsScriptableBase
+    public class DefaultPostProcessingSettings : ScriptableObjectBase
     {
         [SerializeField] protected bool m_bloom;
         [SerializeField] protected bool m_colorGrading;
