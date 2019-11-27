@@ -14,9 +14,9 @@
 
         [SerializeField]
         [Reorderable(paginate = true, pageSize = 10)]
-        protected AppSettingsReorderableArray m_settings;
+        protected ScriptableObjectReorderableArray m_settings;
 
-        public AppSettingsReorderableArray Settings => m_settings;
+        public ScriptableObjectReorderableArray Settings => m_settings;
 
         public IDataSerializationAdapter DataAdapter
         {
@@ -29,7 +29,7 @@
             set => m_dataAdapter = value;
         }
 
-        public AppSettingsScriptableBase this[int index]
+        public ScriptableObjectBase this[int index]
         {
             get
             {
@@ -40,7 +40,7 @@
             }
         }
 
-        public T GetSettingsData<T>(int index) where T : AppSettingsScriptableBase
+        public T GetSettingsData<T>(int index) where T : ScriptableObjectBase
         {
             var settings = this[index];
             if (settings)
@@ -71,10 +71,5 @@
         }
 
         public bool IsInitialized => m_settings != null && m_settings.Length > 0;
-    }
-
-    [System.Serializable]
-    public class AppSettingsReorderableArray : ReorderableArrayForUnityObject<AppSettingsScriptableBase>
-    {
     }
 }

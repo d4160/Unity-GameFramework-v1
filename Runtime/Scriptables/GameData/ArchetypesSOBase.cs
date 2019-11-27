@@ -11,7 +11,7 @@ namespace d4160.GameFramework
 //#endif
         IArchetypeGetter<TArchetype>
         where TArchetype : IArchetype, new()
-        where TReorderableArray : ReorderableArray<TArchetype>
+        where TReorderableArray : Malee.ReorderableArray<TArchetype>
     {
         public override TArchetype GetElementWith(int id)
         {

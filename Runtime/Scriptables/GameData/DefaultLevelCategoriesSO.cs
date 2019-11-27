@@ -4,9 +4,9 @@
     using d4160.Core;
     using Malee;
     using UnityEngine;
-  using UnityEngine.GameFoundation.DataPersistence;
+    using UnityEngine.GameFoundation.DataPersistence;
 
-  [CreateAssetMenu(fileName = "New DefaultLevelCategories_SO", menuName = "Game Framework/Game Data/DefaultLevelCategories")]
+    [CreateAssetMenu(fileName = "New DefaultLevelCategories_SO", menuName = "Game Framework/Game Data/DefaultLevelCategories")]
     public class DefaultLevelCategoriesSO : ArchetypesSOBase<LevelCategoriesReorderableArray, DefaultLevelCategory>
     {
         #region Editor Members

@@ -4,7 +4,7 @@
     using UnityEngine.GameFoundation.DataPersistence;
 
     [CreateAssetMenu(fileName = "New DefaultLocalization Settings_SO.asset", menuName = "Game Framework/App Settings/Default Localization")]
-    public class DefaultLocalizationSettings : AppSettingsScriptableBase
+    public class DefaultLocalizationSettings : ScriptableObjectBase
     {
         [SerializeField] protected SystemLanguage m_textLanguage;
         [SerializeField] protected SystemLanguage m_voiceLanguage;

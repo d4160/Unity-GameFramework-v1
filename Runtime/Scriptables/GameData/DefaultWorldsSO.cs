@@ -4,9 +4,9 @@
     using d4160.Core;
     using UnityEngine;
     using Malee;
-  using UnityEngine.GameFoundation.DataPersistence;
+    using UnityEngine.GameFoundation.DataPersistence;
 
-  [CreateAssetMenu(fileName = "New DefaultWorlds_SO", menuName = "Game Framework/Game Data/DefaultWorlds")]
+    [CreateAssetMenu(fileName = "New DefaultWorlds_SO", menuName = "Game Framework/Game Data/DefaultWorlds")]
     public class DefaultWorldsSO : ArchetypesSOBase<WorldsReorderableArray, DefaultWorld>
     {
 #if UNITY_EDITOR

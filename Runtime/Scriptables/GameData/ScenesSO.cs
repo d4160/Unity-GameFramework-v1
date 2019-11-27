@@ -43,7 +43,7 @@
     }
 
     [System.Serializable]
-    public class ScenesReorderableArray : ReorderableArray<SceneReference>
+    public class ScenesReorderableArray : Malee.ReorderableArray<SceneReference>
     {
     }
 }
