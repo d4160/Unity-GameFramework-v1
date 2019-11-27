@@ -4,13 +4,13 @@
     using UnityEngine.GameFoundation.DataPersistence;
 
     [CreateAssetMenu(fileName = "New DefaultPostProcessing Settings_SO.asset", menuName = "Game Framework/App Settings/Default PostProcessing")]
-    public class DefaultPostProcessingSettings : ScriptableObjectBase
+    public class DefaultPostProcessingSettings : ScriptableObjectBase<DefaultPostProcessingSettingsSerializableData>
     {
         [SerializeField] protected bool m_bloom;
         [SerializeField] protected bool m_colorGrading;
         [SerializeField] protected bool m_vignette;
 
-        public override ISerializableData GetSerializableData()
+        protected override DefaultPostProcessingSettingsSerializableData GetSerializableDataGeneric()
         {
             var data = new DefaultPostProcessingSettingsSerializableData();
             data.bloom = m_bloom;
@@ -20,15 +20,7 @@
             return data;
         }
 
-        public override void InitializeData(ISerializableData data)
-        {
-            if (data != null)
-            {
-                FillFromSerializableData(data);
-            }
-        }
-
-        public override void FillFromSerializableData(ISerializableData data)
+        protected override void FillFromSerializableData(DefaultPostProcessingSettingsSerializableData data)
         {
             var appStatsData = data as DefaultPostProcessingSettingsSerializableData;
             m_bloom = appStatsData.bloom;

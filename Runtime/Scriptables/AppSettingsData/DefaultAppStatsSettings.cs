@@ -4,14 +4,14 @@
     using UnityEngine.GameFoundation.DataPersistence;
 
     [CreateAssetMenu(fileName = "New DefaultAppStats Settings_SO.asset", menuName = "Game Framework/App Settings/Default AppStats")]
-    public class DefaultAppStatsSettings : ScriptableObjectBase
+    public class DefaultAppStatsSettings : ScriptableObjectBase<DefaultAppStatsSettingsSerializableData>
     {
         [SerializeField] protected bool m_fps;
         [SerializeField] protected bool m_ram;
         [SerializeField] protected bool m_audio;
         [SerializeField] protected bool m_advancedInfo;
 
-        public override ISerializableData GetSerializableData()
+        protected override DefaultAppStatsSettingsSerializableData GetSerializableDataGeneric()
         {
             var data = new DefaultAppStatsSettingsSerializableData();
             data.fps = m_fps;
@@ -22,21 +22,12 @@
             return data;
         }
 
-        public override void InitializeData(ISerializableData data)
+        protected override void FillFromSerializableData(DefaultAppStatsSettingsSerializableData data)
         {
-            if (data != null)
-            {
-                FillFromSerializableData(data);
-            }
-        }
-
-        public override void FillFromSerializableData(ISerializableData data)
-        {
-            var appStatsData = data as DefaultAppStatsSettingsSerializableData;
-            m_fps = appStatsData.fps;
-            m_ram = appStatsData.ram;
-            m_audio = appStatsData.audio;
-            m_advancedInfo = appStatsData.advancedInfo;
+            m_fps = data.fps;
+            m_ram = data.ram;
+            m_audio = data.audio;
+            m_advancedInfo = data.advancedInfo;
         }
     }
 }

@@ -4,7 +4,7 @@
     using UnityEngine.GameFoundation.DataPersistence;
 
     [CreateAssetMenu(fileName = "New DefaultAudio Settings_SO.asset", menuName = "Game Framework/App Settings/Default Audio")]
-    public class DefaultAudioSettings : ScriptableObjectBase
+    public class DefaultAudioSettings : ScriptableObjectBase<DefaultAudioSettingsSerializableData>
     {
         [SerializeField] protected bool m_music;
         [Range(0, 1f)]
@@ -13,7 +13,7 @@
         [Range(0, 1f)]
         [SerializeField] protected float m_sfxsVolume;
 
-        public override ISerializableData GetSerializableData()
+        protected override DefaultAudioSettingsSerializableData GetSerializableDataGeneric()
         {
             var data = new DefaultAudioSettingsSerializableData();
             data.music = m_music;
@@ -24,21 +24,12 @@
             return data;
         }
 
-        public override void InitializeData(ISerializableData data)
+        protected override void FillFromSerializableData(DefaultAudioSettingsSerializableData data)
         {
-            if (data != null)
-            {
-                FillFromSerializableData(data);
-            }
-        }
-
-        public override void FillFromSerializableData(ISerializableData data)
-        {
-            var appStatsData = data as DefaultAudioSettingsSerializableData;
-            m_music = appStatsData.music;
-            m_musicVolume = appStatsData.musicVolume;
-            m_sfxs = appStatsData.sfxs;
-            m_sfxsVolume = appStatsData.sfxsVolume;
+            m_music = data.music;
+            m_musicVolume = data.musicVolume;
+            m_sfxs = data.sfxs;
+            m_sfxsVolume = data.sfxsVolume;
         }
     }
 }

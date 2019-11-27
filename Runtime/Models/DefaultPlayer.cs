@@ -4,7 +4,8 @@
     using UnityEngine;
 
     [System.Serializable]
-    public class DefaultPlayer : DefaultArchetype
+    public class DefaultPlayer
     {
+        [SerializeField] protected string m_username;
     }
 }

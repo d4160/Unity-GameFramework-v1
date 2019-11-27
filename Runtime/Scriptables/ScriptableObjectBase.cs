@@ -29,14 +29,6 @@ namespace d4160.GameFramework
 
         protected abstract T GetSerializableDataGeneric();
 
-        public override void InitializeData(ISerializableData data)
-        {
-            if (data != null)
-            {
-                FillFromSerializableData(data);
-            }
-        }
-
         public override void FillFromSerializableData(ISerializableData data)
         {
             FillFromSerializableData(data as T);
