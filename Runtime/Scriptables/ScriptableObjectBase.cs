@@ -8,8 +8,39 @@ namespace d4160.GameFramework
     {
         public abstract ISerializableData GetSerializableData();
 
-        public abstract void FillFromSerializableData(ISerializableData data);
+        public virtual void InitializeData(ISerializableData data)
+        {
+            if (data != null)
+            {
+                FillFromSerializableData(data);
+            }
+        }
 
-        public abstract void InitializeData(ISerializableData data);
+        public abstract void FillFromSerializableData(ISerializableData data);
+    }
+
+    public abstract class ScriptableObjectBase<T> : ScriptableObjectBase where T : class, ISerializableData
+    {
+        public override ISerializableData GetSerializableData()
+        {
+            return GetSerializableDataGeneric();
+        }
+
+        protected abstract T GetSerializableDataGeneric();
+
+        public override void InitializeData(ISerializableData data)
+        {
+            if (data != null)
+            {
+                FillFromSerializableData(data);
+            }
+        }
+
+        public override void FillFromSerializableData(ISerializableData data)
+        {
+            FillFromSerializableData(data as T);
+        }
+
+        protected abstract void FillFromSerializableData(T data);
     }
 }

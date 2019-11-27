@@ -39,7 +39,7 @@
         public DefaultAudioSettingsSerializableData AudioSettingsData { get => m_audioSettingsData; set => m_audioSettingsData = value; }
         public DefaultGraphicsSettingsSerializableData GraphicsSettingsData { get => m_graphicsSettingsData; set => m_graphicsSettingsData = value; }
         public DefaultLocalizationSettingsSerializableData LocalizationSettingsData { get => m_localizationSettingsData; set => m_localizationSettingsData = value; }
-        public DefaultPostProcessingSettingsSerializableData DPostProcessingSettingsData { get => m_postProcessingSettingsData; set => m_postProcessingSettingsData = value; }
+        public DefaultPostProcessingSettingsSerializableData PostProcessingSettingsData { get => m_postProcessingSettingsData; set => m_postProcessingSettingsData = value; }
 
         protected StorageHelperType m_storageHelperType;
         protected int m_completedCount;
