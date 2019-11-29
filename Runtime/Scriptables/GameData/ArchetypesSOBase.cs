@@ -4,16 +4,17 @@ namespace d4160.GameFramework
     using Malee;
     using System.Linq;
 
-    public abstract class ArchetypesSOBase<TReorderableArray, TArchetype>
-        : ReorderableSO<TReorderableArray, TArchetype>,
+    public abstract class ArchetypesSOBase<T1, T2, T3>
+        : ReorderableSO<T1, T2, T3>,
 //#if UNITY_EDITOR
         IArchetypeNames, IArchetypeOperations,
 //#endif
-        IArchetypeGetter<TArchetype>
-        where TArchetype : IArchetype, new()
-        where TReorderableArray : Malee.ReorderableArray<TArchetype>
+        IArchetypeGetter<T2>
+        where T2 : IArchetype, new()
+        where T1 : Malee.ReorderableArray<T2>
+        where T3 : BaseSerializableData
     {
-        public override TArchetype GetElementWith(int id)
+        public override T2 GetElementWith(int id)
         {
             for (var i = 0; i < m_elements.Length; i++)
             {
@@ -60,7 +61,7 @@ namespace d4160.GameFramework
 
         protected virtual IArchetype AddNew()
         {
-            var newElement = new TArchetype();
+            var newElement = new T2();
             m_elements.Add(newElement);
 
             IterateIds();
@@ -90,7 +91,7 @@ namespace d4160.GameFramework
         #endregion
 
         #region Other Methods
-        protected virtual void Add(TArchetype archetype)
+        protected virtual void Add(T2 archetype)
         {
             m_elements.Add(archetype);
 

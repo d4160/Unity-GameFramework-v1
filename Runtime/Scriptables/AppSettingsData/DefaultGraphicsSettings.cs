@@ -7,7 +7,7 @@
     using UnityEngine.GameFoundation.DataPersistence;
 
     [CreateAssetMenu(fileName = "New DefaultGraphics Settings_SO.asset", menuName = "Game Framework/App Settings/Default Graphics")]
-    public class DefaultGraphicsSettings : ScriptableObjectBase<DefaultGraphicsSettingsSerializableData>
+    public abstract class DefaultGraphicsSettings<T> : ScriptableObjectBase<T> where T : BaseSerializableData
     {
         [Dropdown(ValuesProperty = "Resolutions")]
         [SerializeField] protected int m_resolution;
@@ -48,24 +48,6 @@
                 else
                     m_resolution = Screen.resolutions.Length - 1;
             }
-        }
-
-        protected override DefaultGraphicsSettingsSerializableData GetSerializableDataGeneric()
-        {
-            var data = new DefaultGraphicsSettingsSerializableData();
-            data.fullScreenMode = m_fullScreenMode;
-            data.qualityLevel = m_qualityLevel;
-            data.resolution = m_resolution;
-            data.vSyncCount = m_vSyncCount;
-
-            return data;
-        }
-        protected override void FillFromSerializableData(DefaultGraphicsSettingsSerializableData data)
-        {
-            m_fullScreenMode = data.fullScreenMode;
-            m_qualityLevel = data.qualityLevel;
-            m_resolution = data.resolution;
-            m_vSyncCount = data.vSyncCount;
         }
     }
 }

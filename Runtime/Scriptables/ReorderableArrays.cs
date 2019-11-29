@@ -20,12 +20,17 @@
     }
 
     [System.Serializable]
-    public class LeaderboardsReorderableArray : Malee.ReorderableArray<DefaultLeaderboard>
+    public class DefaultLeaderboardsReorderableArray : Malee.ReorderableArray<DefaultLeaderboard>
     {
     }
 
     [System.Serializable]
-    public class PlayersReorderableArray : Malee.ReorderableArray<DefaultPlayer>
+    public class DefaultPlayersReorderableArray : Malee.ReorderableArray<DefaultPlayer>
+    {
+    }
+
+    [System.Serializable]
+    public class DefaultPlayTrialsReorderableArray : Malee.ReorderableArray<DefaultPlayTrial>
     {
     }
 }
