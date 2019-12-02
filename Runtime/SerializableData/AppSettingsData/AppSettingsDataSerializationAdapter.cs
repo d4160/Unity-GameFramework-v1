@@ -115,6 +115,11 @@
             }
         }
 
+        public virtual void Uninitialize()
+        {
+            GameFramework.UninitializeAppSettingsData();
+        }
+
         public virtual void Load(
             IDataPersistence dataPersistence,
             System.Action onLoadCompleted = null,

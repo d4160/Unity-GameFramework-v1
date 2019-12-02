@@ -6,7 +6,7 @@
     using DG.DeInspektor.Attributes;
     using UnityEngine.GameFoundation.DataPersistence;
 
-    [CreateAssetMenu(fileName = "New DefaultGraphics Settings_SO.asset", menuName = "Game Framework/App Settings/Default Graphics")]
+    //[CreateAssetMenu(fileName = "New DefaultGraphics Settings_SO.asset", menuName = "Game Framework/App Settings/Default Graphics")]
     public abstract class DefaultGraphicsSettings<T> : ScriptableObjectBase<T> where T : BaseSerializableData
     {
         [Dropdown(ValuesProperty = "Resolutions")]

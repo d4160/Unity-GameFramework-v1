@@ -1,16 +1,11 @@
 ﻿namespace d4160.GameFramework.Editors
 {
-	using UnityEngine;
-	using UnityEditor;
 	using UnityEditor.UIElements;
-	using UnityEditor.Experimental.GraphView;
 	using UnityEngine.UIElements;
 	using GraphProcessor;
-    using d4160.Levels;
-    using System.Linq;
-    using System.Collections.Generic;
-    using d4160.Core.Editors.Utilities;
-  using d4160.Worlds;
+	using System.Linq;
+	using System.Collections.Generic;
+	using d4160.Core.Editors.Utilities;
 
   [NodeCustomEditor(typeof(ChapterNode))]
 	public class ChapterNodeView : BaseNodeView
@@ -91,7 +86,7 @@
 
 		private VisualElement CreateWorldField(ChapterNode chapterNode)
 		{
-			var worldNames = GameFrameworkSettings.GameDatabase.GetGameData<DefaultWorldsSO>(2).ArchetypeNames;
+			var worldNames = GameFrameworkSettings.GameDatabase.GetGameDataNames(2);
 			worldNames = EditorUtilities.GetNoneSelectableFrom(worldNames);
 
 			PopupField<string> field = new PopupField<string>(
@@ -118,7 +113,7 @@
 
 		private VisualElement CreateWorldSceneField(ChapterNode chapterNode)
 		{
-			var worldScenes = GameFrameworkSettings.GameDatabase.GetGameData<DefaultWorldsSO>(2).GetSceneNames(chapterNode.WorldScene.world).ToList();
+			var worldScenes = GameFrameworkSettings.GameDatabase.GetSceneNames(2, chapterNode.WorldScene.world).ToList();
 			if (worldScenes.Count == 0) worldScenes = new List<string>(){ "" };
 
 			PopupField<string> field = new PopupField<string>(
@@ -139,7 +134,7 @@
 
 		private VisualElement CreateLevelCategoryField(ChapterNode chapterNode)
 		{
-			var levelNames = GameFrameworkSettings.GameDatabase.GetGameData<DefaultLevelCategoriesSO>(3).ArchetypeNames;
+			var levelNames = GameFrameworkSettings.GameDatabase.GetGameDataNames(3);
 			levelNames = EditorUtilities.GetNoneSelectableFrom(levelNames);
 
 			PopupField<string> field = new PopupField<string>(
@@ -166,7 +161,7 @@
 
 		private VisualElement CreateLevelSceneField(ChapterNode chapterNode)
 		{
-			var levelScenes = GameFrameworkSettings.GameDatabase.GetGameData<DefaultLevelCategoriesSO>(3).GetSceneNames(chapterNode.LevelScene.levelCategory).ToList();
+			var levelScenes = GameFrameworkSettings.GameDatabase.GetSceneNames(3, chapterNode.LevelScene.levelCategory).ToList();
 			if (levelScenes.Count == 0) levelScenes = new List<string>(){ "" };
 
 			PopupField<string> field = new PopupField<string>(

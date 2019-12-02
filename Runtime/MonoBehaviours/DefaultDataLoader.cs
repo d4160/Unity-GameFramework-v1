@@ -45,6 +45,11 @@
             m_dataSerializationAdapter.Initialize(Identifier, m_dataPersistence);
         }
 
+        public override void Uninitialize()
+        {
+            m_dataSerializationAdapter.Uninitialize();
+        }
+
         public override void Load()
         {
             m_dataSerializationAdapter.Load(m_dataPersistence);

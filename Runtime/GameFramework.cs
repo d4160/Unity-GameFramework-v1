@@ -31,8 +31,8 @@ namespace d4160.GameFramework
         public static bool IsPlayerDataInitialized => m_PlayerDataInitializationStatus == InitializationStatus.Initialized;
 
         public static void SetAppSettingsDataPath(string dataPath) => m_AppSettingsDataPath = dataPath;
-        public static void SetGameDataPath(string dataPath) => m_AppSettingsDataPath = dataPath;
-        public static void SetPlayerDataPath(string dataPath) => m_AppSettingsDataPath = dataPath;
+        public static void SetGameDataPath(string dataPath) => m_GameDataPath = dataPath;
+        public static void SetPlayerDataPath(string dataPath) => m_PlayerDataPath = dataPath;
 
         #region AppSettings Data
         /// <summary>

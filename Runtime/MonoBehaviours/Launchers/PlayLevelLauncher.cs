@@ -2,7 +2,7 @@
 {
     using Malee;
 
-    public abstract class PlayLevelLauncher : LevelLauncher, IPlayLevel, IGameModeFlow
+    public abstract class PlayLevelLauncher : LevelLauncher, IPlayLevelLauncher, IGameModeFlow
     {
         protected PlayResult m_playResult = PlayResult.None;
         protected PlayState m_playState = PlayState.None;

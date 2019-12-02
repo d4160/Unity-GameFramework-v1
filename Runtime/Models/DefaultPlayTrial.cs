@@ -9,5 +9,10 @@
         [SerializeField] protected float time;
         [SerializeField] protected PlayResult result;
         [SerializeField] protected System.DateTime startedTimeStamp;
+
+        public DefaultPlayTrial()
+        {
+
+        }
     }
 }

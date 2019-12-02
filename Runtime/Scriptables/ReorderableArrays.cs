@@ -1,21 +1,24 @@
 ﻿namespace d4160.GameFramework
 {
-    using d4160.Levels;
-    using d4160.Worlds;
     using Malee;
 
     [System.Serializable]
-    public class ArchetypesReorderableArray : Malee.ReorderableArray<DefaultArchetype>
+    public class DefaultArchetypesReorderableArray : Malee.ReorderableArray<DefaultArchetype>
     {
     }
 
     [System.Serializable]
-    public class LevelCategoriesReorderableArray : Malee.ReorderableArray<DefaultLevelCategory>
+    public class DefaultLevelCategoriesReorderableArray : Malee.ReorderableArray<DefaultLevelCategory>
     {
     }
 
     [System.Serializable]
-    public class WorldsReorderableArray : Malee.ReorderableArray<DefaultWorld>
+    public class DefaultWorldsReorderableArray : Malee.ReorderableArray<DefaultWorld>
+    {
+    }
+
+    [System.Serializable]
+    public class ScenesReorderableArray : Malee.ReorderableArray<SceneReference>
     {
     }
 

@@ -16,6 +16,11 @@
         {
         }
 
+        public DefaultLeaderboardsSerializableData(DefaultLeaderboard[] elements) : base()
+        {
+            leaderboards = elements;
+        }
+
         public virtual void Load(bool encrypted = false, System.Action onCompleted = null)
         {
             switch (StorageHelperType)

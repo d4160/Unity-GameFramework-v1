@@ -2,7 +2,7 @@ namespace d4160.GameFramework
 {
     using UnityEngine;
 
-    [CreateAssetMenu(menuName = "Game Framework/Game/Chapter Graph", order = 0)]
+    [CreateAssetMenu(menuName = "Game Framework/Graphs/Chapter Graph", order = 0)]
     public class ChapterGraph : GameFrameworkBaseGraph
     {
     }

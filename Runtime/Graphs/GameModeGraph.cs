@@ -2,7 +2,7 @@
 {
     using UnityEngine;
 
-    [CreateAssetMenu(menuName = "Game Framework/Game/GameMode Graph", order = -1)]
+    [CreateAssetMenu(menuName = "Game Framework/Graphs/GameMode Graph", order = -1)]
     public class GameModeGraph : GameFrameworkBaseGraph
     {
     }

@@ -1,16 +1,17 @@
-﻿namespace d4160.Levels
+﻿namespace d4160.GameFramework
 {
     using d4160.GameFramework;
     using d4160.Core;
     using Malee;
-    using UnityEngine;
-    using UnityEngine.GameFoundation.DataPersistence;
+  using System.Collections.Generic;
 
-    [CreateAssetMenu(fileName = "New DefaultLevelCategories_SO", menuName = "Game Framework/Game Data/DefaultLevelCategories")]
-    public class DefaultLevelCategoriesSO : ArchetypesSOBase<LevelCategoriesReorderableArray, DefaultLevelCategory>
+  //[CreateAssetMenu(fileName = "New LevelCategories_SO", menuName = "Game Framework/Game Data/LevelCategories")]
+  public abstract class DefaultLevelCategoriesSO<T1, T2, T3> : ArchetypesSOBase<T1, T2, T3>, ISceneNamesGetter
+        where T1 : ReorderableArray<T2>
+        where T2 : ILevelCategory, IArchetype, new()
+        where T3 : BaseSerializableData
     {
         #region Editor Members
-#if UNITY_EDITOR
         public string[] GetSceneNames(int categoryIdx)
         {
             if (m_elements.IsValidIndex(categoryIdx))
@@ -21,7 +22,26 @@
 
             return new string[0];
         }
-#endif
+
+        public CategoryAndScene[] GetCategorizedScenes()
+        {
+            List<CategoryAndScene> scenes = new List<CategoryAndScene>();
+            for(int i = 0; i < m_elements.Length; i++)
+            {
+                var element = m_elements[i];
+                for(int j = 0; j < element.SceneCount; j++)
+                {
+                    var scene = element.GetScene(j);
+                    if (scene == null) continue;
+
+                    scenes.Add(new CategoryAndScene(){
+                        category = element.Name,
+                        scenePath = scene.ScenePath
+                    });
+                }
+            }
+            return scenes.ToArray();
+        }
         #endregion
 
         public int GetSceneBuildIndex(LevelScene lScene)
@@ -51,21 +71,6 @@
             var levelScene = levelCategory?.GetScene(lScene.levelScene);
 
             return levelScene;
-        }
-
-        public override void FillFromSerializableData(ISerializableData data)
-        {
-        }
-
-        public override ISerializableData GetSerializableData()
-        {
-            return null;
-        }
-
-        public override void InitializeData(ISerializableData data)
-        {
-            if(data != null)
-                FillFromSerializableData(data);
         }
     }
 }

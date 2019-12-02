@@ -1,15 +1,15 @@
-﻿namespace d4160.Worlds
+﻿namespace d4160.GameFramework
 {
-    using d4160.GameFramework;
-    using d4160.Core;
-    using UnityEngine;
+  using System.Collections.Generic;
+  using d4160.Core;
     using Malee;
-    using UnityEngine.GameFoundation.DataPersistence;
 
-    [CreateAssetMenu(fileName = "New DefaultWorlds_SO", menuName = "Game Framework/Game Data/DefaultWorlds")]
-    public class DefaultWorldsSO : ArchetypesSOBase<WorldsReorderableArray, DefaultWorld>
+    //[CreateAssetMenu(fileName = "New Worlds_SO", menuName = "Game Framework/Game Data/Worlds")]
+    public abstract class DefaultWorldsSO<T1, T2, T3> : ArchetypesSOBase<T1, T2, T3>, ISceneNamesGetter
+        where T1 : ReorderableArray<T2>
+        where T2 : IArchetype, ILevelCategory, new()
+        where T3 : BaseSerializableData
     {
-#if UNITY_EDITOR
         public string[] GetSceneNames(int worldIdx)
         {
             if (m_elements.IsValidIndex(worldIdx))
@@ -20,7 +20,24 @@
 
             return new string[0];
         }
-#endif
+
+        public CategoryAndScene[] GetCategorizedScenes()
+        {
+            List<CategoryAndScene> scenes = new List<CategoryAndScene>();
+            for(int i = 0; i < m_elements.Length; i++)
+            {
+                var element = m_elements[i];
+                for(int j = 0; j < element.SceneCount; j++)
+                {
+                    var scene = element.GetScene(j);
+                    scenes.Add(new CategoryAndScene(){
+                        category = element.Name,
+                        scenePath = scene.ScenePath
+                    });
+                }
+            }
+            return scenes.ToArray();
+        }
 
         public int GetSceneBuildIndex(WorldScene wScene)
         {
@@ -49,21 +66,6 @@
             var worldScene = world?.GetScene(wScene.worldScene);
 
             return worldScene;
-        }
-
-        public override void FillFromSerializableData(ISerializableData data)
-        {
-        }
-
-        public override ISerializableData GetSerializableData()
-        {
-            return null;
-        }
-
-        public override void InitializeData(ISerializableData data)
-        {
-            if(data != null)
-                FillFromSerializableData(data);
         }
     }
 }

@@ -1,33 +1,19 @@
-﻿  namespace d4160.GameFramework
+﻿namespace d4160.GameFramework
 {
-  using System.Collections.Generic;
-  using d4160.Systems.DataPersistence;
+    using d4160.Systems.DataPersistence;
 
     [System.Serializable]
-    public class DefaultPlayTrialsSerializableData : BaseSerializableData, IStorageHelper
+    public class DefaultWorldsSerializableData : BaseSerializableData, IStorageHelper
     {
-        public DefaultPlayTrial[] playTrials;
+        public DefaultSerializableLevelCategory[] worlds;
+
+        public StorageHelperType StorageHelperType { get; set; }
 
         /// <summary>
         /// Default constructor for serialization purpose.
         /// </summary>
-        public DefaultPlayTrialsSerializableData() : base()
+        public DefaultWorldsSerializableData() : base()
         {
-        }
-
-        public DefaultPlayTrialsSerializableData(DefaultPlayTrial[] elements) : base()
-        {
-            playTrials = elements;
-        }
-
-        public StorageHelperType StorageHelperType { get; set; }
-
-        public void Add(DefaultPlayTrial element)
-        {
-            var list = new List<DefaultPlayTrial>(playTrials);
-            list.Add(element);
-
-            playTrials = list.ToArray();
         }
 
         public virtual void Load(bool encrypted = false, System.Action onCompleted = null)

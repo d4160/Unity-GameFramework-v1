@@ -1,24 +1,13 @@
 namespace d4160.GameFramework
 {
-    using UnityEngine;
-    using UnityEngine.GameFoundation.DataPersistence;
+    using Malee;
 
-    [CreateAssetMenu(fileName = "New DefaultArchetypes_SO.asset", menuName = "Game Framework/Game Data/Default Archetypes")]
-    public class DefaultArchetypesSO : ArchetypesSOBase<ArchetypesReorderableArray, DefaultArchetype>
+    //[CreateAssetMenu(fileName = "New Archetypes_SO.asset", menuName = "Game Framework/Game Data/Archetypes")]
+    public abstract class DefaultArchetypesSO<T1, T2, T3> : ArchetypesSOBase<T1, T2, T3>
+        where T1 : ReorderableArray<T2>
+        where T2 : IArchetype, new()
+        where T3 : BaseSerializableData
     {
-        public override void FillFromSerializableData(ISerializableData data)
-        {
-        }
 
-        public override ISerializableData GetSerializableData()
-        {
-            return null;
-        }
-
-        public override void InitializeData(ISerializableData data)
-        {
-            if(data != null)
-                FillFromSerializableData(data);
-        }
     }
 }

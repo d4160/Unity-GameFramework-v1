@@ -1,11 +1,9 @@
 ﻿namespace d4160.GameFramework
 {
-	using d4160.Levels;
 	using UnityEngine;
 	using GraphProcessor;
-    using d4160.Worlds;
 
-    [System.Serializable, NodeMenuItem("Game Mode/Chapter")]
+	[System.Serializable, NodeMenuItem("Game Mode/Chapter")]
 	public class ChapterNode : GameModeBaseNode
 	{
 		[SerializeField] protected ChapterType m_type;

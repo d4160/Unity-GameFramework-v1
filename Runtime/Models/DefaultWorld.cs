@@ -1,20 +1,20 @@
-﻿namespace d4160.Worlds
+﻿namespace d4160.GameFramework
 {
     using d4160.GameFramework;
     using d4160.Core;
-    using d4160.Levels;
     using Malee;
     using UnityEngine;
 
     [System.Serializable]
-    public class DefaultWorld : DefaultArchetype
+    public class DefaultWorld : DefaultArchetype, ILevelCategory
     {
         [Reorderable(paginate = true, pageSize = 10)]
         [SerializeField] protected ScenesReorderableArray m_scenes;
 
         public ScenesReorderableArray Scenes => m_scenes;
 
-#if UNITY_EDITOR
+        public int SceneCount => m_scenes.Length;
+
         public string[] SceneNames {
             get {
                 var names = new string[m_scenes.Length];
@@ -25,7 +25,6 @@
                 return names;
             }
         }
-#endif
 
         public SceneReference GetScene(int index)
         {

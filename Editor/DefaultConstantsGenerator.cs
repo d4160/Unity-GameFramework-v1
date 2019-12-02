@@ -9,15 +9,15 @@
     public static class DefaultConstantsGenerator
     {
         public static string[] ConstantsFiles => new string[]{
-            "Archetypes.cs", "GameModes.cs", "Worlds.cs", "LevelCategories.cs"
+            "Archetypes.cs", "GameModes.cs", "Worlds.cs", "LevelCategories.cs", "Leaderboards.cs", "Players.cs"
         };
 
         public static string[] TotalConstantsFiles => new string[]{
-            "Total", "Total", "Total", "Total"
+            "Total", "Total", "Total", "Total", "Total", "Total"
         };
 
         public static string[] EnumFiles => new string[]{
-            "ArchetypeEnum.cs", "GameModeEnum.cs", "WorldEnum.cs", "LevelCategoryEnum.cs"
+            "ArchetypeEnum.cs", "GameModeEnum.cs", "WorldEnum.cs", "LevelCategoryEnum.cs", "LeaderboardsEnum.cs", "PlayersEnum.cs"
         };
 
         [MenuItem("Window/Game Framework/Tools/Generate Game Data Constants", priority = 2000)]

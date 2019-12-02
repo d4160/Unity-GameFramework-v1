@@ -1,4 +1,4 @@
-﻿namespace d4160.Levels
+﻿namespace d4160.GameFramework
 {
     using d4160.Core;
     using d4160.GameFramework;
@@ -7,7 +7,7 @@
   using UnityEngine.GameFoundation.DataPersistence;
 
   [CreateAssetMenu(fileName = "New Scenes_SO", menuName = "Game Framework/Game Data/Scenes", order = -1)]
-    public class ScenesSO : ReorderableSO<ScenesReorderableArray, SceneReference>
+    public class ScenesSO : ReorderableSO<ScenesReorderableArray, SceneReference, ScenesSerializableData>
 #if UNITY_EDITOR
         , IArchetypeNames
 #endif
@@ -25,25 +25,14 @@
             }
         }
 #endif
-        public override void FillFromSerializableData(ISerializableData data)
+        protected override void FillFromSerializableData(ScenesSerializableData data)
         {
-            throw new System.NotImplementedException();
+
         }
 
-        public override ISerializableData GetSerializableData()
+        protected override ScenesSerializableData GetSerializableDataGeneric()
         {
-            throw new System.NotImplementedException();
+            return null;
         }
-
-        public override void InitializeData(ISerializableData data)
-        {
-            if(data != null)
-                FillFromSerializableData(data);
-        }
-    }
-
-    [System.Serializable]
-    public class ScenesReorderableArray : Malee.ReorderableArray<SceneReference>
-    {
     }
 }

@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6537044652953267747}
-  - component: {fileID: 6537044652953267933}
   - component: {fileID: 6537044652953267932}
   m_Layer: 0
   m_Name: Menu Launcher
@@ -32,24 +31,6 @@ Transform:
   m_Father: {fileID: 6537044653386992341}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6537044652953267933
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6537044652953267934}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d1e80f9c6cf7284a81dbdd36ebca9d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_worldScene:
-    world: -1
-    worldScene: 0
-  m_menuScene:
-    levelCategory: 2
-    levelScene: 0
 --- !u!114 &6537044652953267932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71,7 +52,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6537044653214067715}
-  - component: {fileID: 6537044653214067773}
   - component: {fileID: 6537044653214067772}
   m_Layer: 0
   m_Name: Mode 1 Launcher
@@ -94,20 +74,6 @@ Transform:
   m_Father: {fileID: 6537044654219985490}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6537044653214067773
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6537044653214067774}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ec63c542cd6d944980dd92d2472746d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_gameModeGraph: {fileID: 11400000, guid: 14dbaf4e23793634ca439d22a0106366, type: 2}
-  m_chapterToStart: 0
 --- !u!114 &6537044653214067772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,7 +127,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6537044653391427787}
-  - component: {fileID: 6537044653391427786}
   - component: {fileID: 6537044653391427785}
   m_Layer: 0
   m_Name: LoadingScreen Launcher
@@ -184,27 +149,6 @@ Transform:
   m_Father: {fileID: 6537044653386992341}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6537044653391427786
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6537044653391427780}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2ac52a51eb6c14429fa66e042bd434b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_worldScene:
-    world: -1
-    worldScene: 0
-  m_loadingScreenScene:
-    levelCategory: 1
-    levelScene: 0
-  m_levelTypeToLoad: 1
-  m_generalLevelToLoad: 1
-  m_gameModeLevelToLoad: 0
 --- !u!114 &6537044653391427785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -300,11 +244,11 @@ MonoBehaviour:
   m_gameModeLevelToStart: 0
   m_levelLaunchers:
     array:
-    - {fileID: 6537044653391427786}
-    - {fileID: 6537044652953267933}
+    - {fileID: 0}
+    - {fileID: 0}
   m_playLaunchers:
     array:
-    - {fileID: 6537044653214067773}
+    - {fileID: 0}
 --- !u!114 &6538884419183571757
 MonoBehaviour:
   m_ObjectHideFlags: 0

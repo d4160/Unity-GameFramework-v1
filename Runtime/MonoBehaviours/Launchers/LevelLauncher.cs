@@ -3,7 +3,7 @@
     using Malee;
     using UnityEngine;
 
-    public abstract class LevelLauncher : MonoBehaviour, ILevel
+    public abstract class LevelLauncher : MonoBehaviour, ILevelLauncher
     {
         /* The index in the GameManager */
         public int LauncherIndex { get; set; } = 0;

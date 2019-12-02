@@ -1,17 +1,13 @@
 ﻿namespace d4160.GameFramework
 {
-    using d4160.Levels;
     using d4160.Core;
     using UnityEngine;
     using UnityExtensions;
     using d4160.Systems.SceneManagement;
-    using d4160.UI;
-    using UniRx.Async;
     using d4160.Core.Attributes;
-  using d4160.Worlds;
 
-  [RequireComponent(typeof(UniRxAsyncEmptySceneLoader))]
-    public class DefaultPlayLauncher : PlayLevelLauncher
+    [RequireComponent(typeof(UniRxAsyncEmptySceneLoader))]
+    public abstract class DefaultPlayLauncher : PlayLevelLauncher
     {
         #region Serialized Fields
         [InspectInline]
@@ -21,7 +17,6 @@
         #endregion
 
         #region Protected Fields and Properties
-        protected UniRxAsyncEmptySceneLoader m_sceneLoader;
         protected GameModeGraphProcessor m_processor;
         protected AsyncOperation m_worldLoadingAsyncOp, m_playLoadingAsyncOp;
         protected bool m_playSceneLoading, m_loadingCompleted;
@@ -70,11 +65,6 @@
         #endregion
 
         #region Unity Callbacks
-        protected virtual void Awake()
-        {
-            m_sceneLoader = GetComponent<UniRxAsyncEmptySceneLoader>();
-        }
-
         protected virtual void Start()
         {
             Initialize();
@@ -93,105 +83,6 @@
         #endregion
 
         #region ILevel Implementation
-        public override async void Load(System.Action onCompleted = null)
-        {
-            m_playState = PlayState.Loading;
-
-            /* If the GameManager is faster than this */
-            Initialize();
-
-            await LoadWorldScene(onCompleted);
-        }
-
-        protected virtual async UniTask LoadWorldScene(System.Action onCompleted = null)
-        {
-            var chapter = CurrentChapter;
-            if (chapter == null) return;
-
-            var buildIndex = GameFrameworkSettings.GameDatabase.GetGameData<DefaultWorldsSO>(2).GetSceneBuildIndex(chapter.WorldScene);
-            if (buildIndex == -1)
-            {
-                LoadPlayScene(true, onCompleted);
-                return;
-            }
-
-            await m_sceneLoader.LoadSceneAsync(
-                buildIndex,
-                true,
-                (ao) => m_worldLoadingAsyncOp = ao,
-                null,
-                false,
-                (p) => {
-                    if (p >= 0.9f)
-                    {
-                        if (!m_playSceneLoading)
-                        {
-                            LoadPlayScene(false, onCompleted);
-                            m_playSceneLoading = true;
-                        }
-                    }
-                    else
-                    {
-                        if (LoadingScreen.Instanced)
-                            LoadingScreen.Instance.SetLoadingProgress(p);
-                    }
-                }
-            );
-        }
-
-        protected virtual async void LoadPlayScene(bool setActiveAsMainScene = false, System.Action onCompleted = null)
-        {
-            var chapter = CurrentChapter;
-            if (chapter == null) return;
-
-            var buildIndex = GameFrameworkSettings.GameDatabase.GetGameData<DefaultLevelCategoriesSO>(3).GetSceneBuildIndex(chapter.LevelScene);
-
-            await m_sceneLoader.LoadSceneAsync(
-                buildIndex,
-                setActiveAsMainScene,
-                (ao) => m_playLoadingAsyncOp = ao,
-                () => {
-                    onCompleted?.Invoke();
-                    SetReadyToPlay();
-                },
-                false,
-                (p) => {
-                    if (p < 0.9f)
-                    {
-                        if (LoadingScreen.Instanced)
-                            LoadingScreen.Instance.SetLoadingProgress(p);
-                    }
-                    else
-                    {
-                        if (!m_loadingCompleted)
-                        {
-                            if (LoadingScreen.Instanced)
-                                LoadingScreen.Instance.SetAsLoadCompleted();
-                            else
-                                ActivateScenes();
-
-                            m_loadingCompleted = true;
-                        }
-                    }
-                }
-            );
-        }
-
-        public override async void Unload(System.Action onCompleted = null)
-        {
-            m_loadingCompleted = false;
-            m_playSceneLoading = false;
-
-            m_worldLoadingAsyncOp = null;
-            m_playLoadingAsyncOp = null;
-
-            await m_sceneLoader.UnloadAllLoadedScenes(onCompleted);
-
-            Time.timeScale = 1;
-
-            m_playState = PlayState.None;
-        }
-
         public override void ActivateScenes()
         {
             if (m_worldLoadingAsyncOp != null)

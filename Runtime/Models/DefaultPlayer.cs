@@ -1,10 +1,8 @@
 ﻿namespace d4160.GameFramework
 {
-    using UnityEngine;
-
     [System.Serializable]
-    public class DefaultPlayer
+    public class DefaultPlayer : DefaultArchetype
     {
-        [SerializeField] protected string m_username;
+        // [SerializeField] protected string m_username; // The m_name is m_username
     }
 }

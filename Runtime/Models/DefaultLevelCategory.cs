@@ -1,19 +1,21 @@
-﻿namespace d4160.Levels
+﻿namespace d4160.GameFramework
 {
-    using d4160.GameFramework;
     using d4160.Core;
     using UnityEngine;
     using UnityExtensions;
     using UnityEngine.Serialization;
+  using System.Collections.Generic;
 
-    [System.Serializable]
-    public class DefaultLevelCategory : DefaultArchetype
+  [System.Serializable]
+    public class DefaultLevelCategory : DefaultArchetype, ILevelCategory
     {
         [InspectInline(canCreateSubasset = true, canEditRemoteTarget = true)]
         [FormerlySerializedAs("scenesSO")]
         [SerializeField] protected ScriptableObject m_scenesSO;
 
         public ScriptableObject ScenesSO => m_scenesSO;
+
+        public int SceneCount => SceneNames.Length;
 
         public string[] SceneNames
         {
@@ -34,9 +36,9 @@
             {
                 return eGetter.GetElementAt(index);
             }
-            else
+            /*else
             {
-                var wGetter = ScenesSO as IElementGetter<Worlds.DefaultWorld>;
+                var wGetter = ScenesSO as IElementGetter<DefaultWorld>;
                 if (wGetter != null)
                 {
                     var world = wGetter.GetElementAt(index);
@@ -45,9 +47,15 @@
                         return world.GetScene(0);
                     }
                 }
-            }
+            }*/
 
             return null;
         }
+    }
+
+    [System.Serializable]
+    public class DefaultSerializableLevelCategory : DefaultArchetype
+    {
+        public SerializableScene[] scenes;
     }
 }

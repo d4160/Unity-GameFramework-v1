@@ -1,6 +1,6 @@
 namespace d4160.GameFramework
 {
-    public interface ILevel
+    public interface ILevelLauncher
     {
         void Load(System.Action onCompleted = null);
 

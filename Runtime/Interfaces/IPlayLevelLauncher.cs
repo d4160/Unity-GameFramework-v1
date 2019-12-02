@@ -1,8 +1,6 @@
 namespace d4160.GameFramework
 {
-    using d4160.Levels;
-
-    public interface IPlayLevel : ILevel
+    public interface IPlayLevelLauncher : ILevelLauncher
     {
         PlayResult PlayResult { get; }
         PlayState PlayState { get; }

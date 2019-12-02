@@ -6,6 +6,7 @@
     public class DefaultPlayersSerializableData : BaseSerializableData, IStorageHelper
     {
         public DefaultPlayer[] players;
+
         public StorageHelperType StorageHelperType { get; set; }
 
         /// <summary>
@@ -13,6 +14,11 @@
         /// </summary>
         public DefaultPlayersSerializableData() : base()
         {
+        }
+
+        public DefaultPlayersSerializableData(DefaultPlayer[] elements) : base()
+        {
+            players = elements;
         }
 
         public virtual void Load(bool encrypted = false, System.Action onCompleted = null)

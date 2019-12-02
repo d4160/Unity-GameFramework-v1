@@ -5,5 +5,7 @@ namespace d4160.GameFramework
         TObject GetElementAt(int idx);
 
         TObject GetElementWith(int id);
+
+        int ElementCount { get; }
     }
 }

@@ -1,6 +1,5 @@
-﻿namespace d4160.Levels
+﻿namespace d4160.GameFramework
 {
-    using d4160.GameFramework;
     using UnityEngine;
 
     public class GameModeFlowController : MonoBehaviour, IGameModeFlowController

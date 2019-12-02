@@ -1,20 +1,14 @@
 ﻿namespace d4160.GameFramework
 {
-    using System.Linq;
+    using Malee;
     using UnityEngine;
-    using UnityEngine.GameFoundation;
     using UnityEngine.GameFoundation.DataPersistence;
 
-    [CreateAssetMenu(fileName = "New DefaultPlayTrials_SO.asset", menuName = "Game Framework/Game Data/Default Leaderboards")]
-    public class DefaultPlayTrialsSO : ReorderableSO<DefaultPlayTrialsReorderableArray, DefaultPlayTrial>
+    //[CreateAssetMenu(fileName = "New PlayTrials_SO.asset", menuName = "Game Framework/Game Data/Leaderboards")]
+    public abstract class DefaultPlayTrialsSO<T1, T2, T3> : ReorderableSO<T1, T2, T3>
+        where T1 : ReorderableArray<T2>
+        where T2 : new()
+        where T3 : BaseSerializableData
     {
-        public override void FillFromSerializableData(ISerializableData data)
-        {
-        }
-
-        public override ISerializableData GetSerializableData()
-        {
-            return null;
-        }
     }
 }

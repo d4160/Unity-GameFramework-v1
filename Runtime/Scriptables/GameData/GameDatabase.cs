@@ -11,7 +11,7 @@
     using UnityEngine;
     using UnityEngine.GameFoundation.DataPersistence;
 
-    [CreateAssetMenu(fileName = "GameFrameworkDatabase.asset", menuName = "Game Framework/Database")]
+    [CreateAssetMenu(fileName = "GameFrameworkDatabase.asset", menuName = "Game Framework/Game Database")]
     public class GameDatabase : ScriptableObject, IDataSerializationActions
     {
         protected IDataSerializationAdapter m_dataAdapter;
@@ -52,6 +52,33 @@
             return null;
         }
 
+        public string[] GetGameDataNames(int index)
+        {
+            var curr = this[index];
+            if (curr is IArchetypeNames)
+                return (curr as IArchetypeNames).ArchetypeNames;
+
+            return null;
+        }
+
+        public string[] GetSceneNames(int dataIndex, int catIndex)
+        {
+            var curr = this[dataIndex];
+            if (curr is ISceneNamesGetter)
+                return (curr as ISceneNamesGetter).GetSceneNames(catIndex);
+
+            return null;
+        }
+
+        public CategoryAndScene[] GetCategorizedScenes(int index)
+        {
+            var curr = this[index];
+            if (curr is ISceneNamesGetter)
+                return (curr as ISceneNamesGetter).GetCategorizedScenes();
+
+            return null;
+        }
+
         public ISerializableData GetSerializableData()
         {
             return DataAdapter.GetSerializableData();
@@ -74,41 +101,5 @@
         }
 
         public bool IsInitialized => m_gameData != null && m_gameData.Length > 0;
-
-        #region Editor Members
-#if UNITY_EDITOR
-        [Button]
-        protected virtual void CreateDefaultArchetypes()
-        {
-            var bindings = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static;
-            var fields = GetType().GetFields(bindings);
-
-            for (int i = 0; i < fields.Length; i++)
-            {
-                var value = fields[i].GetValue(this);
-                if (value is IArchetypeOperations)
-                {
-                    var archetypeInterface = value as IArchetypeOperations;
-                    var attrib = Attribute.GetCustomAttribute(
-                        fields[i], typeof(DefaultArchetypesAttribute));
-
-                    if (attrib != null)
-                    {
-                        var defArchetypesAttrib = attrib as DefaultArchetypesAttribute;
-
-                        if (defArchetypesAttrib.OnlyOnEmptyLists && archetypeInterface.Count != 0)
-                        {
-                            continue;
-                        }
-                        else
-                        {
-                            archetypeInterface.AddRange(defArchetypesAttrib.kValues);
-                        }
-                    }
-                }
-            }
-        }
-#endif
-        #endregion
     }
 }

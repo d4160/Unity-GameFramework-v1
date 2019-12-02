@@ -5,4 +5,11 @@
         string[] LevelCategoryNames { get; }
         string[] LevelSceneNames { get; }
     }
+
+    public interface ISceneNamesGetter
+    {
+        string[] GetSceneNames(int catIdx);
+
+        CategoryAndScene[] GetCategorizedScenes();
+    }
 }

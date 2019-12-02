@@ -1,7 +1,6 @@
 ﻿namespace d4160.GameFramework
 {
     using d4160.Core;
-    using d4160.Levels;
     using NaughtyAttributes;
     using Malee;
     using UnityEngine;
@@ -38,8 +37,8 @@
 
 #if UNITY_EDITOR
         #region Editor Use Members
-        protected string[] LevelCategoryNames => GameFrameworkSettings.GameDatabase.GetGameData<DefaultLevelCategoriesSO>(3).ArchetypeNames;
-        protected string[] GameModeCategoryNames => GameFrameworkSettings.GameDatabase.GetGameData<DefaultArchetypesSO>(1).ArchetypeNames;
+        protected string[] LevelCategoryNames => GameFrameworkSettings.GameDatabase.GetGameDataNames(3);
+        protected string[] GameModeCategoryNames => GameFrameworkSettings.GameDatabase.GetGameDataNames(1);
 
         protected bool IsCommonLevelTypeSelected()
         {
