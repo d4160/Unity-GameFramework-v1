@@ -11,7 +11,7 @@ namespace d4160.GameFramework
 
         public virtual T1 Elements => m_elements;
 
-        public int ElementCount => m_elements.Length;
+        public int ElementsCount => m_elements.Length;
 
         public virtual T2 GetElementAt(int idx)
         {

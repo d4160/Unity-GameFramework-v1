@@ -4,7 +4,7 @@
     using UnityEngine.GameFoundation.DataPersistence;
     using DataSerializerType = d4160.Systems.DataPersistence.DataSerializerType;
 
-    public class DefaultDataLoader : DataLoader
+    public class DefaultDataLoader : DataLoaderBase
     {
         public override void CreateDataPersistence()
         {

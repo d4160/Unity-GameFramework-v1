@@ -17,10 +17,10 @@
         };
 
         public static string[] EnumFiles => new string[]{
-            "ArchetypeEnum.cs", "GameModeEnum.cs", "WorldEnum.cs", "LevelCategoryEnum.cs", "LeaderboardsEnum.cs", "PlayersEnum.cs"
+            "ArchetypeEnum.cs", "GameModeEnum.cs", "WorldEnum.cs", "LevelCategoryEnum.cs", "PlayersEnum.cs", "LeaderboardsEnum.cs"
         };
 
-        [MenuItem("Window/Game Framework/Tools/Generate Game Data Constants", priority = 2000)]
+        [MenuItem("Window/Game Framework/Tools/Generate GameData Constants", priority = 2000)]
         public static void GenerateConstantsAndEnums()
         {
             GenerateConstants();
