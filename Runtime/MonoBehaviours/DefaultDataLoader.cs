@@ -24,7 +24,14 @@
                 break;
 
                 case DataPersistenceType.Local:
-                    dataPersistence = new DefaultLocalPersistence(serializer, m_encrypted, SaveToPlayerPrefs);
+                    if (m_persistenceTarget == DataPersistenceTarget.GameFoundation)
+                    {
+                        var dp  = new LocalPersistenceWithIdentifier(serializer, m_encrypted, SaveToPlayerPrefs);
+                        dp.SetIdentifier(Identifier);
+                        dataPersistence = dp;
+                    }
+                    else
+                        dataPersistence = new DefaultLocalPersistence(serializer, m_encrypted, SaveToPlayerPrefs);
                 break;
 
                 case DataPersistenceType.Remote:
@@ -128,6 +135,16 @@
                 case DataPersistenceTarget.AppSettings:
                     serializationAdapter = CreateSerializationAdapterForAppSettings(m_adapterType);
                 break;
+                case DataPersistenceTarget.GameFoundation:
+                    m_adapterType = DataSerializationAdapterType.Concrete;
+
+                    if (m_persistenceType == DataPersistenceType.PlayerPrefs)
+                        m_persistenceType = DataPersistenceType.Local;
+                    else if (m_persistenceType == DataPersistenceType.Remote)
+                        m_remoteStorageInOneEntry = true;
+
+                    serializationAdapter = CreateSerializationAdapterForGameFoundation();
+                break;
             }
 
             return serializationAdapter;
@@ -146,6 +163,11 @@
         protected virtual IDataSerializationAdapter CreateSerializationAdapterForAppSettings(DataSerializationAdapterType adapterType)
         {
             return new DefaultAppSettingsDataSerializationAdapter(m_adapterType);
+        }
+
+        protected virtual IDataSerializationAdapter CreateSerializationAdapterForGameFoundation()
+        {
+            return new GameFoundationSerializationAdapter();
         }
 
         protected override IDataSerializer CreateDataSerializer()
