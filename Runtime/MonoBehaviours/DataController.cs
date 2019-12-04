@@ -3,7 +3,6 @@
     using d4160.Core;
     using d4160.Systems.DataPersistence;
     using UnityEngine;
-    using UnityEngine.GameFoundation.DataPersistence;
 
     public abstract class DataController<T> : Singleton<T> where T : MonoBehaviour
     {
@@ -14,6 +13,6 @@
 
         //public abstract void SetData<T>(T data, int dataIdxOrId = 0) where T : class, ISerializableData;
 
-        public abstract T GetScriptable<T>(int dataIdxOrId = 0) where T : ScriptableObjectBase;
+        public abstract T GetScriptable<T>(int dataIdxOrId = 0) where T : ScriptableObject;
     }
 }
