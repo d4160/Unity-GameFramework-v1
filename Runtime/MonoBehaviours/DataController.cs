@@ -3,9 +3,11 @@
     using d4160.Core;
     using d4160.Systems.DataPersistence;
     using UnityEngine;
+    using UnityExtensions;
 
     public abstract class DataController<T> : Singleton<T> where T : MonoBehaviour
     {
+        [InspectInline]
         [SerializeField] protected DefaultDataLoader m_dataLoader;
 
         public DefaultDataLoader DataLoader => m_dataLoader;
