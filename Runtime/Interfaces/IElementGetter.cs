@@ -1,11 +1,21 @@
 namespace d4160.GameFramework
 {
-    public interface IElementGetter<TObject>
+    public interface IElementGetter<T>
     {
-        TObject GetElementAt(int idx);
+        T GetElementAt(int idx);
 
-        TObject GetElementWith(int id);
+        T GetElementWith(int id);
 
         int ElementsCount { get; }
+
+        void Add(T element);
+
+        void Remove(T element);
+
+        void Clear();
+
+        T[] GetAll();
+
+        void SetAll(T[] elements);
     }
 }

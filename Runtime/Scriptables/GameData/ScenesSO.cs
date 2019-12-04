@@ -25,12 +25,12 @@
             }
         }
 #endif
-        protected override void FillFromSerializableData(ScenesSerializableData data)
+        public override void Set(ScenesSerializableData data)
         {
 
         }
 
-        protected override ScenesSerializableData GetSerializableDataGeneric()
+        public override ScenesSerializableData Get()
         {
             return null;
         }

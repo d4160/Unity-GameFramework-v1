@@ -4,7 +4,9 @@ namespace d4160.GameFramework
     using Malee;
     using UnityEngine;
 
-    public abstract class ReorderableSO<T1, T2, T3> : ScriptableObjectBase<T3>, IElementGetter<T2>  where T1 : Malee.ReorderableArray<T2> where T3 : BaseSerializableData
+    public abstract class ReorderableSO<T1, T2, T3> : ScriptableObjectBase<T3>, IElementGetter<T2>  
+        where T1 : Malee.ReorderableArray<T2> 
+        where T3 : BaseSerializableData
     {
         [SerializeField][Reorderable(paginate = true, pageSize = 10)]
         protected T1 m_elements;
@@ -21,6 +23,31 @@ namespace d4160.GameFramework
         public virtual T2 GetElementWith(int id)
         {
             return default;
+        }
+
+        public virtual void Add(T2 element)
+        {
+            m_elements.Add(element);
+        }
+
+        public virtual void Remove(T2 element)
+        {
+            m_elements.Remove(element);
+        }
+
+        public virtual void Clear()
+        {
+            m_elements.Clear();
+        }
+
+        public virtual T2[] GetAll()
+        {
+            return m_elements.ToArray();
+        }
+
+        public virtual void SetAll(T2[] elements)
+        {
+            m_elements.CopyFrom(elements);
         }
     }
 }

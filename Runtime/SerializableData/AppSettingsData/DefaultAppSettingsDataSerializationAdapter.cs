@@ -18,7 +18,7 @@
                 return;
             }
 
-            var settings = GameFrameworkSettings.AppSettingsDatabase.Settings;
+            var settings = GameFrameworkSettings.AppSettingsDatabase.AppSettingsData;
 
             for (int i = 0; i < settings.Length; i++)
             {
@@ -35,7 +35,7 @@
 
         protected override ISerializableData GetSerializableDataForConcreteType(DefaultConcreteAppSettingsSerializableData data)
         {
-            var settings = GameFrameworkSettings.AppSettingsDatabase.Settings;
+            var settings = GameFrameworkSettings.AppSettingsDatabase.AppSettingsData;
 
             for (int i = 0; i < settings.Length; i++)
             {

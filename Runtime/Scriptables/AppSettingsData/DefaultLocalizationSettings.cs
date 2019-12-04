@@ -8,5 +8,28 @@
     {
         [SerializeField] protected SystemLanguage m_textLanguage;
         [SerializeField] protected SystemLanguage m_voiceLanguage;
+
+        public virtual SystemLanguage TextLanguage 
+        {
+            get => m_textLanguage;
+            set 
+            {
+                m_textLanguage = value;
+                ApplyTextLanguage();
+            }
+        }
+
+        public virtual SystemLanguage VoiceLanguage 
+        {
+            get => m_voiceLanguage;
+            set 
+            {
+                m_voiceLanguage = value;
+                ApplyVoiceLanguage();
+            }
+        }
+
+        public virtual void ApplyTextLanguage(){}
+        public virtual void ApplyVoiceLanguage(){}
     }
 }

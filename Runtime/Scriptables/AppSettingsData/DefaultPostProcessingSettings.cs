@@ -8,5 +8,39 @@
         [SerializeField] protected bool m_bloom;
         [SerializeField] protected bool m_colorGrading;
         [SerializeField] protected bool m_vignette;
+
+        public virtual bool Bloom 
+        {
+            get => m_bloom;
+            set 
+            {
+                m_bloom = value;
+                ApplyBloom();
+            }
+        }
+
+        public virtual bool ColorGrading 
+        {
+            get => m_colorGrading;
+            set 
+            {
+                m_colorGrading = value;
+                ApplyColorGrading();
+            }
+        }
+
+        public virtual bool Vignette 
+        {
+            get => m_vignette;
+            set 
+            {
+                m_vignette = value;
+                ApplyVignette();
+            }
+        }
+
+        public virtual void ApplyBloom(){}
+        public virtual void ApplyColorGrading(){}
+        public virtual void ApplyVignette(){}
     }
 }

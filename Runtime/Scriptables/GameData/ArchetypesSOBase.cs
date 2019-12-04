@@ -54,11 +54,6 @@ namespace d4160.GameFramework
             }
         }
 
-        public virtual void Clear()
-        {
-            m_elements.Clear();
-        }
-
         protected virtual IArchetype AddNew()
         {
             var newElement = new T2();
@@ -91,9 +86,9 @@ namespace d4160.GameFramework
         #endregion
 
         #region Other Methods
-        protected virtual void Add(T2 archetype)
+        public override void Add(T2 element)
         {
-            m_elements.Add(archetype);
+            base.Add(element);
 
             IterateIds();
         }

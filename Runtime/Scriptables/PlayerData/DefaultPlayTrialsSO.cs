@@ -10,5 +10,6 @@
         where T2 : new()
         where T3 : BaseSerializableData
     {
+        
     }
 }

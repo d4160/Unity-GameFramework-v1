@@ -38,7 +38,7 @@
 #endif
         #endregion
 
-        public int ResolutionIndex
+        public int Resolution
         {
             get => m_resolution;
             set
@@ -47,7 +47,44 @@
                     m_resolution = value;
                 else
                     m_resolution = Screen.resolutions.Length - 1;
+                
+                ApplyResolution();
             }
         }
+
+        public virtual FullScreenMode FullScreenMode 
+        {
+            get => m_fullScreenMode;
+            set 
+            {
+                m_fullScreenMode = value;
+                ApplyFullScreenMode();
+            }
+        }
+
+        public virtual int QualityLevel 
+        {
+            get => m_qualityLevel;
+            set 
+            {
+                m_qualityLevel = value;
+                ApplyQuality();
+            }
+        }
+
+        public virtual int VSyncCount 
+        {
+            get => m_vSyncCount;
+            set 
+            {
+                m_vSyncCount = value;
+                ApplyVSyncCount();
+            }
+        }
+
+        public virtual void ApplyResolution(){}
+        public virtual void ApplyFullScreenMode(){}
+        public virtual void ApplyQuality(){}
+        public virtual void ApplyVSyncCount(){}
     }
 }

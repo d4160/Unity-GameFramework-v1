@@ -24,17 +24,17 @@ namespace d4160.GameFramework
     {
         public override ISerializableData GetSerializableData()
         {
-            return GetSerializableDataGeneric();
+            return Get();
         }
 
-        protected abstract T GetSerializableDataGeneric();
+        public abstract T Get();
 
         public override void FillFromSerializableData(ISerializableData data)
         {
-            FillFromSerializableData(data as T);
+            Set(data as T);
         }
 
-        protected abstract void FillFromSerializableData(T data);
+        public abstract void Set(T data);
     }
 
     [System.Serializable]

@@ -35,7 +35,7 @@
                 return;
             }
 
-            var settings = GameFrameworkSettings.AppSettingsDatabase.Settings;
+            var settings = GameFrameworkSettings.AppSettingsDatabase.AppSettingsData;
             for (int i = 0; i < data.SerializableData.Length; i++)
             {
                 if (!settings.IsValidIndex(i)) break;
@@ -65,7 +65,7 @@
 
         protected virtual ISerializableData GetSerializableDataForGenericType(T1 data)
         {
-            var settings = GameFrameworkSettings.AppSettingsDatabase.Settings;
+            var settings = GameFrameworkSettings.AppSettingsDatabase.AppSettingsData;
             var serializableData = new BaseSerializableData[settings.Length];
 
             for (int i = 0; i < settings.Length; i++)

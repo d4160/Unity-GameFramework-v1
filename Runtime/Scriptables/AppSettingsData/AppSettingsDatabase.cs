@@ -14,9 +14,9 @@
 
         [SerializeField]
         [Reorderable(paginate = true, pageSize = 10)]
-        protected ScriptableObjectReorderableArray m_settings;
+        protected ScriptableObjectReorderableArray m_appSettingsData;
 
-        public ScriptableObjectReorderableArray Settings => m_settings;
+        public ScriptableObjectReorderableArray AppSettingsData => m_appSettingsData;
 
         public IDataSerializationAdapter DataAdapter
         {
@@ -33,8 +33,8 @@
         {
             get
             {
-                if (m_settings.IsValidIndex(index))
-                    return m_settings[index];
+                if (m_appSettingsData.IsValidIndex(index))
+                    return m_appSettingsData[index];
 
                 return null;
             }
@@ -70,6 +70,6 @@
             m_dataAdapter = null;
         }
 
-        public bool IsInitialized => m_settings != null && m_settings.Length > 0;
+        public bool IsInitialized => m_appSettingsData != null && m_appSettingsData.Length > 0;
     }
 }

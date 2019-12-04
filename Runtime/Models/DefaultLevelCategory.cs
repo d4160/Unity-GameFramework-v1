@@ -4,9 +4,9 @@
     using UnityEngine;
     using UnityExtensions;
     using UnityEngine.Serialization;
-  using System.Collections.Generic;
+    using System.Collections.Generic;
 
-  [System.Serializable]
+    [System.Serializable]
     public class DefaultLevelCategory : DefaultArchetype, ILevelCategory
     {
         [InspectInline(canCreateSubasset = true, canEditRemoteTarget = true)]
