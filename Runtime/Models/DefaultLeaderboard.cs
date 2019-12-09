@@ -20,10 +20,11 @@
 
         public StatDefinition Stat => StatManager.catalog.GetStatDefinitions()[m_stat];
 
-        public virtual bool Submit(string playerId, float value)
+        public virtual bool Submit(string playerId, float value, out int climbedPositions)
         {
             bool newEntry = false;
             bool newRecord = false;
+            int previousPos = 0;
             var updatedEntry = m_entries.FirstOrDefault(x => x.playerId == playerId);
             if(string.IsNullOrEmpty(updatedEntry.playerId))
             {
@@ -70,6 +71,7 @@
 
             if(newEntry)
             {
+                previousPos = m_entries.Count + 1;
                 m_entries.Add(updatedEntry);
             }
             else
@@ -81,6 +83,7 @@
                         if (m_entries[i].playerId == playerId)
                         {
                             m_entries[i] = updatedEntry;
+                            previousPos = i + 1;
                             break;
                         }
                     }
@@ -95,13 +98,26 @@
                     m_entries.Insert(0, last);
                 break;
                 case LeaderboardAggregationMethod.Minimum:
-                    m_entries = m_entries.OrderByDescending(x => x.value).ToList();
+                    m_entries = m_entries.OrderBy(x => x.value).ToList();
                 break;
                 case LeaderboardAggregationMethod.Maximun:
                 case LeaderboardAggregationMethod.Sum:
-                    m_entries = m_entries.OrderBy(x => x.value).ToList();
+                    m_entries = m_entries.OrderByDescending(x => x.value).ToList();
                 break;
             }
+
+            int updatedPos = 0;
+
+            for (int i = 0; i < m_entries.Count; i++)
+            {
+                if (m_entries[i].playerId == playerId)
+                {
+                    updatedPos = i + 1;
+                    break;
+                }
+            }
+
+            climbedPositions = previousPos - updatedPos;
 
             return newRecord;
         }
