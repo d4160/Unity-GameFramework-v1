@@ -5,7 +5,7 @@
     using UnityEngine;
     using UnityExtensions;
 
-    public abstract class DataController<T> : Singleton<T> where T : MonoBehaviour
+    public abstract class DataControllerBase<T> : Singleton<T> where T : MonoBehaviour
     {
         [InspectInline]
         [SerializeField] protected DefaultDataLoader m_dataLoader;

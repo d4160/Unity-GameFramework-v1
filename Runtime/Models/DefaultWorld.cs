@@ -16,12 +16,15 @@
         public int SceneCount => m_scenes.Length;
 
         public string[] SceneNames {
-            get {
+            get
+            {
                 var names = new string[m_scenes.Length];
+#if UNITY_EDITOR
                 for (int i = 0; i < names.Length; i++)
                 {
                     names[i] = m_scenes[i].SceneAsset.name;
                 }
+#endif
                 return names;
             }
         }
