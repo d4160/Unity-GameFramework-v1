@@ -3,6 +3,7 @@
     using Malee;
     using System.Linq;
     using UnityEngine.GameFoundation;
+    using d4160.Systems.DataPersistence;
 
     //[CreateAssetMenu(fileName = "New Leaderboards_SO.asset", menuName = "Game Framework/Game Data/Leaderboards")]
     public abstract class DefaultLeaderboardsSO<T1, T2, T3> : ArchetypesSOBase<T1, T2, T3>

@@ -1,7 +1,7 @@
 ﻿namespace d4160.GameFramework
 {
     using UnityEngine;
-    using UnityEngine.GameFoundation.DataPersistence;
+    using d4160.Systems.DataPersistence;
 
     //[CreateAssetMenu(fileName = "New DefaultAudio Settings_SO.asset", menuName = "Game Framework/App Settings/Default Audio")]
     public abstract class DefaultAudioSettings<T> : ScriptableObjectBase<T> where T :BaseSerializableData
@@ -13,40 +13,40 @@
         [Range(0, 1f)]
         [SerializeField] protected float m_sfxsVolume;
 
-        public virtual bool Music 
+        public virtual bool Music
         {
             get => m_music;
-            set 
+            set
             {
                 m_music = value;
                 ApplyMusic();
             }
         }
 
-        public virtual float MusicVolume 
+        public virtual float MusicVolume
         {
             get => m_musicVolume;
-            set 
+            set
             {
                 m_musicVolume = value;
                 ApplyMusicVolume();
             }
         }
 
-        public virtual bool Sfxs 
+        public virtual bool Sfxs
         {
             get => m_sfxs;
-            set 
+            set
             {
                 m_sfxs = value;
                 ApplySfxs();
             }
         }
 
-        public virtual float SfxsVolume 
+        public virtual float SfxsVolume
         {
             get => m_sfxsVolume;
-            set 
+            set
             {
                 m_sfxsVolume = value;
                 ApplySfxsVolume();

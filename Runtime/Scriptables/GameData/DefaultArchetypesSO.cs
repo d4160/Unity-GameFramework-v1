@@ -1,6 +1,7 @@
 namespace d4160.GameFramework
 {
     using Malee;
+    using d4160.Systems.DataPersistence;
 
     //[CreateAssetMenu(fileName = "New Archetypes_SO.asset", menuName = "Game Framework/Game Data/Archetypes")]
     public abstract class DefaultArchetypesSO<T1, T2, T3> : ArchetypesSOBase<T1, T2, T3>

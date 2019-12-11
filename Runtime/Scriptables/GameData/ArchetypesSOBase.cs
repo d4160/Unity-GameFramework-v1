@@ -1,7 +1,7 @@
 namespace d4160.GameFramework
 {
     using d4160.Core;
-    using Malee;
+    using d4160.Systems.DataPersistence;
     using System.Linq;
 
     public abstract class ArchetypesSOBase<T1, T2, T3>

@@ -3,8 +3,7 @@
     using UnityEngine;
     using d4160.Core;
     using d4160.Core.Attributes;
-    using DG.DeInspektor.Attributes;
-    using UnityEngine.GameFoundation.DataPersistence;
+    using d4160.Systems.DataPersistence;
 
     //[CreateAssetMenu(fileName = "New DefaultGraphics Settings_SO.asset", menuName = "Game Framework/App Settings/Default Graphics")]
     public abstract class DefaultGraphicsSettings<T> : ScriptableObjectBase<T> where T : BaseSerializableData
@@ -47,35 +46,35 @@
                     m_resolution = value;
                 else
                     m_resolution = Screen.resolutions.Length - 1;
-                
+
                 ApplyResolution();
             }
         }
 
-        public virtual FullScreenMode FullScreenMode 
+        public virtual FullScreenMode FullScreenMode
         {
             get => m_fullScreenMode;
-            set 
+            set
             {
                 m_fullScreenMode = value;
                 ApplyFullScreenMode();
             }
         }
 
-        public virtual int QualityLevel 
+        public virtual int QualityLevel
         {
             get => m_qualityLevel;
-            set 
+            set
             {
                 m_qualityLevel = value;
                 ApplyQuality();
             }
         }
 
-        public virtual int VSyncCount 
+        public virtual int VSyncCount
         {
             get => m_vSyncCount;
-            set 
+            set
             {
                 m_vSyncCount = value;
                 ApplyVSyncCount();

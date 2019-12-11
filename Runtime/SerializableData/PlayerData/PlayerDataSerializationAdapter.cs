@@ -5,7 +5,7 @@
     using UnityEngine;
     using UnityEngine.GameFoundation.DataPersistence;
 
-    public abstract class PlayerDataSerializationAdapter<T1, T2> : IDataSerializationAdapter where T1 : class, IGenericSerialiableData, new() where T2 : class, ISerializableData, new()
+    public abstract class PlayerDataSerializationAdapter<T1, T2> : IDataSerializationAdapter where T1 : class, IGenericSerializableData, new() where T2 : class, ISerializableData, new()
     {
         protected DataSerializationAdapterType m_dataType;
 

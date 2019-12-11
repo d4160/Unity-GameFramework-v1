@@ -1,6 +1,7 @@
 ﻿namespace d4160.GameFramework
 {
     using UnityEngine;
+    using d4160.Systems.DataPersistence;
 
     //[CreateAssetMenu(fileName = "New DefaultPostProcessing Settings_SO.asset", menuName = "Game Framework/App Settings/Default PostProcessing")]
     public abstract class DefaultPostProcessingSettings<T> : ScriptableObjectBase<T> where T : BaseSerializableData
@@ -9,30 +10,30 @@
         [SerializeField] protected bool m_colorGrading;
         [SerializeField] protected bool m_vignette;
 
-        public virtual bool Bloom 
+        public virtual bool Bloom
         {
             get => m_bloom;
-            set 
+            set
             {
                 m_bloom = value;
                 ApplyBloom();
             }
         }
 
-        public virtual bool ColorGrading 
+        public virtual bool ColorGrading
         {
             get => m_colorGrading;
-            set 
+            set
             {
                 m_colorGrading = value;
                 ApplyColorGrading();
             }
         }
 
-        public virtual bool Vignette 
+        public virtual bool Vignette
         {
             get => m_vignette;
-            set 
+            set
             {
                 m_vignette = value;
                 ApplyVignette();

@@ -9,7 +9,7 @@
     /// which JsonUtility can't support -> https://answers.unity.com/questions/1301570/doesnt-jsonutility-support-arrays-with-abstract-ty.html
     /// </summary>
     [System.Serializable]
-    public class DefaultPlayerSerializableData : IGenericSerialiableData
+    public class DefaultPlayerSerializableData : IGenericSerializableData
     {
         [SerializeField] protected BaseSerializableData[] m_playerData;
 
