@@ -38,12 +38,12 @@
 
         protected virtual void OnEnable()
         {
-            LoadingScreen.OnLoadCompleted += LoadingScreen_OnLoadCompleted;
+            LoadingScreenBase.OnLoadCompleted += LoadingScreen_OnLoadCompleted;
         }
 
         protected virtual void OnDisable()
         {
-            LoadingScreen.OnLoadCompleted -= LoadingScreen_OnLoadCompleted;
+            LoadingScreenBase.OnLoadCompleted -= LoadingScreen_OnLoadCompleted;
         }
         #endregion
 
