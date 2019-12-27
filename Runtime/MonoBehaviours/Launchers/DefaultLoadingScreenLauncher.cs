@@ -6,7 +6,6 @@
     using d4160.Systems.SceneManagement;
     using NaughtyAttributes;
 
-    [RequireComponent(typeof(UniRxAsyncEmptySceneLoader))]
     public abstract class DefaultLoadingScreenLauncher : DefaultLevelLauncher
     {
         [Header("LOAD LEVEL")]
@@ -20,7 +19,7 @@
 
 #if UNITY_EDITOR
         #region Other Editor Members
-        protected abstract string[] GameModeCategoriesNames { get; }
+        protected virtual string[] GameModeCategoriesNames => (GameFrameworkSettings.GameDatabase[1] as IArchetypeNames).ArchetypeNames;
 
         protected bool IsCommonLevelTypeSelected()
         {
@@ -67,6 +66,50 @@
                 m_generalLevelToLoad = level;
         }
 
-        /* TODO Set world and logic scenes methods */
+        protected override void LoadWorldScene(System.Action onCompleted = null)
+        {
+            var buildIndex = (GameFrameworkSettings.GameDatabase[2] as IWorldSceneGetter).GetSceneBuildIndex(m_worldScene);
+            if (buildIndex == -1)
+            {
+                LoadLevelScene(true, onCompleted);
+                return;
+            }
+
+            //Debug.Log($"WorldSceneName null?: {worldSceneName}");
+            m_sceneLoader.LoadSceneAsync(
+                buildIndex,
+                true,
+                null,
+                () => LoadLevelScene(false, onCompleted),
+                true,
+                null
+            );
+        }
+
+        protected override void LoadLevelScene(bool setActiveAsMainScene = false, System.Action onCompleted = null)
+        {
+            var buildIndex = (GameFrameworkSettings.GameDatabase[3] as ILevelSceneGetter).GetSceneBuildIndex(m_levelScene);
+
+            m_sceneLoader.LoadSceneAsync(
+                buildIndex,
+                setActiveAsMainScene,
+                null,
+                () => {
+                    var level = m_levelTypeToLoad == LevelType.General ? m_generalLevelToLoad : m_gameModeLevelToLoad;
+                    var loadinScreen = LoadingScreenBase.Instance;
+                    GameManager.Instance.LoadLevel(m_levelTypeToLoad, level);
+                    loadinScreen.StartLoad();
+
+                    onCompleted?.Invoke();
+                },
+                true,
+                null
+            );
+        }
+
+        public override void Unload(System.Action onCompleted = null)
+        {
+            m_sceneLoader.UnloadAllLoadedScenes(onCompleted);
+        }
     }
 }

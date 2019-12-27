@@ -3,10 +3,9 @@
     using d4160.Core;
     using UnityEngine;
     using UnityExtensions;
-    using d4160.Systems.SceneManagement;
     using d4160.Core.Attributes;
+    using d4160.UI;
 
-    [RequireComponent(typeof(UniRxAsyncEmptySceneLoader))]
     public abstract class DefaultPlayLauncher : PlayLevelLauncher
     {
         #region Serialized Fields
@@ -268,6 +267,110 @@
             loadingLauncher.SetLevelToLoad(LevelType.GameMode, LauncherIndex);
 
             GameManager.Instance.LoadLevel(LevelType.General, 0);
+        }
+        #endregion
+
+        #region ILevel Implementation
+        public override void Load(System.Action onCompleted = null)
+        {
+            m_playState = PlayState.Loading;
+
+            /* If the GameManager is faster than this */
+            Initialize();
+
+            LoadWorldScene(onCompleted);
+        }
+
+        protected virtual void LoadWorldScene(System.Action onCompleted = null)
+        {
+            var chapter = CurrentChapter;
+            if (chapter == null) return;
+
+            var buildIndex = (GameFrameworkSettings.GameDatabase[2] as IWorldSceneGetter).GetSceneBuildIndex(chapter.WorldScene);
+            if (buildIndex == -1)
+            {
+                LoadPlayScene(true, onCompleted);
+                return;
+            }
+
+            m_sceneLoader.LoadSceneAsync(
+                buildIndex,
+                true,
+                (ao) => m_worldLoadingAsyncOp = ao,
+                null,
+                false,
+                (p) => {
+                    if (p >= 0.9f)
+                    {
+                        if (!m_playSceneLoading)
+                        {
+                            LoadPlayScene(false, onCompleted);
+                            m_playSceneLoading = true;
+                        }
+                    }
+                    else
+                    {
+                        if (LoadingScreenBase.Instanced)
+                            LoadingScreenBase.Instance.SetLoadingProgress(p);
+                    }
+                }
+            );
+        }
+
+        protected virtual void LoadPlayScene(bool setActiveAsMainScene = false, System.Action onCompleted = null)
+        {
+            var chapter = CurrentChapter;
+            if (chapter == null) return;
+
+            var buildIndex = (GameFrameworkSettings.GameDatabase[3] as ILevelSceneGetter).GetSceneBuildIndex(chapter.LevelScene);
+
+            m_sceneLoader.LoadSceneAsync(
+                buildIndex,
+                setActiveAsMainScene,
+                (ao) => m_playLoadingAsyncOp = ao,
+                () => {
+                    onCompleted?.Invoke();
+                    SetReadyToPlay();
+                },
+                false,
+                (p) => {
+                    if (p < 0.9f)
+                    {
+                        if (LoadingScreenBase.Instanced)
+                            LoadingScreenBase.Instance.SetLoadingProgress(p);
+                    }
+                    else
+                    {
+                        if (!m_loadingCompleted)
+                        {
+                            if (LoadingScreenBase.Instanced)
+                                LoadingScreenBase.Instance.SetAsLoadCompleted();
+                            else
+                                ActivateScenes();
+
+                            m_loadingCompleted = true;
+                        }
+                    }
+                }
+            );
+        }
+
+        public override void Unload(System.Action onCompleted = null)
+        {
+            m_loadingCompleted = false;
+            m_playSceneLoading = false;
+
+            m_worldLoadingAsyncOp = null;
+            m_playLoadingAsyncOp = null;
+
+            m_sceneLoader.UnloadAllLoadedScenes(() => {
+
+                Time.timeScale = 1;
+
+                m_playState = PlayState.None;
+
+                onCompleted.Invoke();
+            });
         }
         #endregion
     }

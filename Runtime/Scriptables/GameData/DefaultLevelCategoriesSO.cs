@@ -7,7 +7,7 @@
     using d4160.Systems.DataPersistence;
 
     //[CreateAssetMenu(fileName = "New LevelCategories_SO", menuName = "Game Framework/Game Data/LevelCategories")]
-    public abstract class DefaultLevelCategoriesSO<T1, T2, T3> : ArchetypesSOBase<T1, T2, T3>, ISceneNamesGetter
+    public abstract class DefaultLevelCategoriesSO<T1, T2, T3> : ArchetypesSOBase<T1, T2, T3>, ISceneNamesGetter, ILevelSceneGetter
         where T1 : ReorderableArray<T2>
         where T2 : ILevelCategory, IArchetype, new()
         where T3 : BaseSerializableData
@@ -66,7 +66,7 @@
             return levelScene == null ? string.Empty : levelScene.ScenePath;
         }
 
-        private SceneReference GetSceneReference(LevelScene lScene)
+        public SceneReference GetSceneReference(LevelScene lScene)
         {
             var levelCategory = GetElementAt(lScene.levelCategory);
             var levelScene = levelCategory?.GetScene(lScene.levelScene);

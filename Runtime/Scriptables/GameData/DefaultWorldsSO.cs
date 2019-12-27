@@ -6,7 +6,7 @@
     using d4160.Systems.DataPersistence;
 
     //[CreateAssetMenu(fileName = "New Worlds_SO", menuName = "Game Framework/Game Data/Worlds")]
-    public abstract class DefaultWorldsSO<T1, T2, T3> : ArchetypesSOBase<T1, T2, T3>, ISceneNamesGetter
+    public abstract class DefaultWorldsSO<T1, T2, T3> : ArchetypesSOBase<T1, T2, T3>, ISceneNamesGetter, IWorldSceneGetter
         where T1 : ReorderableArray<T2>
         where T2 : IArchetype, ILevelCategory, new()
         where T3 : BaseSerializableData
@@ -61,7 +61,7 @@
             return worldScene == null ? string.Empty : worldScene.ScenePath;
         }
 
-        private SceneReference GetSceneReference(WorldScene wScene)
+        public SceneReference GetSceneReference(WorldScene wScene)
         {
             var world = GetElementAt(wScene.world);
             var worldScene = world?.GetScene(wScene.worldScene);
