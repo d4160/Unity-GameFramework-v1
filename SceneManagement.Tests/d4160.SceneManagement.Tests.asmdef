@@ -1,0 +1,18 @@
+{
+    "name": "d4160.SceneManagement.Tests",
+    "references": [
+        "GUID:5653d8b3e7f8cbf429aeb4ce87d3584b",
+        "GUID:84651a3751eca9349aac36a66bba901b"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

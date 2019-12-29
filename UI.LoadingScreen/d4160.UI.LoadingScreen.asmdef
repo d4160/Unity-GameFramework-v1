@@ -1,0 +1,20 @@
+{
+    "name": "d4160.UI.LoadingScreen",
+    "references": [
+        "GUID:abd02ea2a3d741f48b1c16eb7025fec5",
+        "GUID:5653d8b3e7f8cbf429aeb4ce87d3584b",
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:776d03a35f1b52c4a9aed9f56d7b4229",
+        "GUID:8a35b685373ded64ab9e7f33d0dd8216",
+        "GUID:c956f17f16aa645919b704d986429054"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
