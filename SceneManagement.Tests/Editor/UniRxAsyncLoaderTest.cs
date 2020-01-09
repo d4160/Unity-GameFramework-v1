@@ -1,5 +1,5 @@
 ﻿/*
-namespace d4160.Systems.SceneManagement.Tests
+namespace d4160.SceneManagement.Tests
 {
     using d4160.Game;
     using d4160.Levels;

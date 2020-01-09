@@ -1,4 +1,4 @@
-﻿namespace d4160.Systems.SceneManagement
+﻿namespace d4160.SceneManagement
 {
     using System;
     using System.Collections.Generic;
@@ -6,9 +6,11 @@
 
     public class DefaultEmptySceneLoader : IAsyncSceneLoader
     {
-        private List<int> _loadedScenes = new List<int>();
+        public virtual bool NetworkingSyncLoad { get; } = false;
 
-        public void LoadSceneAsync(
+        protected List<int> m_loadedScenes = new List<int>();
+
+        public virtual void LoadSceneAsync(
             int buildIdx,
             bool setActiveAsMainScene = false,
             Action<AsyncOperation> onStarted = null,
@@ -19,17 +21,19 @@
             if (buildIdx == -1)
                 return;
 
-            if (!_loadedScenes.Contains(buildIdx))
-                _loadedScenes.Add(buildIdx);
+            if (!m_loadedScenes.Contains(buildIdx))
+                m_loadedScenes.Add(buildIdx);
             else
                 return;
 
+            //Debug.Log($"Networking load: {NetworkingSyncLoad}");
+            SceneManagementSingleton.Instance.NetworkingSyncLoad = NetworkingSyncLoad;
             SceneManagementSingleton.Instance.LoadSceneAsync(
                 buildIdx, setActiveAsMainScene, onStarted,
                 onCompleted, allowSceneActivation, onProgress);
         }
 
-        public void UnloadSceneAsync(
+        public virtual void UnloadSceneAsync(
             int buildIdx,
             Action onCompleted = null)
         {
@@ -39,19 +43,25 @@
             if (SceneManagementSingleton.IsSceneInBackground(buildIdx))
                 return;
 
-            _loadedScenes.Remove(buildIdx);
+            m_loadedScenes.Remove(buildIdx);
 
             SceneManagementSingleton.UnloadSceneAsync(buildIdx, onCompleted);
         }
 
-        public void UnloadAllLoadedScenes(Action onCompleted = null)
+        public virtual void UnloadAllLoadedScenes(Action onCompleted = null)
         {
-            for (int i = _loadedScenes.Count - 1; i >= 0; i--)
+            if (m_loadedScenes.Count == 0)
+            {
+                onCompleted?.Invoke();
+                return;
+            }
+
+            for (int i = m_loadedScenes.Count - 1; i >= 0; i--)
             {
                 if (onCompleted != null && i == 0)
-                    UnloadSceneAsync(_loadedScenes[i], onCompleted);
+                    UnloadSceneAsync(m_loadedScenes[i], onCompleted);
                 else
-                    UnloadSceneAsync(_loadedScenes[i]);
+                    UnloadSceneAsync(m_loadedScenes[i]);
             }
         }
     }

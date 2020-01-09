@@ -1,8 +1,8 @@
 ﻿namespace d4160.GameFramework
 {
-    using d4160.Systems.DataPersistence;
+    using d4160.DataPersistence;
     using UnityEngine.GameFoundation.DataPersistence;
-    using DataSerializerType = d4160.Systems.DataPersistence.DataSerializerType;
+    using DataSerializerType = DataPersistence.DataSerializerType;
 
     public class DefaultDataLoader : DataLoaderBase
     {

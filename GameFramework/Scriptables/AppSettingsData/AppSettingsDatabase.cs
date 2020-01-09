@@ -1,11 +1,10 @@
 ﻿namespace d4160.GameFramework
 {
     using d4160.Core;
-    using d4160.Systems.DataPersistence;
+    using d4160.DataPersistence;
     using Malee;
     using UnityEngine;
     using UnityEngine.GameFoundation.DataPersistence;
-    using UnityExtensions;
 
     [CreateAssetMenu(fileName = "AppSettingsDatabase.asset", menuName = "Game Framework/App Database")]
     public class AppSettingsDatabase : ScriptableObject, IDataSerializationActions

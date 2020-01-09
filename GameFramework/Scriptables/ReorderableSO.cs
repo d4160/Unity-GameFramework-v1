@@ -3,10 +3,10 @@ namespace d4160.GameFramework
     using d4160.Core;
     using Malee;
     using UnityEngine;
-    using d4160.Systems.DataPersistence;
+    using d4160.DataPersistence;
 
     public abstract class ReorderableSO<T1, T2, T3> : ScriptableObjectBase<T3>, IElementGetter<T2>
-        where T1 : Malee.ReorderableArray<T2>
+        where T1 : ReorderableArray<T2>
         where T3 : BaseSerializableData
     {
         [SerializeField][Reorderable(paginate = true, pageSize = 10)]

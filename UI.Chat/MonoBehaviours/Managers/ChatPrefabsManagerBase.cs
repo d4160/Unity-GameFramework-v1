@@ -1,10 +1,15 @@
-﻿namespace d4160.UI
+﻿namespace d4160.UI.Chat
 {
-    using UnityEngine;
-    using d4160.Core;
+    using Core;
 
     public class ChatPrefabsManagerBase : PrefabManagerBase<ChatPrefabsManagerBase, ChatUIBase>
     {
-
+        public override void SetInstanced(ChatUIBase instanced)
+        {
+            if (m_instancedMain && m_instancedMain != instanced)
+                Destroy(instanced.gameObject);
+            else
+                m_instancedMain = instanced;
+        }
     }
 }

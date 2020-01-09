@@ -1,6 +1,6 @@
 ﻿namespace d4160.GameFramework
 {
-    using d4160.Systems.DataPersistence;
+    using DataPersistence;
 
     [System.Serializable]
     public class ScenesSerializableData : BaseSerializableData, IStorageHelper

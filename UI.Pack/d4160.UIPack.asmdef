@@ -1,0 +1,17 @@
+{
+    "name": "d4160.UIPack",
+    "references": [
+        "GUID:abd02ea2a3d741f48b1c16eb7025fec5",
+        "GUID:c956f17f16aa645919b704d986429054",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

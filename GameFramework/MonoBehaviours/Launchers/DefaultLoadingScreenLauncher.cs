@@ -1,24 +1,28 @@
 ﻿namespace d4160.GameFramework
 {
-    using d4160.GameFramework;
-    using d4160.UI;
+    using d4160.UI.Loading;
     using UnityEngine;
-    using d4160.Systems.SceneManagement;
+#if NAUGHTY_ATTRIBUTES
     using NaughtyAttributes;
+#endif
 
     public abstract class DefaultLoadingScreenLauncher : DefaultLevelLauncher
     {
         [Header("LOAD LEVEL")]
         [SerializeField] protected LevelType m_levelTypeToLoad;
+#if NAUGHTY_ATTRIBUTES
         [ShowIf("IsCommonLevelTypeSelected")]
+#endif
         [d4160.Core.Attributes.Dropdown("BootLoader", "PlayLogic", ValuesProperty = "LevelCategoryNames")]
         [SerializeField] protected int m_generalLevelToLoad;
+#if NAUGHTY_ATTRIBUTES
         [ShowIf("IsGameModeLevelTypeSelected")]
+#endif
         [d4160.Core.Attributes.Dropdown(ValuesProperty = "GameModeCategoriesNames")]
         [SerializeField] protected int m_gameModeLevelToLoad;
 
 #if UNITY_EDITOR
-        #region Other Editor Members
+#region Other Editor Members
         protected virtual string[] GameModeCategoriesNames => (GameFrameworkSettings.GameDatabase[1] as IArchetypeNames).ArchetypeNames;
 
         protected bool IsCommonLevelTypeSelected()
@@ -30,10 +34,10 @@
         {
             return m_levelTypeToLoad == LevelType.GameMode;
         }
-        #endregion
+#endregion
 #endif
 
-        #region Unity Callbacks
+#region Unity Callbacks
 
         protected virtual void OnEnable()
         {
@@ -44,9 +48,9 @@
         {
             LoadingScreenBase.OnLoadCompleted -= LoadingScreen_OnLoadCompleted;
         }
-        #endregion
+#endregion
 
-        #region Events Callbacks
+#region Events Callbacks
         protected virtual void LoadingScreen_OnLoadCompleted()
         {
             var level = m_levelTypeToLoad == LevelType.General ? m_generalLevelToLoad : m_gameModeLevelToLoad;
@@ -55,7 +59,7 @@
             // LoadingScreen level is the first (0)
             GameManager.Instance.UnloadLevel(LevelType.General, 0);
         }
-        #endregion
+#endregion
 
         public virtual void SetLevelToLoad(LevelType levelType, int level)
         {

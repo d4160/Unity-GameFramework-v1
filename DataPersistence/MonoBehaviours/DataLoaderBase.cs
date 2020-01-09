@@ -1,9 +1,11 @@
-﻿namespace d4160.Systems.DataPersistence
+﻿namespace d4160.DataPersistence
 {
     using UnityEngine;
     using UnityEngine.GameFoundation.DataPersistence;
     using UnityExtensions;
+#if NAUGHTY_ATTRIBUTES
     using NaughtyAttributes;
+#endif
 
     public abstract class DataLoaderBase : MonoBehaviour
     {
@@ -13,35 +15,51 @@
         [SerializeField] protected DataPersistenceType m_persistenceType = DataPersistenceType.Local;
         [SerializeField] protected bool m_encrypted;
 
+#if NAUGHTY_ATTRIBUTES
         [ShowIf("IsDataPersistenceLocal")]
+#endif
         [SerializeField] protected SaveDataPath m_saveDataFolder;
 
+#if NAUGHTY_ATTRIBUTES
         [ShowIf(ConditionOperator.And, "IsDataPersistenceLocal", "IsNotSavePathPlayerPrefs")]
+#endif
         [SerializeField] protected string m_fileName;
 
+#if NAUGHTY_ATTRIBUTES
         [ShowIf(ConditionOperator.And, "IsDataPersistenceLocal", "IsNotSavePathPlayerPrefs")]
+#endif
         [SerializeField] protected string m_fileExtension;
 
+#if NAUGHTY_ATTRIBUTES
         [ShowIf("IsDataPersistenceRemote")]
+#endif
         [SerializeField] protected RemotePersistenceType m_remotePersistenceType = RemotePersistenceType.PlayFab;
 
+#if NAUGHTY_ATTRIBUTES
         [ShowIf("IsDataPersistenceRemote")]
+#endif
         [Tooltip("Otherwise split in many entries like playerprefs")]
         [SerializeField] protected bool m_remoteStorageInOneEntry;
 
+#if NAUGHTY_ATTRIBUTES
         [ShowIf("AvailableToUseKey")]
+#endif
         [SerializeField] protected string m_key;
 
+#if NAUGHTY_ATTRIBUTES
         [ShowIf("AvailableToUseSerializer")]
+#endif
         [SerializeField] protected DataSerializerType m_serializerType = DataSerializerType.Odin;
 
+#if NAUGHTY_ATTRIBUTES
         [ShowIf("AvailableToChoiceAdapter")]
+#endif
         [SerializeField] protected DataSerializationAdapterType m_adapterType = DataSerializationAdapterType.Generic;
 
         protected IDataPersistence m_dataPersistence;
         protected IDataSerializationAdapter m_dataSerializationAdapter;
 
-        #region Editor Only
+#region Editor Only
 #if UNITY_EDITOR
         protected bool IsNotDataPersistenceTargetGameFoundation => m_persistenceTarget != DataPersistenceTarget.GameFoundation;
         protected bool IsDataPersistenceLocaOrRemote => IsDataPersistenceLocal || IsDataPersistenceRemote;
@@ -53,7 +71,7 @@
                                             (IsDataPersistenceLocal ||
                                             (IsDataPersistenceRemote && m_remoteStorageInOneEntry));
 #endif
-        #endregion
+#endregion
 
         protected bool IsDataPersistenceLocal => m_persistenceType == DataPersistenceType.Local;
         protected bool IsDataPersistenceRemote => m_persistenceType == DataPersistenceType.Remote;

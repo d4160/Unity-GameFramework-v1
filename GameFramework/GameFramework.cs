@@ -1,7 +1,7 @@
 namespace d4160.GameFramework
 {
     using System;
-    using d4160.Systems.DataPersistence;
+    using d4160.DataPersistence;
     using UnityEngine;
     using UnityEngine.GameFoundation.DataPersistence;
 
@@ -174,7 +174,7 @@ namespace d4160.GameFramework
                         onLoadFailed?.Invoke();
                     }
                 },
-                () => { onLoadFailed?.Invoke(); });
+                (e) => { onLoadFailed?.Invoke(); });
         }
 
         private static void FillAppSettingsData(ISerializableData data)
@@ -208,7 +208,7 @@ namespace d4160.GameFramework
             }
 
             var appSettingsData = GameFrameworkSettings.AppSettingsDatabase.GetSerializableData();
-            dataPersistence.Save(m_AppSettingsDataPath, appSettingsData, onSaveCompleted, onSaveFailed);
+            dataPersistence.Save(m_AppSettingsDataPath, appSettingsData, onSaveCompleted, (e) => onSaveFailed.Invoke());
         }
         #endregion
 
@@ -352,7 +352,7 @@ namespace d4160.GameFramework
                         onLoadFailed?.Invoke();
                     }
                 },
-                () => { onLoadFailed?.Invoke(); });
+                (e) => { onLoadFailed?.Invoke(); });
         }
 
         private static void FillGameData(ISerializableData data)
@@ -386,7 +386,7 @@ namespace d4160.GameFramework
             }
 
             var gameData = GameFrameworkSettings.GameDatabase.GetSerializableData();
-            dataPersistence.Save(m_GameDataPath, gameData, onSaveCompleted, onSaveFailed);
+            dataPersistence.Save(m_GameDataPath, gameData, onSaveCompleted, (e) => onSaveFailed.Invoke());
         }
         #endregion
 
@@ -530,7 +530,7 @@ namespace d4160.GameFramework
                         onLoadFailed?.Invoke();
                     }
                 },
-                () => { onLoadFailed?.Invoke(); });
+                (e) => { onLoadFailed?.Invoke(); });
         }
 
         private static void FillPlayerData(ISerializableData data)
@@ -564,7 +564,7 @@ namespace d4160.GameFramework
             }
 
             var PlayerData = GameFrameworkSettings.PlayerDatabase.GetSerializableData();
-            dataPersistence.Save(m_PlayerDataPath, PlayerData, onSaveCompleted, onSaveFailed);
+            dataPersistence.Save(m_PlayerDataPath, PlayerData, onSaveCompleted, (e) => onSaveFailed.Invoke());
         }
         #endregion
     }

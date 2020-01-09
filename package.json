@@ -14,8 +14,7 @@
     "name": "d4160(Maranatha2031)"
   },
   "dependencies":{
-    "d4160.game-framework-core": "0.1.0",
-    "com.github.anchan828.property-drawer-collection": "1.0.0"
+    "d4160.game-framework-core": "0.1.0"
   },
   "repository": {
     "type": "git",
@@ -23,9 +22,14 @@
   },
   "samples": [
     {
-      "displayName": "LoadingScreen Prefabs",
-      "description": "LoadingScreen Prefabs.",
-      "path": "Samples~/LoadingScreen Prefabs"
+      "displayName": "Michsky LoadingScreen Prefabs",
+      "description": "Michsky LoadingScreen Prefabs.",
+      "path": "Samples~/Michsky LoadingScreen Prefabs"
+    },
+    {
+      "displayName": "Michsky Modern UI Pack",
+      "description": "Michsky Modern UI Pack.",
+      "path": "Samples~/Michsky Modern UI Pack"
     }
   ]
 }

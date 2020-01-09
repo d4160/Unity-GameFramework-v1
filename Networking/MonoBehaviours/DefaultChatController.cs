@@ -1,4 +1,4 @@
-﻿namespace d4160.Systems.Networking
+﻿namespace d4160.Networking
 {
     using UnityEngine;
     using UnityEngine.UI;

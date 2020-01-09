@@ -1,6 +1,5 @@
-namespace d4160.Systems.DataPersistence
+namespace d4160.DataPersistence
 {
-    using d4160.Systems.DataPersistence;
     using Malee;
     using UnityEngine;
     using UnityEngine.GameFoundation.DataPersistence;

@@ -1,10 +1,9 @@
-﻿namespace d4160.Systems.Networking
+﻿namespace d4160.Networking
 {
 	using System.Collections.Generic;
-	using UnityEngine.UI;
 	using UnityEngine;
 	using UnityEngine.Events;
-	using d4160.UI;
+	using UI.Chat;
 
 	public abstract class ChatControllerBase : MonoBehaviour
 	{
@@ -58,37 +57,37 @@
 
 		protected virtual void Awake()
 		{
-				CreateChatProvider();
+			CreateChatProvider();
 
-				m_chatProvider.UseCustomAuth = m_allowCustomAuthentication;
+			m_chatProvider.UseCustomAuth = m_allowCustomAuthentication;
 		}
 
 		protected virtual void OnEnable()
 		{
-				m_chatProvider.OnConnectedAction += OnConnected;
-				m_chatProvider.OnDisconnectedAction += OnDisconnected;
-				m_chatProvider.OnSubscribedAction += OnSubscribed;
-				m_chatProvider.OnUnsubscribedAction += OnUnsubscribed;
-				m_chatProvider.OnGetMessagesAction += OnGetMessages;
-				m_chatProvider.OnPrivateMessageAction += OnPrivateMessage;
-			  m_chatProvider.OnStatusUpdateAction += OnStatusUpdate;
-				m_chatProvider.OnUserSubscribedAction += OnUserSubscribed;
-				m_chatProvider.OnUserUnsubscribedAction += OnUserUnsubscribed;
-				m_chatProvider.OnChatStateChangedAction += OnChatStateChange;
+			m_chatProvider.OnConnectedAction += OnConnected;
+			m_chatProvider.OnDisconnectedAction += OnDisconnected;
+			m_chatProvider.OnSubscribedAction += OnSubscribed;
+			m_chatProvider.OnUnsubscribedAction += OnUnsubscribed;
+			m_chatProvider.OnGetMessagesAction += OnGetMessages;
+			m_chatProvider.OnPrivateMessageAction += OnPrivateMessage;
+		    m_chatProvider.OnStatusUpdateAction += OnStatusUpdate;
+			m_chatProvider.OnUserSubscribedAction += OnUserSubscribed;
+			m_chatProvider.OnUserUnsubscribedAction += OnUserUnsubscribed;
+			m_chatProvider.OnChatStateChangedAction += OnChatStateChange;
 		}
 
 		protected virtual void OnDisable()
 		{
-				m_chatProvider.OnConnectedAction -= OnConnected;
-				m_chatProvider.OnDisconnectedAction -= OnDisconnected;
-				m_chatProvider.OnSubscribedAction -= OnSubscribed;
-				m_chatProvider.OnUnsubscribedAction -= OnUnsubscribed;
-				m_chatProvider.OnGetMessagesAction -= OnGetMessages;
-				m_chatProvider.OnPrivateMessageAction -= OnPrivateMessage;
-				m_chatProvider.OnStatusUpdateAction -= OnStatusUpdate;
-				m_chatProvider.OnUserSubscribedAction -= OnUserSubscribed;
-				m_chatProvider.OnUserUnsubscribedAction -= OnUserUnsubscribed;
-				m_chatProvider.OnChatStateChangedAction -= OnChatStateChange;
+			m_chatProvider.OnConnectedAction -= OnConnected;
+			m_chatProvider.OnDisconnectedAction -= OnDisconnected;
+			m_chatProvider.OnSubscribedAction -= OnSubscribed;
+			m_chatProvider.OnUnsubscribedAction -= OnUnsubscribed;
+			m_chatProvider.OnGetMessagesAction -= OnGetMessages;
+			m_chatProvider.OnPrivateMessageAction -= OnPrivateMessage;
+			m_chatProvider.OnStatusUpdateAction -= OnStatusUpdate;
+			m_chatProvider.OnUserSubscribedAction -= OnUserSubscribed;
+			m_chatProvider.OnUserUnsubscribedAction -= OnUserUnsubscribed;
+			m_chatProvider.OnChatStateChangedAction -= OnChatStateChange;
 		}
 
 		protected virtual void Start()
@@ -200,18 +199,18 @@
 			{
 				m_chatProvider.Connect(m_clientVersion);
 
-				Debug.Log("Connecting to chat as: " + m_chatProvider.Username);
+                Debug.Log("Connecting to chat as: " + m_chatProvider.Username);
 			}
 		}
 
 		public virtual void Disconnect()
 		{
-				if (m_chatProvider != null)
-				{
-						m_chatProvider.Disconnect();
+			if (m_chatProvider != null)
+			{
+				m_chatProvider.Disconnect();
 
-						Debug.Log("Disconnecting from chat as: " + m_chatProvider.Username);
-				}
+				Debug.Log("Disconnecting from chat as: " + m_chatProvider.Username);
+			}
 		}
 
 		#region MonoBehaviour callbacks

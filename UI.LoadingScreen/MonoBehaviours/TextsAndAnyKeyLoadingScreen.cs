@@ -1,7 +1,9 @@
-﻿namespace d4160.UI
+﻿namespace d4160.UI.Loading
 {
     using d4160.Core;
+#if NAUGHTY_ATTRIBUTES
     using NaughtyAttributes;
+#endif
     using UnityEngine;
     using UnityEngine.UI;
 #if UNITY_INPUT_SYSTEM
@@ -12,40 +14,64 @@
     {
         [Header("TITLES")]
         public bool enableTitle;
+#if NAUGHTY_ATTRIBUTES
         [ShowIf("enableTitle")]
+#endif
         public Text title;
+#if NAUGHTY_ATTRIBUTES
         [ShowIf("enableTitle")]
+#endif
         public string titleText;
         public bool enableTitleDesc = true;
+#if NAUGHTY_ATTRIBUTES
         [ShowIf("enableTitleDesc")]
+#endif
         public Text titleDescription;
+#if NAUGHTY_ATTRIBUTES
         [ShowIf("enableTitleDesc")]
+#endif
         public string titleDescText;
 
         [Header("PROGRESS")]
         public bool enableProgress;
+#if NAUGHTY_ATTRIBUTES
         [ShowIf("enableProgress")]
+#endif
         public Text progress;
         public bool enableProgressBar;
+#if NAUGHTY_ATTRIBUTES
         [ShowIf("enableProgressBar")]
+#endif
         public GameObject progressBar;
 
         [Header("HINTS")]
         public bool enableHints;
+#if NAUGHTY_ATTRIBUTES
         [ShowIf("enableHints")]
+#endif
         public Text hintsText;
+#if NAUGHTY_ATTRIBUTES
         [ShowIf("enableHints")]
+#endif
         public string[] hintList;
+#if NAUGHTY_ATTRIBUTES
         [ShowIf("enableHints")]
+#endif
         public bool useRandomHint = true;
+#if NAUGHTY_ATTRIBUTES
         [ShowIf("enableHints")]
+#endif
         public bool changeHintWithTimer;
+#if NAUGHTY_ATTRIBUTES
         [ShowIf(ConditionOperator.And, "enableHints", "changeHintWithTimer")]
+#endif
         public float hintTimerValue = 5;
 
         [Header("PRESS ANY KEY")]
         public bool enablePressAnyKey = true;
+#if NAUGHTY_ATTRIBUTES
         [ShowIf("enablePressAnyKey")]
+#endif
         public Animator objectAnimator;
 
         protected bool m_isAnimPlayed = false;
@@ -116,8 +142,10 @@
             }
         }
 
-        protected override void UpdateCallback()
+        protected override void UpdateCallback(float dt)
         {
+            //Debug.Log($"Elapsed: {m_elapsedLoadingTime}, LoadCompleted? {m_sceneAsyncLoadCompleted}, AsyncLoadingProgress? {m_sceneAsyncLoadingProgress}");
+
             UpdateElapsedLoadingTime();
 
             ProcessProgress();

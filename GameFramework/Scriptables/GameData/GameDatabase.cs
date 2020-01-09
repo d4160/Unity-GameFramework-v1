@@ -1,13 +1,8 @@
 ﻿namespace d4160.GameFramework
 {
-    using d4160.Core;
-    using d4160.Systems.DataPersistence;
+    using Core;
+    using DataPersistence;
     using Malee;
-#if UNITY_EDITOR
-    using NaughtyAttributes;
-    using System;
-    using System.Reflection;
-#endif
     using UnityEngine;
     using UnityEngine.GameFoundation.DataPersistence;
 

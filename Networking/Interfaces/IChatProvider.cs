@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace d4160.Systems.Networking
+﻿namespace d4160.Networking
 {
+    using System;
+
     public interface IChatProvider
     {
         string Username { get; }

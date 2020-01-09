@@ -1,7 +1,7 @@
 ﻿namespace d4160.GameFramework
 {
     using UnityEngine;
-    using d4160.Systems.DataPersistence;
+    using d4160.DataPersistence;
 
     //[CreateAssetMenu(fileName = "New DefaultLocalization Settings_SO.asset", menuName = "Game Framework/App Settings/Default Localization")]
     public abstract class DefaultLocalizationSettings<T> : ScriptableObjectBase<T> where T : BaseSerializableData

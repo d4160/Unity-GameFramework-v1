@@ -1,7 +1,7 @@
 ﻿namespace d4160.GameFramework
 {
     using d4160.Core;
-    using d4160.Systems.DataPersistence;
+    using d4160.DataPersistence;
     using UnityEngine;
     using UnityEngine.GameFoundation.DataPersistence;
 

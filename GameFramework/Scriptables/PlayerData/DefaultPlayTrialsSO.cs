@@ -1,7 +1,7 @@
 ﻿namespace d4160.GameFramework
 {
     using Malee;
-    using d4160.Systems.DataPersistence;
+    using d4160.DataPersistence;
 
     //[CreateAssetMenu(fileName = "New PlayTrials_SO.asset", menuName = "Game Framework/Game Data/Leaderboards")]
     public abstract class DefaultPlayTrialsSO<T1, T2, T3> : ReorderableSO<T1, T2, T3>

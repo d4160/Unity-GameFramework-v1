@@ -1,7 +1,7 @@
 ﻿  namespace d4160.GameFramework
 {
   using System.Collections.Generic;
-  using d4160.Systems.DataPersistence;
+  using d4160.DataPersistence;
 
     [System.Serializable]
     public class DefaultPlayTrialsSerializableData : BaseSerializableData, IStorageHelper

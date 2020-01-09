@@ -1,4 +1,4 @@
-namespace d4160.Systems.DataPersistence
+namespace d4160.DataPersistence
 {
     using System;
     using UnityEngine.GameFoundation.DataPersistence;
@@ -30,7 +30,7 @@ namespace d4160.Systems.DataPersistence
         /// <param name="content"></param>
         /// <param name="onSaveCompleted"></param>
         /// <param name="onSaveFailed"></param>
-        public override void Save(string identifier, ISerializableData content, Action onSaveCompleted = null, Action onSaveFailed = null)
+        public override void Save(string identifier, ISerializableData content, Action onSaveCompleted = null, Action<Exception> onSaveFailed = null)
         {
             var storageHelper = content as IStorageHelper;
 
@@ -42,7 +42,7 @@ namespace d4160.Systems.DataPersistence
             }
             else
             {
-                onSaveFailed?.Invoke();
+                onSaveFailed?.Invoke(new Exception());
             }
         }
 
@@ -53,17 +53,17 @@ namespace d4160.Systems.DataPersistence
         /// <param name="onLoadCompleted"></param>
         /// <param name="onLoadFailed"></param>
         /// <typeparam name="T"></typeparam>
-        public override void Load<T>(string identifierFullPath, Action<ISerializableData> onLoadCompleted = null, Action onLoadFailed = null)
+        public override void Load<T>(string identifierFullPath, Action<T> onLoadCompleted = null, Action<Exception> onLoadFailed = null)
         {
             if (m_storageHelper != null)
             {
                 m_storageHelper.Load(m_encrypted);
 
-                onLoadCompleted?.Invoke(m_storageHelper as ISerializableData);
+                onLoadCompleted?.Invoke((T)m_storageHelper);
             }
             else
             {
-                onLoadFailed?.Invoke();
+                onLoadFailed?.Invoke(new Exception());
             }
         }
     }

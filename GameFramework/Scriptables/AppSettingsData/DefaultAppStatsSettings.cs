@@ -1,7 +1,7 @@
 ﻿namespace d4160.GameFramework
 {
     using UnityEngine;
-    using d4160.Systems.DataPersistence;
+    using d4160.DataPersistence;
 
     //[CreateAssetMenu(fileName = "New DefaultAppStats Settings_SO.asset", menuName = "Game Framework/App Settings/Default AppStats")]
     public abstract class DefaultAppStatsSettings<T> : ScriptableObjectBase<T> where T : BaseSerializableData

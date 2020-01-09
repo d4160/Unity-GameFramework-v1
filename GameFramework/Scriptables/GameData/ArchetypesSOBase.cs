@@ -1,7 +1,7 @@
 namespace d4160.GameFramework
 {
     using d4160.Core;
-    using d4160.Systems.DataPersistence;
+    using d4160.DataPersistence;
     using System.Linq;
 
     public abstract class ArchetypesSOBase<T1, T2, T3>
@@ -10,7 +10,7 @@ namespace d4160.GameFramework
         IArchetypeNames, IArchetypeOperations,
 //#endif
         IArchetypeGetter<T2>
-        where T2 : IArchetype, new()
+        where T2 : IArchetype, IArchetypeName, new()
         where T1 : Malee.ReorderableArray<T2>
         where T3 : BaseSerializableData
     {
@@ -49,7 +49,7 @@ namespace d4160.GameFramework
         {
             for (int i = 0; i < names.Length; i++)
             {
-                var element = AddNew();
+                var element = AddNew() as IArchetypeName;
                 element.Name = names[i];
             }
         }

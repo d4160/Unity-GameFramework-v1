@@ -1,4 +1,4 @@
-﻿namespace d4160.GameFramework.Editors
+﻿namespace d4160.GameFramework.Editor
 {
 	using GraphProcessor;
 	using UnityEditor;

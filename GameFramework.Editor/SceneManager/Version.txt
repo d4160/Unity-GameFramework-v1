@@ -1,0 +1,4 @@
+AssetStore -> Scene Manager Utility
+Readme.pdf was deleted
+
+v1.1.2 (current)released Jun 25, 2018

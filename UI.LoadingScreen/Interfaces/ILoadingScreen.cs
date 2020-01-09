@@ -1,4 +1,4 @@
-namespace d4160.UI
+namespace d4160.UI.Loading
 {
     public interface ILoadingScreen
     {

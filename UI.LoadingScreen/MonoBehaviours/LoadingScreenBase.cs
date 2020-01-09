@@ -1,10 +1,10 @@
-﻿namespace d4160.UI
+﻿using d4160.Loops;
+
+namespace d4160.UI.Loading
 {
     using System;
-    using System.Collections;
-    using d4160.Core;
-    using d4160.Systems.SceneManagement;
-    using UniRx;
+    using Core;
+    using SceneManagement;
     using UnityEngine;
 
     public abstract class LoadingScreenBase : Singleton<LoadingScreenBase>, ILoadingScreen
@@ -15,18 +15,29 @@
         protected float m_elapsedLoadingTime;
         protected float m_sceneAsyncLoadingProgress;
         protected bool m_sceneAsyncLoadCompleted;
-        protected IDisposable m_updateCallbackRegister;
+        protected bool m_loading;
 
         protected virtual bool ReadyToContinue => m_sceneAsyncLoadCompleted;
 
-        public virtual void StartLoad()
+        protected virtual void OnEnable()
         {
-            m_updateCallbackRegister = MainThreadDispatcher.UpdateAsObservable().Subscribe(
-                (u) => UpdateCallback());
+            UpdateLoop.OnUpdate += UpdateCallback;
         }
 
-        protected virtual void UpdateCallback()
+        protected virtual void OnDisable()
         {
+            UpdateLoop.OnUpdate -= UpdateCallback;
+        }
+
+        public virtual void StartLoad()
+        {
+            m_loading = true;
+        }
+
+        protected virtual void UpdateCallback(float dt)
+        {
+            if (!m_loading) return;
+            
             UpdateElapsedLoadingTime();
         }
 
@@ -77,7 +88,7 @@
 
         protected virtual void FinishAndContinue()
         {
-            m_updateCallbackRegister.Dispose();
+            m_loading = false;
 
             m_sceneAsyncLoadCompleted = false;
             m_elapsedLoadingTime = 0f;

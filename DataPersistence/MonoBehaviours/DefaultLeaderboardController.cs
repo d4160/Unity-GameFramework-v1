@@ -1,7 +1,8 @@
-﻿namespace d4160.Systems.DataPersistence
+﻿namespace d4160.DataPersistence
 {
-    using d4160.Core;
+#if NAUGHTY_ATTRIBUTES
     using NaughtyAttributes;
+#endif
     using UnityExtensions;
     using UnityEngine;
 
@@ -9,7 +10,10 @@
     {
         [InspectInline]
         [SerializeField] protected AuthenticatorControllerBase m_authenticator;
+#if NAUGHTY_ATTRIBUTES
         [ShowIf("IsAuthenticatorLocal")]
+
+#endif
         [SerializeField] protected string m_playerStatsItem = "normalModePlayerStats";
 
 #if UNITY_EDITOR

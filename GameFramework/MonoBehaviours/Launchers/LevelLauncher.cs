@@ -1,6 +1,6 @@
 ﻿namespace d4160.GameFramework
 {
-    using d4160.Systems.SceneManagement;
+    using d4160.SceneManagement;
     using Malee;
     using UnityEngine;
 

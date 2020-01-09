@@ -1,9 +1,9 @@
 ﻿namespace d4160.GameFramework
 {
     using UnityEngine;
-    using d4160.Core;
-    using d4160.Core.Attributes;
-    using d4160.Systems.DataPersistence;
+    using Core;
+    using Core.Attributes;
+    using DataPersistence;
 
     //[CreateAssetMenu(fileName = "New DefaultGraphics Settings_SO.asset", menuName = "Game Framework/App Settings/Default Graphics")]
     public abstract class DefaultGraphicsSettings<T> : ScriptableObjectBase<T> where T : BaseSerializableData
@@ -13,10 +13,12 @@
         [SerializeField] protected FullScreenMode m_fullScreenMode;
         [Dropdown(ValuesProperty = "Qualities")]
         [SerializeField] protected int m_qualityLevel;
+#if NAUGHTY_ATTRIBUTES
         [Popup("Don't Sync","Every V Blank","Every Second V Blank", IsIndexProperty = true)]
+#endif
         [SerializeField] protected int m_vSyncCount;
 
-        #region Editor Use
+#region Editor Use
 #if UNITY_EDITOR
         protected string[] Resolutions
         {
@@ -35,7 +37,7 @@
 
         protected string[] Qualities => QualitySettings.names;
 #endif
-        #endregion
+#endregion
 
         public int Resolution
         {

@@ -1,7 +1,7 @@
 ﻿namespace d4160.GameFramework
 {
     using UnityEngine;
-    using d4160.Systems.DataPersistence;
+    using d4160.DataPersistence;
 
     //[CreateAssetMenu(fileName = "New DefaultAudio Settings_SO.asset", menuName = "Game Framework/App Settings/Default Audio")]
     public abstract class DefaultAudioSettings<T> : ScriptableObjectBase<T> where T :BaseSerializableData

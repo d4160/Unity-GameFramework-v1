@@ -1,4 +1,4 @@
-﻿namespace d4160.Systems.Networking
+﻿namespace d4160.Networking
 {
     public enum NetworkingType
     {

@@ -1,4 +1,4 @@
-﻿namespace d4160.GameFramework.Editors
+﻿namespace d4160.GameFramework.Editor
 {
 	using UnityEditor.UIElements;
 	using UnityEngine.UIElements;
@@ -7,7 +7,7 @@
 	using System.Collections.Generic;
 	using d4160.Core.Editors.Utilities;
 
-  [NodeCustomEditor(typeof(ChapterNode))]
+	[NodeCustomEditor(typeof(ChapterNode))]
 	public class ChapterNodeView : BaseNodeView
 	{
 		VisualElement _worldSceneField, _levelSceneField;

@@ -1,8 +1,8 @@
-﻿namespace d4160.UI
-{
-    using UnityEngine;
+﻿using d4160.Core;
 
-    public abstract class ChatUIBase : MonoBehaviour, IChatUI
+namespace d4160.UI.Chat
+{
+    public abstract class ChatUIBase : EntityBehaviourBase, IChatUI
     {
         protected virtual void Awake()
         {

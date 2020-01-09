@@ -3,12 +3,12 @@
     using System.Collections.Generic;
     using d4160.Core;
     using Malee;
-    using d4160.Systems.DataPersistence;
+    using d4160.DataPersistence;
 
     //[CreateAssetMenu(fileName = "New Worlds_SO", menuName = "Game Framework/Game Data/Worlds")]
     public abstract class DefaultWorldsSO<T1, T2, T3> : ArchetypesSOBase<T1, T2, T3>, ISceneNamesGetter, IWorldSceneGetter
         where T1 : ReorderableArray<T2>
-        where T2 : IArchetype, ILevelCategory, new()
+        where T2 : IArchetype, IArchetypeName, ILevelCategory, new()
         where T3 : BaseSerializableData
     {
         public string[] GetSceneNames(int worldIdx)

@@ -1,4 +1,4 @@
-﻿namespace d4160.Systems.DataPersistence
+﻿namespace d4160.DataPersistence
 {
     public interface IAuthenticator
     {

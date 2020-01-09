@@ -1,9 +1,10 @@
-﻿namespace d4160.UI
+﻿namespace d4160.UI.Loading
 {
-    using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.UI;
+#if NAUGHTY_ATTRIBUTES
     using NaughtyAttributes;
+#endif
     using d4160.Core;
 
     public class NonInteractiveLoadingScreen : LoadingScreenBase
@@ -13,32 +14,48 @@
 
         [Header("IMAGES")]
         public Image imageObject;
+#if NAUGHTY_ATTRIBUTES
         [OnValueChanged("CalculateMinLoadingDuration")]
+#endif
         public Sprite[] imageList;
         [Tooltip("If not use images in sequence")]
         public bool useRandomImage;
         public bool changeImageWithTimer;
+#if NAUGHTY_ATTRIBUTES
         [ShowIf("changeImageWithTimer")]
         [OnValueChanged("CalculateMinLoadingDuration")]
+#endif
         public float imageTimerValue = 2f;
+#if NAUGHTY_ATTRIBUTES
         [ShowIf("changeImageWithTimer")]
+#endif
         public Animator fadingAnimator;
+#if NAUGHTY_ATTRIBUTES
         [ShowIf("changeImageWithTimer")]
         [OnValueChanged("CalculateMinLoadingDuration")]
+#endif
         [Range(0.1f, 5)] public float imageFadingSpeed = 1f;
         [Tooltip("For the complete fade out and fade in. For 60 frames = 1f")]
+#if NAUGHTY_ATTRIBUTES
         [ShowIf("changeImageWithTimer")]
         [OnValueChanged("CalculateMinLoadingDuration")]
+#endif
         public float fadingAnimationDuration = 1.1f;
 
         [Header("SETTINGS")]
         public float fadingAnimationSpeed = 2.0f;
+#if NAUGHTY_ATTRIBUTES
         [ShowIf("changeImageWithTimer")]
+#endif
         public bool calculateMinLoadingDuration;
+#if NAUGHTY_ATTRIBUTES
         [ShowIf(ConditionOperator.And, "changeImageWithTimer", "calculateMinLoadingDuration")]
         [ReadOnly]
+#endif
         public float calculatedMinLoadingDuration;
+#if NAUGHTY_ATTRIBUTES
         [HideIf(ConditionOperator.And, "calculateMinLoadingDuration", "changeImageWithTimer")]
+#endif
         public float minLoadingDuration = 2f;
 
         protected int m_imageCount;
@@ -49,7 +66,7 @@
             calculatedMinLoadingDuration = (imageTimerValue + fadingAnimationDuration * 1f / imageFadingSpeed) * imageList.Length;
         }
 
-        protected override bool ReadyToContinue => m_elapsedLoadingTime >= minLoadingDuration && m_sceneAsyncLoadCompleted;
+        protected override bool ReadyToContinue => m_elapsedLoadingTime >= minLoadingDuration && (m_sceneAsyncLoadCompleted || m_sceneAsyncLoadingProgress == 0f); // Strange bug fix when the level to load is really fast loaded, fastest than the asyncLoadCompleted check  
 
         protected virtual void Start()
         {
@@ -78,9 +95,9 @@
             // fadingAnimator.SetFloat("Fade Out", imageFadingSpeed);
         }
 
-        protected override void UpdateCallback()
+        protected override void UpdateCallback(float dt)
         {
-            base.UpdateCallback();
+            base.UpdateCallback(dt);
 
             ProcessImages();
 

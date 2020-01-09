@@ -1,6 +1,6 @@
 ﻿namespace d4160.GameFramework
 {
-    using d4160.Systems.DataPersistence;
+    using d4160.DataPersistence;
     using UnityEngine;
     using UnityEngine.GameFoundation;
     using UnityEngine.GameFoundation.DataPersistence;
@@ -42,7 +42,7 @@
             System.Action onLoadCompleted = null,
             System.Action onLoadFailed = null)
         {
-            GameFoundation.Load(dataPersistence, onLoadCompleted, onLoadFailed);
+            GameFoundation.Load(dataPersistence, onLoadCompleted, (e) => onLoadFailed.Invoke());
         }
 
         public virtual void Save(
@@ -50,7 +50,7 @@
             System.Action onSaveCompleted = null,
             System.Action onSaveFailed = null)
         {
-            GameFoundation.Save(dataPersistence, onSaveCompleted, onSaveFailed);
+            GameFoundation.Save(dataPersistence, onSaveCompleted, (e) => onSaveFailed.Invoke());
         }
     }
 }

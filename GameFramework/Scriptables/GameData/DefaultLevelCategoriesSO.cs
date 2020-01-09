@@ -1,15 +1,14 @@
 ﻿namespace d4160.GameFramework
 {
-    using d4160.GameFramework;
     using d4160.Core;
     using Malee;
     using System.Collections.Generic;
-    using d4160.Systems.DataPersistence;
+    using d4160.DataPersistence;
 
     //[CreateAssetMenu(fileName = "New LevelCategories_SO", menuName = "Game Framework/Game Data/LevelCategories")]
     public abstract class DefaultLevelCategoriesSO<T1, T2, T3> : ArchetypesSOBase<T1, T2, T3>, ISceneNamesGetter, ILevelSceneGetter
         where T1 : ReorderableArray<T2>
-        where T2 : ILevelCategory, IArchetype, new()
+        where T2 : ILevelCategory, IArchetype, IArchetypeName, new()
         where T3 : BaseSerializableData
     {
         #region Editor Members

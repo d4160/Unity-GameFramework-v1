@@ -1,10 +1,12 @@
-﻿namespace d4160.GameFramework
+﻿using System.Runtime.Remoting.Messaging;
+
+namespace d4160.GameFramework
 {
     using d4160.Core;
     using UnityEngine;
     using UnityExtensions;
     using d4160.Core.Attributes;
-    using d4160.UI;
+    using d4160.UI.Loading;
 
     public abstract class DefaultPlayLauncher : PlayLevelLauncher
     {
@@ -24,6 +26,7 @@
         {
             get
             {
+                Debug.Log($"Processor null? {m_processor == null}");
                 if (m_processor != null)
                     return m_processor.Current as ChapterNode;
 
@@ -75,6 +78,11 @@
             if (m_gameModeGraph && m_processor == null)
             {
                 m_processor = new GameModeGraphProcessor(m_gameModeGraph);
+                m_processor.MoveTo(m_chapterToStart);
+                m_processor.Run();
+            }
+            else if (m_processor != null && m_processor.Current == null)
+            {
                 m_processor.MoveTo(m_chapterToStart);
                 m_processor.Run();
             }
@@ -284,17 +292,21 @@
         protected virtual void LoadWorldScene(System.Action onCompleted = null)
         {
             var chapter = CurrentChapter;
+
+            Debug.Log(($"Loading world scene of play level. Chapter is null? {chapter == null}"));
+            Debug.Log(($"Chapter data: WorldScene(cat:#)->{chapter.WorldScene.world}:{chapter.WorldScene.worldScene}"));
+
             if (chapter == null) return;
 
-            var buildIndex = (GameFrameworkSettings.GameDatabase[2] as IWorldSceneGetter).GetSceneBuildIndex(chapter.WorldScene);
-            if (buildIndex == -1)
+            int? buildIndex = (GameFrameworkSettings.GameDatabase[2] as IWorldSceneGetter)?.GetSceneBuildIndex(chapter.WorldScene);
+            if (!buildIndex.HasValue || buildIndex == -1)
             {
                 LoadPlayScene(true, onCompleted);
                 return;
             }
 
             m_sceneLoader.LoadSceneAsync(
-                buildIndex,
+                buildIndex.Value,
                 true,
                 (ao) => m_worldLoadingAsyncOp = ao,
                 null,
@@ -320,12 +332,18 @@
         protected virtual void LoadPlayScene(bool setActiveAsMainScene = false, System.Action onCompleted = null)
         {
             var chapter = CurrentChapter;
+
+            Debug.Log(($"Loading play scene of play level. Chapter is null? {chapter == null}"));
+            Debug.Log(($"Chapter data: LevelScene(cat:#)->{chapter.LevelScene.levelCategory}:{chapter.LevelScene.levelScene}"));
+
             if (chapter == null) return;
 
-            var buildIndex = (GameFrameworkSettings.GameDatabase[3] as ILevelSceneGetter).GetSceneBuildIndex(chapter.LevelScene);
+            int? buildIndex = (GameFrameworkSettings.GameDatabase[3] as ILevelSceneGetter)?.GetSceneBuildIndex(chapter.LevelScene);
+
+            if (!buildIndex.HasValue || buildIndex == -1) return;
 
             m_sceneLoader.LoadSceneAsync(
-                buildIndex,
+                buildIndex.Value,
                 setActiveAsMainScene,
                 (ao) => m_playLoadingAsyncOp = ao,
                 () => {

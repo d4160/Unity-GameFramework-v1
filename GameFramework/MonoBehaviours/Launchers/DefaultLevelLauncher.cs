@@ -1,10 +1,8 @@
 ﻿namespace d4160.GameFramework
 {
-    using d4160.GameFramework;
     using UnityEngine;
-    using d4160.Systems.SceneManagement;
-    using d4160.UI;
-    using d4160.Systems.DataPersistence;
+    using d4160.UI.Loading;
+    using d4160.DataPersistence;
 
     public abstract class DefaultLevelLauncher : LevelLauncher
 #if UNITY_EDITOR

@@ -1,7 +1,9 @@
 ﻿namespace d4160.GameFramework
 {
     using d4160.Core;
+#if NAUGHTY_ATTRIBUTES
     using NaughtyAttributes;
+#endif
     using Malee;
     using UnityEngine;
     using System.Collections.Generic;
@@ -9,34 +11,44 @@
 
     public class GameManager : Singleton<GameManager>, ILevelLoader, ILevelScenesActiver, IGameModeFlowController, IPlayFlowController
     {
-        #region Serialized Fields
+#region Serialized Fields
         [SerializeField] protected bool m_startLevelAtStart;
+#if NAUGHTY_ATTRIBUTES
         [ShowIf("m_startLevelAtStart")]
+#endif
         [SerializeField] protected LevelType m_levelTypeToStart;
+#if NAUGHTY_ATTRIBUTES
         [ShowIf(ConditionOperator.And, "m_startLevelAtStart", "IsCommonLevelTypeSelected")]
+#endif
         [d4160.Core.Attributes.Dropdown("BootLoader", "PlayLogic",ValuesProperty = "LevelCategoryNames")]
         [SerializeField] protected int m_generalLevelToStart;
+#if NAUGHTY_ATTRIBUTES
         [ShowIf(ConditionOperator.And, "m_startLevelAtStart", "IsGameModeLevelTypeSelected")]
+#endif
         [d4160.Core.Attributes.Dropdown(ValuesProperty = "GameModeCategoryNames")]
         [SerializeField] protected int m_gameModeLevelToStart;
 
+#if NAUGHTY_ATTRIBUTES
         [BoxGroup("General Launchers")]
+#endif
         [Reorderable]
         [SerializeField] protected LevelLaunchersReorderableArray m_levelLaunchers;
 
+#if NAUGHTY_ATTRIBUTES
         [BoxGroup("GameMode Launchers")]
+#endif
         [Reorderable]
         [SerializeField] protected PlayLevelLauncherReorderableArray m_playLaunchers;
-        #endregion
+#endregion
 
-        #region Protected Fields and Properties
+#region Protected Fields and Properties
         protected List<LevelReference> m_startedLevels = new List<LevelReference>();
 
         public List<LevelReference> StartedLevels => m_startedLevels;
-        #endregion
+#endregion
 
 #if UNITY_EDITOR
-        #region Editor Use Members
+#region Editor Use Members
         protected string[] LevelCategoryNames => GameFrameworkSettings.GameDatabase.GetGameDataNames(3);
         protected string[] GameModeCategoryNames => GameFrameworkSettings.GameDatabase.GetGameDataNames(1);
 
@@ -51,10 +63,10 @@
         }
 
         private bool _firstLoad = true;
-        #endregion
+#endregion
 #endif
 
-        #region Unity Callbacks
+#region Unity Callbacks
         protected virtual void Start()
         {
             SetLauncherIndexes();
@@ -78,9 +90,9 @@
                 m_playLaunchers[i].LauncherIndex = i;
             }
         }
-        #endregion
+#endregion
 
-        #region Get Methods
+#region Get Methods
         public T GetLevelLauncher<T>(int index) where T : LevelLauncher
         {
             if (m_levelLaunchers.IsValidIndex(index))
@@ -120,9 +132,9 @@
 
             return null;
         }
-        #endregion
+#endregion
 
-        #region ILevelLoader implementation
+#region ILevelLoader implementation
         public virtual void LoadLevel(LevelType levelType, int level, System.Action onCompleted = null)
         {
             switch (levelType)
@@ -325,9 +337,9 @@
                     UnloadLevel(m_startedLevels[i].levelType, m_startedLevels[i].level);
             }
         }
-        #endregion
+#endregion
 
-        #region ILevelScenesActiver Implemetation
+#region ILevelScenesActiver Implemetation
         public virtual void ActivateScenes(LevelType levelType, int level)
         {
             switch (levelType)
@@ -348,9 +360,9 @@
                     break;
             }
         }
-        #endregion
+#endregion
 
-        #region IPlayFlowController Implementation
+#region IPlayFlowController Implementation
         public virtual PlayState GetPlayState(int playLauncherIndex)
         {
             if (m_playLaunchers.IsValidIndex(playLauncherIndex))
@@ -414,9 +426,9 @@
                 m_playLaunchers[playLauncherIndex].SetGameOver(gameResult);
             }
         }
-        #endregion
+#endregion
 
-        #region IGameModeFlowController Implementation
+#region IGameModeFlowController Implementation
         public virtual void MoveRestart(bool useLoadingScreen = false, int playLauncherIndex = 0)
         {
             if (m_playLaunchers.IsValidIndex(playLauncherIndex))
@@ -448,6 +460,6 @@
                 m_playLaunchers[playLauncherIndex].MoveTo(useLoadingScreen, nodeIndex);
             }
         }
-        #endregion
+#endregion
     }
 }

@@ -1,7 +1,6 @@
-﻿namespace d4160.Systems.SceneManagement
+﻿namespace d4160.SceneManagement
 {
-    using d4160.Core;
-    using UnityEngine;
+    using Core;
 
     public class DefaultSceneLoaderFactory : Singleton<DefaultSceneLoaderFactory>, IFactory<IAsyncSceneLoader>
     {

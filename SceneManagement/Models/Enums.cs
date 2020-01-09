@@ -1,4 +1,4 @@
-﻿namespace d4160.Systems.SceneManagement
+﻿namespace d4160.SceneManagement
 {
     public enum SceneLoaderType
     {

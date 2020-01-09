@@ -1,7 +1,7 @@
 ﻿namespace d4160.GameFramework
 {
-    using d4160.Core;
-    using d4160.Systems.DataPersistence;
+    using Core;
+    using DataPersistence;
     using Malee;
     using UnityEngine;
     using UnityEngine.GameFoundation.DataPersistence;
@@ -19,12 +19,7 @@
 
         public IDataSerializationAdapter DataAdapter
         {
-            get {
-                if (m_dataAdapter == null)
-                    m_dataAdapter = new DefaultPlayerDataSerializationAdapter();
-
-                return m_dataAdapter;
-            }
+            get { return m_dataAdapter ?? (m_dataAdapter = new DefaultPlayerDataSerializationAdapter()); }
             set => m_dataAdapter = value;
         }
 

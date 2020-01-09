@@ -1,7 +1,6 @@
 ﻿namespace d4160.GameFramework
 {
-  using d4160.GameFramework;
-  using UnityEngine;
+    using UnityEngine;
 
     public class PlayFlowController : MonoBehaviour, IPlayFlowController
     {
