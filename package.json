@@ -1,7 +1,7 @@
 {
   "name": "d4160.game-framework",
   "displayName": "Unity Game Framework",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "unity": "2018.1",
   "description": "Unity Game Framework to control the essential parts of any game or app (Game Modes, Scene Management, Play Flow, Settings, Data Persistence and much more (WIP))",
   "keywords": [
@@ -13,18 +13,18 @@
   "author": {
     "name": "d4160(Maranatha2031)"
   },
-  "dependencies":{
+  "dependencies": {
     "d4160.game-framework-core": "1.0.0",
-	"com.unity.game.foundation": "0.2.0-preview.3",
-	"garettbass.unity-extensions.inspect-in-line": "0.2.1",
-	"com.github.sabresaurus.player-prefs-editor": "1.1.0",
-	"cfoulston.unity-reorderable-list": "1.0.1",
-	"com.alelievr.node-graph-processor": "0.3.1",
-	"com.johannesmp.unityscenereference": "1.1.1",
-	"d4160.constants-and-enums-generator-kit": "0.1.1",
-	"com.unity.inputsystem": "1.0.0-preview.3",
-	"com.unity.addressables": "1.5.0",
-	"com.unity.textmeshpro": "2.0.1"
+    "com.unity.game.foundation": "0.2.0-preview.3",
+    "garettbass.unity-extensions.inspect-in-line": "0.2.1",
+    "com.github.sabresaurus.player-prefs-editor": "1.1.0",
+    "cfoulston.unity-reorderable-list": "1.0.1",
+    "com.alelievr.node-graph-processor": "0.3.1",
+    "com.johannesmp.unityscenereference": "1.1.1",
+    "d4160.constants-and-enums-generator-kit": "0.1.1",
+    "com.unity.inputsystem": "1.0.0-preview.3",
+    "com.unity.addressables": "1.5.0",
+    "com.unity.textmeshpro": "2.0.1"
   },
   "repository": {
     "type": "git",
