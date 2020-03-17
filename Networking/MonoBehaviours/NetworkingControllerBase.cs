@@ -1,4 +1,7 @@
-﻿namespace d4160.Networking
+﻿using UltEvents;
+using UnityEngine.UIElements;
+
+namespace d4160.Networking
 {
     using UnityEngine;
 
@@ -11,6 +14,8 @@
 		/// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
 		/// </summary>
 		[SerializeField] protected string m_clientVersion = "1.0";
+        [SerializeField] protected bool m_connectAtStart;
+        [Header("EVENTS")] [SerializeField] protected UltEvent _onConnected;
 
         protected INetworkingLauncher m_networkingLauncher;
 
@@ -22,7 +27,25 @@
 
             if (m_networkingLauncher != null)
             {
+                if (_onConnected != null)
+                    m_networkingLauncher.OnConnected += _onConnected.Invoke;
+
                 m_networkingLauncher.Awake();
+            }
+        }
+
+        protected virtual void Start()
+        {
+            if (m_connectAtStart)
+                Connect();
+        }
+
+        protected virtual void OnDestroy()
+        {
+            if (m_networkingLauncher != null)
+            {
+                if (_onConnected != null)
+                    m_networkingLauncher.OnConnected -= _onConnected.Invoke;
             }
         }
 

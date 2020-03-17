@@ -9,8 +9,9 @@
 	{
 		[SerializeField] protected ChatProviderType m_chatProviderType = ChatProviderType.PhotonUnityNetworking;
 		[SerializeField] protected bool m_authenticateAtStart;
+        [SerializeField] protected bool m_connectAtStart;
 		[SerializeField] protected string m_username;
-		[Tooltip("Is allowed to use custom id or username from custom authentication")]
+		[Tooltip("Is allowed to use custom id or username from custom authentication. If is true, it will use a display name from an external source (like PhotonCustomAuth)")]
 		[SerializeField] protected bool m_allowCustomAuthentication;
 		[SerializeField] protected string m_clientVersion = "1.0";
 		[SerializeField] protected string[] m_channelsToJoinOnConnect; // set in inspector. Demo channels to join automatically.
@@ -94,6 +95,9 @@
 		{
 			if (m_authenticateAtStart)
 				Authenticate();
+
+			if (m_connectAtStart)
+				Connect();
 		}
 
 		public virtual void Authenticate()
@@ -113,31 +117,36 @@
 				m_chatProvider.Subscribe(m_channelsToJoinOnConnect, m_historyLengthToFetch);
 			}
 
-			ChatPrefabsManagerBase.Instance.InstancedMain.OnConnected(m_friendsList);
+			if (ChatPrefabsManagerBase.Instanced)
+			    ChatPrefabsManagerBase.Instance.InstancedMain?.OnConnected(m_friendsList);
 
 			m_chatProvider.SetOnlineStatus(ChatUserStatus.Online); // You can set your online state (without a mesage).
 		}
 
 		protected virtual void OnDisconnected()
 		{
-			ChatPrefabsManagerBase.Instance.InstancedMain.OnDisconnected();
+			if (ChatPrefabsManagerBase.Instanced)
+			    ChatPrefabsManagerBase.Instance.InstancedMain?.OnDisconnected();
 		}
 
 		protected void OnChatStateChange(string state)
 		{
-			ChatPrefabsManagerBase.Instance.InstancedMain.OnChatStateChange(state);
+            if (ChatPrefabsManagerBase.Instanced)
+				ChatPrefabsManagerBase.Instance.InstancedMain?.OnChatStateChange(state);
 		}
 
 		protected virtual void OnSubscribed(string[] channels)
 		{
-			ChatPrefabsManagerBase.Instance.InstancedMain.OnSubscribed(channels);
+            if(ChatPrefabsManagerBase.Instanced)
+			    ChatPrefabsManagerBase.Instance.InstancedMain?.OnSubscribed(channels);
 
 			ShowChannel(channels[0]);
 		}
 
 		protected virtual void OnUnsubscribed(string[] channels)
 		{
-			ChatPrefabsManagerBase.Instance.InstancedMain.OnUnsubscribed(channels);
+            if (ChatPrefabsManagerBase.Instanced)
+				ChatPrefabsManagerBase.Instance.InstancedMain?.OnUnsubscribed(channels);
 		}
 
 		public void OnGetMessages(string channelName, string[] senders, object[] messages)
@@ -366,7 +375,8 @@
 
 			Debug.Log("ShowChannel: " + m_selectedChannelName);
 
-			ChatPrefabsManagerBase.Instance.InstancedMain.ShowChannel(channelName, messages);
+			if(ChatPrefabsManagerBase.Instanced)
+			    ChatPrefabsManagerBase.Instance.InstancedMain?.ShowChannel(channelName, messages);
 		}
 	}
 

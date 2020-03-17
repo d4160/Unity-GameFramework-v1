@@ -1,8 +1,10 @@
-﻿namespace d4160.Networking
+﻿using System;
+
+namespace d4160.Networking
 {
     public interface INetworkingLauncher
     {
-        //bool IgnoreCallbacks { get; set; }
+        Action OnConnected { get; set; }
 
         void Awake();
 

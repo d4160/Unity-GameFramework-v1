@@ -107,7 +107,7 @@
 
         public abstract void Initialize();
 
-        public abstract void Uninitialize();
+        public abstract void Deinitialize();
 
         public abstract void Save();
 

@@ -1,4 +1,8 @@
-﻿namespace d4160.DataPersistence
+﻿using System.Linq;
+using d4160.Core.Attributes;
+using UnityEngine.GameFoundation;
+
+namespace d4160.DataPersistence
 {
 #if NAUGHTY_ATTRIBUTES
     using NaughtyAttributes;
@@ -14,17 +18,23 @@
         [ShowIf("IsAuthenticatorLocal")]
 
 #endif
-        [SerializeField] protected string m_playerStatsItem = "normalModePlayerStats";
+        [Dropdown(ValuesProperty = "ItemNames")]
+        [SerializeField] protected int m_playerStatsItem;
 
 #if UNITY_EDITOR
         protected bool IsAuthenticatorLocal => m_authenticator.AuthenticationType == AuthenticationType.Local;
+        protected string[] ItemNames =>
+            InventoryManager.catalog.GetItemDefinitions().Select(x => x.displayName).ToArray();
 #endif
 
-        public virtual string PlayerStatsItem
+        public virtual int PlayerStatsItemIndex
         {
             get => m_playerStatsItem;
             set => m_playerStatsItem = value;
         }
+
+        public virtual InventoryItemDefinition PlayerStatsItem =>
+            InventoryManager.catalog.GetItemDefinitions()[m_playerStatsItem];
 
         public AuthenticatorControllerBase Authenticator => m_authenticator;
 

@@ -135,6 +135,15 @@
 #endregion
 
 #region ILevelLoader implementation
+
+        public virtual void RestartLevel(LevelType levelType, int level, System.Action onCompleted = null)
+        {
+            UnloadLevel(levelType, level, () =>
+            {
+                LoadLevel(levelType, level, onCompleted);
+            });
+        }
+
         public virtual void LoadLevel(LevelType levelType, int level, System.Action onCompleted = null)
         {
             switch (levelType)

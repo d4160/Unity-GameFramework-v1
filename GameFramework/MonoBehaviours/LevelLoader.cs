@@ -73,5 +73,15 @@
                 UnloadLevel(unloadLevelType, unloadLevel);
             });
         }
+
+        /// <summary>
+        /// For cases when don't use LoadingScreen to reload the level, instead use LoadAfterUnload using loading screen
+        /// </summary>
+        /// <param name="levelType"></param>
+        /// <param name="level"></param>
+        public void RestartLevel(LevelType levelType, int level)
+        {
+            GameManager.Instance.RestartLevel(levelType, level);
+        }
     }
 }

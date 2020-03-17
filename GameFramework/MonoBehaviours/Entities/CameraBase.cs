@@ -11,7 +11,10 @@ namespace d4160.GameFramework
         protected virtual void Awake()
         {
             m_camera = GetComponent<Camera>();
+        }
 
+        protected virtual void Start()
+        {
             CameraPrefabsManagerBase.Instance.SetInstanced(this);
         }
     }

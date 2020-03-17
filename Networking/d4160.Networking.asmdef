@@ -2,7 +2,8 @@
     "name": "d4160.Networking",
     "references": [
         "GUID:abd02ea2a3d741f48b1c16eb7025fec5",
-        "GUID:115a3056a51e172458fbc4df44828e11"
+        "GUID:115a3056a51e172458fbc4df44828e11",
+        "GUID:57a6d82589ae03c4cabdc058f719f231"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

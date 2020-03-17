@@ -1,4 +1,7 @@
-﻿namespace d4160.GameFramework
+﻿using UltEvents;
+using UnityEngine;
+
+namespace d4160.GameFramework
 {
     using d4160.DataPersistence;
     using UnityEngine.GameFoundation.DataPersistence;
@@ -6,6 +9,28 @@
 
     public class DefaultDataLoader : DataLoaderBase
     {
+        [SerializeField] protected UltEvent _onInitializeCompleted;
+
+        public UltEvent OnInitializeCompleted => _onInitializeCompleted;
+
+        protected static DefaultDataLoader _gameFoundationDataLoader;
+        public static DefaultDataLoader GameFoundationDataLoader
+        {
+            get => _gameFoundationDataLoader;
+            protected set => _gameFoundationDataLoader = value;
+        }
+
+        protected virtual void Awake()
+        {
+            if (_gameFoundationDataLoader == null)
+            {
+                if (m_persistenceTarget == DataPersistenceTarget.GameFoundation)
+                {
+                    _gameFoundationDataLoader = this;
+                }
+            }
+        }
+
         public override void CreateDataPersistence()
         {
             IDataPersistence dataPersistence = null;
@@ -49,12 +74,12 @@
 
         public override void Initialize()
         {
-            m_dataSerializationAdapter.Initialize(Identifier, m_dataPersistence);
+            m_dataSerializationAdapter.Initialize(Identifier, m_dataPersistence, _onInitializeCompleted.Invoke);
         }
 
-        public override void Uninitialize()
+        public override void Deinitialize()
         {
-            m_dataSerializationAdapter.Uninitialize();
+            m_dataSerializationAdapter.Deinitialize();
         }
 
         public override void Load()

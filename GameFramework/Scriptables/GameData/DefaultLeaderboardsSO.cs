@@ -14,7 +14,7 @@ namespace d4160.GameFramework
         where T3 : BaseSerializableData
     {
 #if UNITY_EDITOR
-        protected string[] StatNames => StatManager.catalog.GetStatDefinitions().Select((x) => x.id).ToArray();
+        protected string[] StatNames => StatManager.catalog.GetStatDefinitions().Select((x) => x.displayName).ToArray();
 #endif
     }
 }

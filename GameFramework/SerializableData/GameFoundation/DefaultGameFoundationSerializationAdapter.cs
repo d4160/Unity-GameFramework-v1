@@ -33,7 +33,7 @@
             GameFoundation.Initialize(dataPersistence, onInitializeCompleted, onInitializeFailed);
         }
 
-        public virtual void Uninitialize()
+        public virtual void Deinitialize()
         {
         }
 

@@ -87,7 +87,7 @@
 		private VisualElement CreateWorldField(ChapterNode chapterNode)
 		{
 			var worldNames = GameFrameworkSettings.GameDatabase.GetGameDataNames(2);
-			worldNames = EditorUtilities.GetNoneSelectableFrom(worldNames);
+			worldNames = EditorUtility.GetNoneSelectableFrom(worldNames);
 
 			PopupField<string> field = new PopupField<string>(
 				"World", worldNames.ToList(), 0)
@@ -135,7 +135,7 @@
 		private VisualElement CreateLevelCategoryField(ChapterNode chapterNode)
 		{
 			var levelNames = GameFrameworkSettings.GameDatabase.GetGameDataNames(3);
-			levelNames = EditorUtilities.GetNoneSelectableFrom(levelNames);
+			levelNames = EditorUtility.GetNoneSelectableFrom(levelNames);
 
 			PopupField<string> field = new PopupField<string>(
 				"Level Category", levelNames.ToList(), 0)

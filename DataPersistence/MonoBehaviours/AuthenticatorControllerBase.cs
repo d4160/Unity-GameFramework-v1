@@ -1,4 +1,6 @@
-﻿namespace d4160.DataPersistence
+﻿using UltEvents;
+
+namespace d4160.DataPersistence
 {
     using System;
 #if NAUGHTY_ATTRIBUTES
@@ -31,8 +33,8 @@
 #endif
         [SerializeField] protected string m_username;
         [SerializeField] protected bool m_authenticateAtStart;
-        [SerializeField] protected UnityEvent m_onLoginCompleted;
-        [SerializeField] protected UnityEvent m_onLoginFailed;
+        [SerializeField] protected UltEvent m_onLoginCompleted;
+        [SerializeField] protected UltEvent m_onLoginFailed;
 
         protected IAuthenticator m_authenticator;
         protected bool m_authenticated;

@@ -24,6 +24,26 @@ namespace d4160.DataPersistence
         }
 
         /// <summary>
+        /// Ignore identifierFullPath, don't need here
+        /// </summary>
+        /// <param name="identifierFullPath"></param>
+        /// <param name="onLoadCompleted"></param>
+        /// <param name="onLoadFailed"></param>
+        public override void Load<T>(string identifier, Action<T> onLoadCompleted = null, Action<Exception> onLoadFailed = null)
+        {
+            if (m_storageHelper != null)
+            {
+                m_storageHelper.Load(m_encrypted);
+
+                onLoadCompleted?.Invoke((T)m_storageHelper);
+            }
+            else
+            {
+                onLoadFailed?.Invoke(new Exception());
+            }
+        }
+
+        /// <summary>
         /// Ignore identifier, don't need here
         /// </summary>
         /// <param name="identifier"></param>
@@ -43,27 +63,6 @@ namespace d4160.DataPersistence
             else
             {
                 onSaveFailed?.Invoke(new Exception());
-            }
-        }
-
-        /// <summary>
-        /// Ignore identifierFullPath, don't need here
-        /// </summary>
-        /// <param name="identifierFullPath"></param>
-        /// <param name="onLoadCompleted"></param>
-        /// <param name="onLoadFailed"></param>
-        /// <typeparam name="T"></typeparam>
-        public override void Load<T>(string identifierFullPath, Action<T> onLoadCompleted = null, Action<Exception> onLoadFailed = null)
-        {
-            if (m_storageHelper != null)
-            {
-                m_storageHelper.Load(m_encrypted);
-
-                onLoadCompleted?.Invoke((T)m_storageHelper);
-            }
-            else
-            {
-                onLoadFailed?.Invoke(new Exception());
             }
         }
     }

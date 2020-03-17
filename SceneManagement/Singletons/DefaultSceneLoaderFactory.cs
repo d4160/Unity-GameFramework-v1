@@ -2,14 +2,14 @@
 {
     using Core;
 
-    public class DefaultSceneLoaderFactory : Singleton<DefaultSceneLoaderFactory>, IFactory<IAsyncSceneLoader>
+    public class DefaultSceneLoaderFactory : Singleton<DefaultSceneLoaderFactory>, IClassFactory<IAsyncSceneLoader>
     {
         public virtual IAsyncSceneLoader Create(SceneLoaderType option)
         {
-            return Create((int)option);
+            return Fabricate((int)option);
         }
 
-        public virtual IAsyncSceneLoader Create(int option = 0)
+        public virtual IAsyncSceneLoader Fabricate(int option = 0)
         {
             switch((SceneLoaderType)option)
             {

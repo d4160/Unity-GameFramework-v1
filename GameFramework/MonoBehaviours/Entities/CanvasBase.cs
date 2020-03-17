@@ -11,7 +11,10 @@ namespace d4160.GameFramework
         protected virtual void Awake()
         {
             m_canvas = GetComponent<Canvas>();
+        }
 
+        protected virtual void Start()
+        {
             CanvasPrefabsManagerBase.Instance.SetInstanced(this);
         }
     }

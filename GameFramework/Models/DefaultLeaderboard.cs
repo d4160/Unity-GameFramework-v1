@@ -46,23 +46,23 @@
                 {
                     case LeaderboardAggregationMethod.Last:
                         newRecord = true;
-                    break;
+                        break;
                     case LeaderboardAggregationMethod.Maximun:
                         if (newValue > lastVal)
                         {
                             newRecord = true;
                         }
-                    break;
+                        break;
                     case LeaderboardAggregationMethod.Minimum:
                         if (newValue < lastVal)
                         {
                             newRecord = true;
                         }
-                    break;
+                        break;
                     case LeaderboardAggregationMethod.Sum:
                         newValue += lastVal;
                         newRecord = true;
-                    break;
+                        break;
                 }
 
                 if (newRecord)

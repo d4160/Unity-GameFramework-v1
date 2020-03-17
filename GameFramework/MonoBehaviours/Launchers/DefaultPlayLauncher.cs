@@ -18,7 +18,7 @@ namespace d4160.GameFramework
         #endregion
 
         #region Protected Fields and Properties
-        protected GameModeGraphProcessor m_processor;
+        protected DefaultGameModeGraphProcessor m_processor;
         protected AsyncOperation m_worldLoadingAsyncOp, m_playLoadingAsyncOp;
         protected bool m_playSceneLoading, m_loadingCompleted;
 
@@ -26,7 +26,7 @@ namespace d4160.GameFramework
         {
             get
             {
-                Debug.Log($"Processor null? {m_processor == null}");
+                //Debug.Log($"Processor null? {m_processor == null}");
                 if (m_processor != null)
                     return m_processor.Current as ChapterNode;
 
@@ -43,7 +43,7 @@ namespace d4160.GameFramework
             {
                 if (!m_gameModeGraph) return new string[0];
 
-                m_processor = new GameModeGraphProcessor(m_gameModeGraph);
+                m_processor = new DefaultGameModeGraphProcessor(m_gameModeGraph);
 
                 var nodes = m_processor.ProcessArray;
                 var names = new string[nodes.Length];
@@ -77,7 +77,7 @@ namespace d4160.GameFramework
             // Only once in the app life, this configuration don't allow runtime graph nodes
             if (m_gameModeGraph && m_processor == null)
             {
-                m_processor = new GameModeGraphProcessor(m_gameModeGraph);
+                m_processor = new DefaultGameModeGraphProcessor(m_gameModeGraph);
                 m_processor.MoveTo(m_chapterToStart);
                 m_processor.Run();
             }
@@ -293,8 +293,8 @@ namespace d4160.GameFramework
         {
             var chapter = CurrentChapter;
 
-            Debug.Log(($"Loading world scene of play level. Chapter is null? {chapter == null}"));
-            Debug.Log(($"Chapter data: WorldScene(cat:#)->{chapter.WorldScene.world}:{chapter.WorldScene.worldScene}"));
+            //Debug.Log(($"Loading world scene of play level. Chapter is null? {chapter == null}"));
+            //Debug.Log(($"Chapter data: WorldScene(cat:#)->{chapter.WorldScene.world}:{chapter.WorldScene.worldScene}"));
 
             if (chapter == null) return;
 

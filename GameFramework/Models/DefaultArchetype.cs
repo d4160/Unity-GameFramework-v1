@@ -9,6 +9,7 @@ namespace d4160.GameFramework
     {
         [SerializeField] protected string m_name;
         [SerializeField] protected int m_id;
+        [SerializeField] protected string[] m_categories;
 
         public DefaultArchetype()
         {

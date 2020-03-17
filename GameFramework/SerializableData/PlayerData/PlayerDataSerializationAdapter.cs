@@ -115,7 +115,7 @@
             }
         }
 
-        public virtual void Uninitialize()
+        public virtual void Deinitialize()
         {
             GameFramework.UninitializePlayerData();
         }

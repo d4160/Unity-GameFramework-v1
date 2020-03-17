@@ -37,9 +37,33 @@
                     var archetypeInterface = data[i] as IArchetypeNames;
                     var names = archetypeInterface.ArchetypeNames;
 
-                    ConstantsGeneratorKit.RebuildConstantsClass(ConstantsFiles[i], names, TotalConstantsFiles[i]);
+                    if (i == 0)
+                    {
+                        ConstantsGeneratorKit.RebuildConstantsClass(ConstantsFiles[i], names, TotalConstantsFiles[i], AdditionalArchetypesContent());
+                    }
+                    else
+                    {
+                        ConstantsGeneratorKit.RebuildConstantsClass(ConstantsFiles[i], names, TotalConstantsFiles[i]);
+                    }
                 }
             }
+        }
+
+        static string AdditionalArchetypesContent()
+        {
+            return $@"
+        internal static int GetFixed(int entity)
+        {{
+            if (entity >= 0 && entity < 4)
+            {{
+                return entity + 1;
+            }}
+
+            if (entity == 7)
+                return 5;
+
+            return 0;
+        }}";
         }
 
         static void GenerateEnums()

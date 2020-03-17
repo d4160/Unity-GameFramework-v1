@@ -11,6 +11,10 @@
         void InitializeData(ISerializableData data);
     }
 
+    //public interface ISerializableData
+    //{
+    //}
+
     public interface IDataSerializationAdapter : IDataSerializationActions
     {
         void Initialize(
@@ -19,7 +23,7 @@
             System.Action onInitializeCompleted = null,
             System.Action onInitializeFailed = null);
 
-        void Uninitialize();
+        void Deinitialize();
 
         void Load(
             IDataPersistence dataPersistence,
