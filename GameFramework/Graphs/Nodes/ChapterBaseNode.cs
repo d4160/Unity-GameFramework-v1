@@ -6,7 +6,7 @@
     using UnityEngine;
 
     [System.Serializable]
-	public abstract class TalentBaseNode : GameFrameworkBaseNode<TalentBaseNode>
+	public abstract class ChapterBaseNode : GameFrameworkBaseNode<ChapterBaseNode>
     {
     }
 }

@@ -7,9 +7,9 @@
 
     public class DefaultTalentGraphProcessor : BaseGraphProcessor
     {
-        protected TalentBaseNode[] _processArray;
+        protected DefaultTalentNode[] _processArray;
 
-        public TalentBaseNode[] ProcessArray => _processArray;
+        public DefaultTalentNode[] ProcessArray => _processArray;
 
         /// <summary>
         /// Manage graph scheduling and processing
@@ -22,7 +22,7 @@
 
         public override void UpdateComputeOrder()
 		{
-			_processArray = graph.nodes.OfType<TalentBaseNode>().OrderBy((x) => x.computeOrder).ToArray();
+			_processArray = graph.nodes.OfType<DefaultTalentNode>().OrderBy((x) => x.computeOrder).ToArray();
 
             JobHandle.ScheduleBatchedJobs();
         }
