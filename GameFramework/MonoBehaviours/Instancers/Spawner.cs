@@ -4,8 +4,10 @@ using System.Linq;
 using d4160.Core;
 using Lean.Pool;
 using UltEvents;
+#if UNITY_ECS
 using Unity.Entities;
 using Unity.Transforms;
+#endif
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityExtensions;
@@ -26,7 +28,9 @@ namespace d4160.GameFramework
         [InspectInline(canEditRemoteTarget = true)]
         [SerializeField] protected SpawnDataSO _spawnDataSO;
         [SerializeField] protected bool _startSpawnAtStart;
+#if UNITY_ECS
         [SerializeField] protected bool _useECS;
+#endif
         [SerializeField] protected Transform _waveSpawnTransform;
         [Tooltip("If is infinite use a random wave by default. To control the difficulty for this I recommend to use an external source to active and disable spawners like a Timeline, a Timer or a SpawnController.")]
         [SerializeField] protected bool _infiniteWaves;
@@ -45,10 +49,12 @@ namespace d4160.GameFramework
         protected Coroutine _spawnCoroutine;
         protected int _currentWaveIndex;
         protected bool _pingPongInverseDirection;
+#if UNITY_ECS
         protected Entity _entityPrefab;
         protected EntityManager _entityManager;
         protected GameObjectConversionSettings _conversionSettings;
         protected BlobAssetStore _blobAssetStore;
+#endif
 
         public Vector2 SpawnRate
         {
@@ -96,12 +102,14 @@ namespace d4160.GameFramework
             if (!_waveSpawnTransform)
                 _waveSpawnTransform = transform;
 
+#if UNITY_ECS
             if (_useECS)
             {
                 _entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
                 _blobAssetStore = new BlobAssetStore();
                 _conversionSettings = GameObjectConversionSettings.FromWorld(World.DefaultGameObjectInjectionWorld, _blobAssetStore);
             }
+#endif
         }
 
         protected virtual void Start()
@@ -127,7 +135,9 @@ namespace d4160.GameFramework
 
         protected virtual void OnDestroy()
         {
+#if UNITY_ECS
             _blobAssetStore?.Dispose();
+#endif
         }
 
         public virtual void SpawnWave(int waveIndex = -1)
@@ -173,6 +183,7 @@ namespace d4160.GameFramework
 
         protected virtual void InstantiateWavePrefab(GameObject prefab)
         {
+#if UNITY_ECS
             if (_useECS)
             {
                 _entityPrefab = GameObjectConversionUtility.ConvertGameObjectHierarchy(prefab, _conversionSettings);
@@ -181,6 +192,7 @@ namespace d4160.GameFramework
                 _entityManager.SetComponentData(newEntity, new Rotation(){ Value = _waveSpawnTransform.rotation });
             }
             else
+#endif
             {
                 Instantiate(prefab, _waveSpawnTransform.position, _waveSpawnTransform.rotation);
             }

@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using d4160.GameFramework;
+#if UNITY_ECS
 using Unity.Entities;
+#endif
 using UnityEngine;
 
 namespace d4160.GameFramework
@@ -12,7 +14,10 @@ namespace d4160.GameFramework
     }
 
     [System.Serializable]
-    public struct EntityCategoryData : IComponentData
+    public struct EntityCategoryData
+#if UNITY_ECS
+        : IComponentData
+#endif
     {
         public int category;
     }

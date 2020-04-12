@@ -87,7 +87,8 @@
 
             for (int i = 0; i < m_playLaunchers.Length; i++)
             {
-                m_playLaunchers[i].LauncherIndex = i;
+                if (m_playLaunchers[i])
+                    m_playLaunchers[i].LauncherIndex = i;
             }
         }
 #endregion

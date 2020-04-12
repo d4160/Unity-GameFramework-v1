@@ -1,19 +1,29 @@
-﻿using Unity.Entities;
+﻿#if UNITY_ECS
+using Unity.Entities;
 using Unity.Mathematics;
+#endif
 
 namespace d4160.ECS
 {
     [System.Serializable]
-    public struct Rotation2D : IComponentData
+    public struct Rotation2D
+#if UNITY_ECS
+        : IComponentData
+#endif
     {
         public int direction;
         public float speed;
     }
 
     [System.Serializable]
-    public struct Rotation : IComponentData
+    public struct Rotation
+#if UNITY_ECS
+        : IComponentData
+#endif
     {
+#if UNITY_ECS
         public int3 direction;
+#endif
         public float speed;
     }
 }

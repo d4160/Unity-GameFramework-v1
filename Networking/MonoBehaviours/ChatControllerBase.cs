@@ -60,11 +60,14 @@
 		{
 			CreateChatProvider();
 
-			m_chatProvider.UseCustomAuth = m_allowCustomAuthentication;
+			if (m_chatProvider != null)
+			    m_chatProvider.UseCustomAuth = m_allowCustomAuthentication;
 		}
 
 		protected virtual void OnEnable()
 		{
+			if (m_chatProvider == null) return;
+
 			m_chatProvider.OnConnectedAction += OnConnected;
 			m_chatProvider.OnDisconnectedAction += OnDisconnected;
 			m_chatProvider.OnSubscribedAction += OnSubscribed;
@@ -79,6 +82,8 @@
 
 		protected virtual void OnDisable()
 		{
+            if (m_chatProvider == null) return;
+
 			m_chatProvider.OnConnectedAction -= OnConnected;
 			m_chatProvider.OnDisconnectedAction -= OnDisconnected;
 			m_chatProvider.OnSubscribedAction -= OnSubscribed;

@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7598350604749973558}
-  - component: {fileID: 7598350604749973557}
   m_Layer: 0
   m_Name: PUN Launcher
   m_TagString: Untagged
@@ -31,18 +30,6 @@ Transform:
   m_Father: {fileID: 7598350605248619790}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7598350604749973557
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7598350604749973559}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 809cd6bfe313fd648a190ab260e5a271, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7598350605248619784
 GameObject:
   m_ObjectHideFlags: 0
@@ -90,6 +77,9 @@ MonoBehaviour:
   m_networkingType: 0
   m_maxPlayersPerRoom: 4
   m_clientVersion: 1.0
+  m_connectAtStart: 0
+  _onConnected:
+    _PersistentCalls: []
 --- !u!1 &7598350605711721539
 GameObject:
   m_ObjectHideFlags: 0
@@ -135,6 +125,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_chatProviderType: 0
   m_authenticateAtStart: 0
+  m_connectAtStart: 0
   m_username: Player1
   m_allowCustomAuthentication: 0
   m_clientVersion: 1.0

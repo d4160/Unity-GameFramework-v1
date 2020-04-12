@@ -1,4 +1,5 @@
-﻿using d4160.Core;
+﻿#if UNITY_ECS
+using d4160.Core;
 using Unity.Entities;
 using Unity.Transforms;
 using UnityEngine;
@@ -61,3 +62,4 @@ namespace d4160.GameFramework
         }
     }
 }
+#endif

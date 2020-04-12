@@ -58,7 +58,6 @@ MonoBehaviour:
   m_playLaunchers:
     array:
     - {fileID: 7216523200552072616}
-    - {fileID: 7216523199734249707}
 --- !u!114 &4510624551887630987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -249,7 +248,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7216523199734249706}
-  - component: {fileID: 7216523199734249707}
   m_Layer: 0
   m_Name: Multiplayer Mode
   m_TagString: GameController
@@ -271,22 +269,6 @@ Transform:
   m_Father: {fileID: 4512047071138218996}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7216523199734249707
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7216523199734249705}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 085d8a6cc56de9b4381b49cc70970924, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_sceneLoaderType: 3
-  m_gameModeGraph: {fileID: 11400000, guid: ad7cbca22e2033d45bd45329c5ab2ce7, type: 2}
-  m_chapterToStart: 0
-  playerPrefab: {fileID: 100030, guid: fe764102aa5aa431795da15fa2dec0e2, type: 3}
 --- !u!1 &7216523200552072621
 GameObject:
   m_ObjectHideFlags: 0
