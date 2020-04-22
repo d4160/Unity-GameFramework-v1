@@ -28,7 +28,7 @@ namespace d4160.Networking
             if (m_networkingLauncher != null)
             {
                 if (_onConnected != null)
-                    m_networkingLauncher.OnConnected += _onConnected.Invoke;
+                    m_networkingLauncher.OnConnectedCallback += _onConnected.Invoke;
 
                 m_networkingLauncher.Awake();
             }
@@ -45,7 +45,7 @@ namespace d4160.Networking
             if (m_networkingLauncher != null)
             {
                 if (_onConnected != null)
-                    m_networkingLauncher.OnConnected -= _onConnected.Invoke;
+                    m_networkingLauncher.OnConnectedCallback -= _onConnected.Invoke;
             }
         }
 
