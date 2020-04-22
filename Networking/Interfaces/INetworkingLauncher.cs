@@ -4,7 +4,7 @@ namespace d4160.Networking
 {
     public interface INetworkingLauncher
     {
-        Action OnConnected { get; set; }
+        Action OnConnectedCallback { get; set; }
 
         void Awake();
 
