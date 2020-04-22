@@ -331,8 +331,8 @@
         {
             var chapter = CurrentChapter;
 
-            Debug.Log(($"Loading play scene of play level. Chapter is null? {chapter == null}"));
-            Debug.Log(($"Chapter data: LevelScene(cat:#)->{chapter.LevelScene.levelCategory}:{chapter.LevelScene.levelScene}"));
+            //Debug.Log(($"Loading play scene of play level. Chapter is null? {chapter == null}"));
+            //Debug.Log(($"Chapter data: LevelScene(cat:#)->{chapter.LevelScene.levelCategory}:{chapter.LevelScene.levelScene}"));
 
             if (chapter == null) return;
 
