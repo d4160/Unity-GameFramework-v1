@@ -48,8 +48,11 @@
 
         protected virtual void LoadWorldScene(System.Action onCompleted = null)
         {
-            var buildIndex = (GameFrameworkSettings.GameDatabase[2] as IWorldSceneGetter).GetSceneBuildIndex(m_worldScene);
-            if (buildIndex == -1)
+            var buildIndex = (GameFrameworkSettings.GameDatabase[2] as IWorldSceneGetter)?.GetSceneBuildIndex(m_worldScene);
+
+            Debug.Log($"(Level Launcher) Loading World Scene: {buildIndex} index");
+
+            if (!buildIndex.HasValue || buildIndex == -1)
             {
                 LoadLevelScene(true, onCompleted);
                 return;
@@ -57,7 +60,7 @@
 
             //Debug.Log($"WorldSceneName null?: {worldSceneName}");
             m_sceneLoader.LoadSceneAsync(
-                buildIndex,
+                buildIndex.Value,
                 true,
                 (ao) => m_worldLoadingAsyncOp = ao,
                 null,
@@ -82,10 +85,19 @@
 
         protected virtual void LoadLevelScene(bool setActiveAsMainScene = false, System.Action onCompleted = null)
         {
-            var buildIndex = (GameFrameworkSettings.GameDatabase[3] as ILevelSceneGetter).GetSceneBuildIndex(m_levelScene);
+            var buildIndex = (GameFrameworkSettings.GameDatabase[3] as ILevelSceneGetter)?.GetSceneBuildIndex(m_levelScene);
+
+            Debug.Log($"(Level Launcher) Loading Level Scene: {buildIndex} index");
+
+            if (!buildIndex.HasValue || buildIndex == -1)
+            {
+                onCompleted?.Invoke();
+
+                return;
+            }
 
             m_sceneLoader.LoadSceneAsync(
-                buildIndex,
+                buildIndex.Value,
                 setActiveAsMainScene,
                 (ao) => m_levelLoadingAsyncOp = ao,
                 () => onCompleted?.Invoke(),

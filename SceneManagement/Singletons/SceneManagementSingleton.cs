@@ -194,22 +194,22 @@
             if (!IsSceneLoadedOrInBackground(sceneBuildIdx))
             {
                 //Debug.Log($"Try to load scene {sceneBuildIdx}. AsynOp null? {m_asyncLoadOperation == null}");
-                if (m_asyncLoadOperation == null)
-                {
-                    StartCoroutine(LoadSceneCo(sceneBuildIdx, mode));
+                //if (m_asyncLoadOperation == null)
+                //{
+                StartCoroutine(LoadSceneCo(sceneBuildIdx, mode));
 
-                    LoadSceneAsync(onStarted, onComplete, allowSceneActivation, onProgress);
+                LoadSceneAsync(onStarted, onComplete, allowSceneActivation, onProgress);
 
-                    m_onAsyncLoadOperationHelper = null;
+                m_onAsyncLoadOperationHelper = null;
 
-                    return true;
-                }
-                else
-                {
-                    m_onAsyncLoadOperationHelper += () => {
-                        LoadSceneAsync(sceneBuildIdx, mode, onStarted, onComplete, allowSceneActivation, onProgress);
-                    };
-                }
+                return true;
+                //}
+                //else
+                //{
+                //    m_onAsyncLoadOperationHelper += () => {
+                //        LoadSceneAsync(sceneBuildIdx, mode, onStarted, onComplete, allowSceneActivation, onProgress);
+                //    };
+                //}
             }
             else
             {

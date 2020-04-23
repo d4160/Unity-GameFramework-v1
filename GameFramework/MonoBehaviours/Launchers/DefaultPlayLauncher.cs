@@ -291,12 +291,12 @@
         {
             var chapter = CurrentChapter;
 
-            //Debug.Log(($"Loading world scene of play level. Chapter is null? {chapter == null}"));
-            //Debug.Log(($"Chapter data: WorldScene(cat:#)->{chapter.WorldScene.world}:{chapter.WorldScene.worldScene}"));
-
             if (chapter == null) return;
 
             int? buildIndex = (GameFrameworkSettings.GameDatabase[2] as IWorldSceneGetter)?.GetSceneBuildIndex(chapter.WorldScene);
+
+            Debug.Log($"(Play Launcher) Loading World Scene: {buildIndex} index");
+
             if (!buildIndex.HasValue || buildIndex == -1)
             {
                 LoadPlayScene(true, onCompleted);
@@ -331,14 +331,18 @@
         {
             var chapter = CurrentChapter;
 
-            //Debug.Log(($"Loading play scene of play level. Chapter is null? {chapter == null}"));
-            //Debug.Log(($"Chapter data: LevelScene(cat:#)->{chapter.LevelScene.levelCategory}:{chapter.LevelScene.levelScene}"));
-
             if (chapter == null) return;
 
             int? buildIndex = (GameFrameworkSettings.GameDatabase[3] as ILevelSceneGetter)?.GetSceneBuildIndex(chapter.LevelScene);
 
-            if (!buildIndex.HasValue || buildIndex == -1) return;
+            Debug.Log($"(Play Launcher) Loading Play Scene: {buildIndex} index");
+
+            if (!buildIndex.HasValue || buildIndex == -1)
+            {
+                onCompleted?.Invoke();
+
+                return;
+            }
 
             m_sceneLoader.LoadSceneAsync(
                 buildIndex.Value,
@@ -352,6 +356,7 @@
                 (p) => {
                     if (p < 0.9f)
                     {
+                        Debug.Log($"{p}%");
                         if (LoadingScreenBase.Instanced)
                             LoadingScreenBase.Instance.SetLoadingProgress(p);
                     }
