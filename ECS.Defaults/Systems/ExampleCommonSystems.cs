@@ -34,13 +34,13 @@
 //            float3 pos = trans.Value;
 //            switch (limits.side)
 //            {
-//                case LimitSide.Lower:
+//                case LimitSide.Right:
 //                    if (pos.y < limits.limitValue)
 //                    {
 //                        ecb.DestroyEntity(entity);
 //                    }
 //                    break;
-//                case LimitSide.Upper:
+//                case LimitSide.Left:
 //                    if (pos.y > limits.limitValue)
 //                    {
 //                        ecb.DestroyEntity(entity);

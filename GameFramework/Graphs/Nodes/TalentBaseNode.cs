@@ -8,5 +8,6 @@
     [System.Serializable]
 	public abstract class TalentBaseNode : GameFrameworkBaseNode<TalentBaseNode>
     {
+        public virtual void Unprocess() { }
     }
 }

@@ -1,4 +1,6 @@
-﻿#if UNITY_ECS
+﻿using UnityEngine;
+
+#if UNITY_ECS
 using Unity.Entities;
 using Unity.Mathematics;
 #endif
@@ -12,7 +14,9 @@ namespace d4160.ECS
 #endif
     {
 #if UNITY_ECS
-        public int2 direction;
+        public float2 direction;
+#else
+        public Vector2 direction;
 #endif
         public float speed;
     }
@@ -24,7 +28,9 @@ namespace d4160.ECS
 #endif
     {
 #if UNITY_ECS
-        public int3 direction;
+        public float3 direction;
+#else
+        public Vector3 direction;
 #endif
         public float speed;
     }

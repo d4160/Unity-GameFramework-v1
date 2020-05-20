@@ -17,7 +17,9 @@ namespace d4160.ECS
 
     public enum LimitSide
     {
-        Lower,
-        Upper
+        Up,
+        Right,
+        Down,
+        Left
     }
 }
