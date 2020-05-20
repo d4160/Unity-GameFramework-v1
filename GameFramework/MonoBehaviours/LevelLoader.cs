@@ -62,8 +62,16 @@
 
         public void LoadAfterUnloadLevel(LevelType unloadLevelType, int unloadLevel, LevelType loadLevelType, int loadLevel)
         {
+            if (gameObject.transform.parent)
+                gameObject.transform.SetParent(null);
+
+            DontDestroyOnLoad(gameObject);
+
             UnloadLevel(unloadLevelType, unloadLevel, () =>{
                 LoadLevel(loadLevelType, loadLevel);
+                
+                if(gameObject)
+                    Destroy(gameObject);
             });
         }
 

@@ -18,15 +18,21 @@
             bool allowSceneActivation = true,
             AsyncOperationProgress onProgress = null)
         {
+            //Debug.Log($"DefaultEmptySceneLoader.LoadSceneAsync: {buildIdx} index, allow activation: {allowSceneActivation}, main scene: {setActiveAsMainScene}");
+
             if (buildIdx == -1)
                 return;
 
-            if (!m_loadedScenes.Contains(buildIdx))
-                m_loadedScenes.Add(buildIdx);
-            else
+            if (m_loadedScenes.Contains(buildIdx))
+            {
+                //Debug.Log($"DefaultEmptySceneLoader.LoadSceneAsync: Already loaded: {buildIdx}");
                 return;
+            }
 
-            //Debug.Log($"Networking load: {NetworkingSyncLoad}");
+            m_loadedScenes.Add(buildIdx);
+
+            //Debug.Log($"DefaultEmptySceneLoader.LoadSceneAsync: Send sentence to SceneManagement...");
+
             SceneManagementSingleton.Instance.NetworkingSyncLoad = NetworkingSyncLoad;
             SceneManagementSingleton.Instance.LoadSceneAsync(
                 buildIdx, setActiveAsMainScene, onStarted,

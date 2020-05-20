@@ -24,7 +24,7 @@
         /// <summary>
         /// To store scene load callbacks to start after the current ends
         /// </summary>
-        protected event Action m_onAsyncLoadOperationHelper;
+        //protected event Action m_onAsyncLoadOperationHelper;
         protected event AsyncOperationProgress m_onAsyncLoadOperationProgress;
         #endregion
 
@@ -191,16 +191,18 @@
             bool allowSceneActivation = true,
             AsyncOperationProgress onProgress = null)
         {
+            //Debug.Log($"SceneManagementSingleton.LoadSceneAsync: Is Scene Loaded? {IsSceneLoadedOrInBackground(sceneBuildIdx)}");
+
             if (!IsSceneLoadedOrInBackground(sceneBuildIdx))
             {
-                //Debug.Log($"Try to load scene {sceneBuildIdx}. AsynOp null? {m_asyncLoadOperation == null}");
+                //Debug.Log($"SceneManagementSingleton.LoadSceneAsync: Send sentence to StartCoroutine {sceneBuildIdx}.");
                 //if (m_asyncLoadOperation == null)
                 //{
-                StartCoroutine(LoadSceneCo(sceneBuildIdx, mode));
+                StartCoroutine(LoadSceneCo(sceneBuildIdx, mode, onStarted, onComplete, allowSceneActivation, onProgress));
 
-                LoadSceneAsync(onStarted, onComplete, allowSceneActivation, onProgress);
+                //LoadSceneAsync(onStarted, onComplete, allowSceneActivation, onProgress);
 
-                m_onAsyncLoadOperationHelper = null;
+                //m_onAsyncLoadOperationHelper = null;
 
                 return true;
                 //}
@@ -219,9 +221,28 @@
             return false;
         }
 
-        protected virtual IEnumerator LoadSceneCo(int sceneBuildIdx, LoadSceneMode mode)
+        protected virtual IEnumerator LoadSceneCo(
+            int sceneBuildIdx, 
+            LoadSceneMode mode, 
+            Action<AsyncOperation> onStarted = null,
+            Action onComplete = null,
+            bool allowSceneActivation = true,
+            AsyncOperationProgress onProgress = null)
         {
-            yield return m_asyncLoadOperation = (NetworkingSyncLoad ? NetworkingLoadSceneAsyncInternal(sceneBuildIdx, mode) : LoadSceneAsyncInternal(sceneBuildIdx, mode));
+            //Debug.Log($"SceneManagementSingleton.LoadSceneCo: Loading... ({sceneBuildIdx}index)");
+
+            m_asyncLoadOperation = null;
+            m_onAsyncLoadOperationProgress = null;
+
+            m_asyncLoadOperation = (NetworkingSyncLoad ? NetworkingLoadSceneAsyncInternal(sceneBuildIdx, mode) : LoadSceneAsyncInternal(sceneBuildIdx, mode));
+
+            LoadSceneAsync(onStarted, onComplete, allowSceneActivation, onProgress);
+
+            //m_onAsyncLoadOperationHelper = null;
+
+            yield return m_asyncLoadOperation;
+
+            //Debug.Log($"SceneManagementSingleton.LoadSceneCo: Loaded! ({sceneBuildIdx}index)");
         }
 
         public virtual bool LoadSceneAsync(
@@ -240,15 +261,15 @@
 
                     LoadSceneAsync(onStarted, onComplete, allowSceneActivation, onProgress);
 
-                    m_onAsyncLoadOperationHelper = null;
+                    //m_onAsyncLoadOperationHelper = null;
 
                     return true;
                 }
                 else
                 {
-                    m_onAsyncLoadOperationHelper += () => {
-                        LoadSceneAsync(sceneName, mode, onStarted, onComplete, allowSceneActivation, onProgress);
-                    };
+                    //m_onAsyncLoadOperationHelper += () => {
+                    //    LoadSceneAsync(sceneName, mode, onStarted, onComplete, allowSceneActivation, onProgress);
+                    //};
                 }
             }
             else
@@ -276,7 +297,7 @@
             LoadSceneMode mode = LoadSceneMode.Additive)
         {
             //_buildIndexTemp = buildIndex;
-            //Debug.Log($"Load {buildIndex} index scene as mainscene: {setActiveAsMainScene}. Allow activation: {allowSceneActivation}");
+            //Debug.Log($"SceneManagementSingleton.LoadSceneAsync: {buildIndex} index scene as mainscene: {setActiveAsMainScene}. Allow activation: {allowSceneActivation}");
             if (setActiveAsMainScene)
             {
                 return LoadSceneAsync(buildIndex, mode, onStarted, () =>
@@ -334,18 +355,16 @@
 
             //Debug.Log($"Scene {_buildIndexTemp} allow {m_asyncLoadOperation.allowSceneActivation}.");
 
-            if (onComplete != null)
-            {
-                m_asyncLoadOperation.completed += (ao) =>
-                {
-                    //Debug.Log($"Scene {_buildIndexTemp} is loaded.");
-                    m_asyncLoadOperation = null;
-                    m_onAsyncLoadOperationProgress = null;
 
-                    m_onAsyncLoadOperationHelper?.Invoke();
-                    onComplete.Invoke();
-                };
-            }
+            m_asyncLoadOperation.completed += (ao) =>
+            {
+                //Debug.Log($"Scene {_buildIndexTemp} is loaded.");
+                m_asyncLoadOperation = null;
+                m_onAsyncLoadOperationProgress = null;
+
+                //m_onAsyncLoadOperationHelper?.Invoke();
+                onComplete?.Invoke();
+            };
 
             if (onProgress != null)
                 m_onAsyncLoadOperationProgress += onProgress;

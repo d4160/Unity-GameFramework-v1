@@ -32,11 +32,13 @@
         {
             if (m_worldLoadingAsyncOp != null)
             {
+                //Debug.Log($"(Level Launcher) Activating World Scene.");
                 m_worldLoadingAsyncOp.allowSceneActivation = true;
             }
 
             if (m_levelLoadingAsyncOp != null)
             {
+                //Debug.Log($"(Level Launcher) Activating Level Scene.");
                 m_levelLoadingAsyncOp.allowSceneActivation = true;
             }
         }
@@ -50,15 +52,16 @@
         {
             var buildIndex = (GameFrameworkSettings.GameDatabase[2] as IWorldSceneGetter)?.GetSceneBuildIndex(m_worldScene);
 
-            Debug.Log($"(Level Launcher) Loading World Scene: {buildIndex} index");
+            //Debug.Log($"(Level Launcher) Try to Load World Scene: {buildIndex} index");
 
             if (!buildIndex.HasValue || buildIndex == -1)
             {
+                //Debug.Log($"(Level Launcher) Loading World Scene: No Scene. Go to Load LevelScene");
                 LoadLevelScene(true, onCompleted);
                 return;
             }
 
-            //Debug.Log($"WorldSceneName null?: {worldSceneName}");
+            //Debug.Log($"(Level Launcher) Loading World Scene: {buildIndex} index");
             m_sceneLoader.LoadSceneAsync(
                 buildIndex.Value,
                 true,
@@ -70,6 +73,7 @@
                     {
                         if (!m_levelSceneLoading)
                         {
+                            //Debug.Log($"(Level Launcher) World Scene loaded: {buildIndex} index");
                             LoadLevelScene(false, onCompleted);
                             m_levelSceneLoading = true;
                         }
@@ -87,11 +91,14 @@
         {
             var buildIndex = (GameFrameworkSettings.GameDatabase[3] as ILevelSceneGetter)?.GetSceneBuildIndex(m_levelScene);
 
-            Debug.Log($"(Level Launcher) Loading Level Scene: {buildIndex} index");
+            //Debug.Log($"(Level Launcher) Try to Load Level Scene: {buildIndex} index");
 
             if (!buildIndex.HasValue || buildIndex == -1)
             {
+                //Debug.Log($"(Level Launcher) Loading Level Scene: No Scene.");
                 onCompleted?.Invoke();
+
+                ActivateScenes();
 
                 return;
             }
@@ -105,6 +112,7 @@
                 (p) => {
                     if (p < 0.9f)
                     {
+                        //Debug.Log($"(Level Launcher) Loading Level Scene: {(int)(p * 100)}%");
                         if (LoadingScreenBase.Instanced)
                             LoadingScreenBase.Instance.SetLoadingProgress(p);
                     }
@@ -112,6 +120,10 @@
                     {
                         if (!m_loadingCompleted)
                         {
+                            //Debug.Log($"(Level Launcher) Level Scene loaded: {buildIndex} index");
+
+                            //Debug.Log($"(Level Launcher) LoadingScreenBase Instanced?: {LoadingScreenBase.Instanced}");
+
                             if (LoadingScreenBase.Instanced)
                                 LoadingScreenBase.Instance.SetAsLoadCompleted();
                             else
