@@ -356,7 +356,7 @@
                 (p) => {
                     if (p < 0.9f)
                     {
-                        Debug.Log($"{p}%");
+                        //Debug.Log($"{p}%");
                         if (LoadingScreenBase.Instanced)
                             LoadingScreenBase.Instance.SetLoadingProgress(p);
                     }

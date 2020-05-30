@@ -16,16 +16,27 @@ namespace d4160.GameFoundation
         [Dropdown(ValuesProperty = "InventoryNames")]
         [SerializeField] protected int _inventory;
 
-        [SerializeField] protected UltEvent _onItemAdded;
-        [SerializeField] protected UltEvent _onItemRemoved;
-        [SerializeField] protected UltEvent _onItemQuantityChanged;
+        [SerializeField] protected InventoryItemUltEvent _onItemAdded;
+        [SerializeField] protected InventoryItemUltEvent _onItemRemoved;
+        [SerializeField] protected InventoryItemUltEvent _onItemQuantityChanged;
 
 #if UNITY_EDITOR
         protected string[] InventoryNames =>
             InventoryManager.catalog.GetCollectionDefinitions().Select(x => x.displayName).ToArray();
 #endif
 
-        public Inventory SelectedInventory => InventoryManager.GetInventories()[_inventory];
+        public Inventory SelectedInventory { 
+            get {
+                if (InventoryManager.IsInitialized)
+                {
+                    return InventoryManager.GetInventories()[_inventory];
+                }
+                else
+                {
+                    return null;
+                }
+            } 
+        }
 
 
         protected virtual void OnEnable()
@@ -90,9 +101,54 @@ namespace d4160.GameFoundation
             _onItemQuantityChanged?.Invoke(item);   
         }
 
-        [Serializable]
-        public class UltEvent : UltEvent<InventoryItem>
+        public virtual void AddItem(string itemDefinitionId, int quantity = 1)
         {
+            SelectedInventory?.AddItem(itemDefinitionId, quantity);
         }
+
+        public virtual void AddItem(int itemDefinitionHash, int quantity = 1)
+        {
+            SelectedInventory?.AddItem(itemDefinitionHash, quantity);
+        }
+
+        public virtual void RemoveItem(int itemDefinitionHash, int quantity = 1)
+        {
+            SelectedInventory?.RemoveItem(itemDefinitionHash, quantity);
+        }
+
+        public virtual void RemoveItem(string itemDefinitionId, int quantity = 1)
+        {
+            SelectedInventory?.RemoveItem(itemDefinitionId, quantity);
+        }
+
+        public virtual InventoryItem GetItem(int itemDefinitionHash)
+        {
+            return SelectedInventory?.GetItem(itemDefinitionHash);
+        }
+
+        public virtual int GetQuantity(int itemDefinitionHash)
+        {
+            if (InventoryManager.IsInitialized)
+            {
+                int quantity = 0;
+                try
+                {
+                    quantity = SelectedInventory.GetQuantity(itemDefinitionHash);
+                }
+                catch
+                {
+
+                }
+
+                return quantity;
+            }
+                
+            return 0;
+        }
+    }
+
+    [Serializable]
+    public class InventoryItemUltEvent : UltEvent<InventoryItem>
+    {
     }
 }

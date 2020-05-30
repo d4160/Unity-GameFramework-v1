@@ -7,10 +7,13 @@ namespace d4160.GameFoundation
     public class DefaultStatCalculator : StatCalculatorBase
     {
         [SerializeField] protected FloatUltEvent m_onPartialStatUpdated;
+        [SerializeField] protected FloatUltEvent m_onMaxPartialStatUpdated;
 
         public virtual int PartialIntStat => (int)PartialFloatStat;
+        public virtual int MaxPartialIntStat => (int)MaxPartialFloatStat;
 
         protected float m_partialStatValue;
+        protected float m_maxPartialStatValue;
 
         public virtual float PartialFloatStat
         {
@@ -23,16 +26,43 @@ namespace d4160.GameFoundation
             }
         }
 
-        public override float CalculateStat(int difficultyLevel = 1)
+        public virtual float MaxPartialFloatStat
         {
-            if (m_statCalculatorDefinition)
+            get => m_maxPartialStatValue;
+            protected set
             {
-                PartialFloatStat = m_statCalculatorDefinition.CalculateStat(difficultyLevel);
+                m_maxPartialStatValue = value;
 
-                FloatStat += PartialFloatStat;
+                m_onMaxPartialStatUpdated?.Invoke(m_maxPartialStatValue);
             }
+        }
 
-            return FloatStat;
+        public override void UpdateStat(float diff)
+        {
+            PartialFloatStat = diff;
+
+            base.UpdateStat(diff);
+        }
+
+        public override void UpdateMaxStat(float diff)
+        {
+            MaxPartialFloatStat = diff;
+
+            base.UpdateMaxStat(diff);
+        }
+
+        public override void UpdateStat(int diff)
+        {
+            PartialFloatStat = diff;
+
+            base.UpdateStat(diff);
+        }
+
+        public override void UpdateMaxStat(int diff)
+        {
+            MaxPartialFloatStat = diff;
+
+            base.UpdateMaxStat(diff);
         }
     }
 }

@@ -12,13 +12,16 @@ namespace d4160.GameFoundation
         [SerializeField] protected StatCalculatorDefinitionBase m_statCalculatorDefinition;
         [SerializeField] protected bool m_calculateAtStart;
         [SerializeField] protected int m_difficultyLevelToSetAtStart;
-        [SerializeField] protected FloatUltEvent m_onStatUpdated;
+        [SerializeField] protected float m_statValue;
+        [SerializeField] protected float m_maxStatValue;
 
-        protected float m_statValue;
+        [SerializeField] protected FloatUltEvent m_onStatUpdated;
+        [SerializeField] protected FloatUltEvent m_onNormalizedStatUpdated;
+        [SerializeField] protected FloatUltEvent m_onMaxStatUpdated;
 
         public virtual int IntStat
         {
-            get => (int) FloatStat;
+            get => (int)FloatStat;
             set => FloatStat = value;
         }
 
@@ -30,6 +33,25 @@ namespace d4160.GameFoundation
                 m_statValue = value;
 
                 m_onStatUpdated?.Invoke(m_statValue);
+
+                m_onNormalizedStatUpdated?.Invoke(m_statValue / m_maxStatValue);
+            }
+        }
+
+        public virtual int IntMaxStat
+        {
+            get => (int)FloatMaxStat;
+            set => FloatMaxStat = value;
+        }
+
+        public virtual float FloatMaxStat
+        {
+            get => m_maxStatValue;
+            protected set
+            {
+                m_maxStatValue = value;
+
+                m_onMaxStatUpdated?.Invoke(m_maxStatValue);
             }
         }
 
@@ -61,15 +83,50 @@ namespace d4160.GameFoundation
         public virtual float CalculateStat(int difficultyLevel = 1)
         {
             if (m_statCalculatorDefinition)
+            {
                 FloatStat = m_statCalculatorDefinition.CalculateStat(difficultyLevel);
+                FloatMaxStat = FloatStat;
+            }
+            else
+            {
+                FloatStat = FloatMaxStat;
+            }
 
             return FloatStat;
         }
 
-        public virtual void UpdateStat(float deltaTime)
+        public virtual void UpdateStat(float diff)
         {
-            float diff = deltaTime;
-            FloatStat += diff;
+            var newVal = FloatStat + diff;
+
+            FloatStat = Mathf.Clamp(newVal, 0f, FloatMaxStat);
+        }
+
+        public virtual void UpdateMaxStat(float diff)
+        {
+            var newVal = FloatMaxStat + diff;
+
+            if (newVal < 0)
+                FloatMaxStat = 0f;
+            else
+                FloatMaxStat = newVal;
+        }
+
+        public virtual void UpdateStat(int diff)
+        {
+            var newVal = FloatStat + diff;
+
+            FloatStat = Mathf.Clamp(newVal, 0f, FloatMaxStat);
+        }
+
+        public virtual void UpdateMaxStat(int diff)
+        {
+            var newVal = FloatMaxStat + diff;
+
+            if (newVal < 0)
+                FloatMaxStat = 0f;
+            else
+                FloatMaxStat = newVal;
         }
     }
 

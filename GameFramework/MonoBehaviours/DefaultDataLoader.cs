@@ -72,6 +72,9 @@ namespace d4160.GameFramework
             return null;
         }
 
+        /// <summary>
+        /// This method also Load data if there is
+        /// </summary>
         public override void Initialize()
         {
             m_dataSerializationAdapter.Initialize(Identifier, m_dataPersistence, _onInitializeCompleted.Invoke);

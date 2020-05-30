@@ -8,6 +8,7 @@
     using UnityEngine;
     using System.Collections.Generic;
     using UnityEngine.SceneManagement;
+    using d4160.SceneManagement;
 
     public class GameManager : Singleton<GameManager>, ILevelLoader, ILevelScenesActiver, IGameModeFlowController, IPlayFlowController
     {
@@ -145,6 +146,20 @@
             });
         }
 
+        public virtual void RestartActivedLevel()
+        {
+            RestartLevel(SceneManager.GetActiveScene().buildIndex);              
+        }
+
+        public virtual void RestartLevel(int buildIdx, bool setActive = true)
+        {
+            UnloadAllLoadedScenesExceptBootloader(() => {
+                SceneManagementSingleton.Instance.LoadSceneAsync(buildIdx, LoadSceneMode.Additive, null, () => {
+                    SceneManagementSingleton.SetActiveScene(buildIdx);
+                });
+            });
+        }
+
         public virtual void LoadLevel(LevelType levelType, int level, System.Action onCompleted = null)
         {
             switch (levelType)
@@ -235,7 +250,6 @@
             }
         }
 
-#if UNITY_EDITOR
         protected void UnloadAllLoadedScenesExceptBootloader(System.Action onCompleted = null)
         {
             // First scene (bootloader)
@@ -280,7 +294,6 @@
                 };
             }
         }
-#endif
 
         protected virtual void RemoveStartedLevel(LevelType levelType, int level)
         {
