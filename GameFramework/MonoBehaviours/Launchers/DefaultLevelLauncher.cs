@@ -149,5 +149,10 @@
                 onCompleted?.Invoke();
             });
         }
+
+        public void ChangeLevelScene(int sceneIndex)
+        {
+            m_levelScene.levelScene = sceneIndex;
+        }
     }
 }

@@ -1,7 +1,7 @@
 {
   "name": "d4160.game-framework",
   "displayName": "Unity Game Framework",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "unity": "2018.1",
   "description": "Unity Game Framework to control the essential parts of any game or app (Game Modes, Scene Management, Play Flow, Settings, Data Persistence and much more (WIP))",
   "keywords": [
